@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { Sidebar } from 'primereact/sidebar';
 import { Button } from 'primereact/button';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { SidebarData } from "./SidebarData";
 
@@ -15,7 +15,18 @@ import '../styles/flags.css';
 function Navbar() {
 
     const [visible, setVisible] = useState(false);
+    const location = useLocation();
     const [activeRoute, setActiveRoute] = useState('/');
+
+    useEffect(() => {
+        // Almacena la ruta actual en localStorage cuando cambia
+        setActiveRoute(location.pathname);
+    }, [location]);
+
+    const handleItemClick = (path) => {
+        setActiveRoute(path);
+        setVisible(false);
+    };
 
     return (
         <>
@@ -45,7 +56,7 @@ function Navbar() {
                                                 textCont={activeRoute === item.path ? 'white' : 'black'}
                                                 borderBtn={activeRoute === item.path ? 'success' : 'secondary'}
                                                 typeBtn={activeRoute === item.path ? {} : { text: true }}
-                                                onClick={() => setActiveRoute(item.path)}
+                                                onClick={() => handleItemClick(item.path)}
                                             />
                                         </Link>
                                     </div>
