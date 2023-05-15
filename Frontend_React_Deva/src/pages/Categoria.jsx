@@ -222,12 +222,12 @@ export default function Category() {
   return (
     <div>
       {/** TABLA de la categoría */}
-      <Table refToast={toast} left={leftToolbarTemplate} right={rightToolbarTemplate} refDT={dt} value={categorias}
+      <Table isCategory={true} refToast={toast} left={leftToolbarTemplate} right={rightToolbarTemplate} refDT={dt} value={categorias}
         selection={selectedCategorias} onSelectionChange={(e) => setSelectedCategorias(e.value)} dataKey="id"
         globalFilter={globalFilter} header={header} nombre_01="nombre" header_01="Nombre"
         nombre_02="estado" header_02="Estado" body={actionBodyTemplate} />
       {/** Modal de CREAR y ACTUALIZAR */}
-      <DialogCreateUpdate visible={categoriaDialog} header={modalTitle} footer={categoriaDialogFooter}
+      <DialogCreateUpdate isCategory={true} visible={categoriaDialog} header={modalTitle} footer={categoriaDialogFooter}
         onHide={hideDialog} htmlFor_01="nombre" label_01="Nombre" id_01="nombre"
         value_01={categoria.nombre} onChange_01={(e) => onInputChange(e, 'nombre')}
         className_01={classNames({ 'p-invalid': submitted && !categoria.nombre })} msgRequired_01={submitted
