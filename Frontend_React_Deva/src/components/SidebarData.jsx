@@ -10,19 +10,19 @@ export const SidebarData = [
     },
     {
         title: 'Categorias',
-        path: '/categorias',
+        path: '/categoria',
         icon: "pi pi-list",
         cName: 'nav-text'
     },
     {
         title: 'Productos',
-        path: '/productos',
+        path: '/producto',
         icon: "pi pi-shopping-cart",
         cName: 'nav-text'
     },
     {
         title: 'Usuarios',
-        path: '/usuarios',
+        path: '/usuario',
         icon: "pi pi-users",
         cName: 'nav-text'
     },

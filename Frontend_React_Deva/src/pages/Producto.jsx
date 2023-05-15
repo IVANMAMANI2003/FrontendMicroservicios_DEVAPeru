@@ -13,7 +13,7 @@ import { getCategoryList } from '../services/CategoriaService';
 
 export default function Product() {
 
-  let dataCategory = {
+  let dataProduct = {
     id: null,
     nombre: "",
     precio: "",
@@ -34,7 +34,7 @@ export default function Product() {
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
   const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-  const [product, setProduct] = useState(dataCategory);
+  const [product, setProduct] = useState(dataProduct);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -129,7 +129,7 @@ export default function Product() {
   };
 
   const openNew = () => {
-    setProduct(dataCategory);
+    setProduct(dataProduct);
     setSubmitted(false);
     setProductDialog(true);
     setModalTitle("Crear producto");
@@ -249,54 +249,54 @@ export default function Product() {
   return (
     <div>
       {/** TABLA de la categoría */}
-      <Table refToast={toast} left={leftToolbarTemplate} right={rightToolbarTemplate} refDT={dt} value={products}
+      <Table isCategory={false} refToast={toast} left={leftToolbarTemplate} right={rightToolbarTemplate} refDT={dt} value={products}
         selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)} dataKey="id"
-        globalFilter={globalFilter} header={header} nombre_01="nombre" header_01="Nombre" nombre_02="precio" header_02="Precio" nombre_03="stock" header_03="Stock" nombre_04="detalle" header_04="Detalle" nombre_05="material" header_05="Material" nombre_06="largo" header_06="Largo" nombre_07="ancho" header_07="Ancho" nombre_08="alto" header_08="Alto" nombre_09="estado" header_09="Estado" nombre_10="categoria.nombre" header_10="Categoria" body={actionBodyTemplate} />
+        globalFilter={globalFilter} header={header} nombre_00="nombre" header_00="Nombre" nombre_01="precio" header_01="Precio" nombre_02="stock" header_02="Stock" nombre_03="detalle" header_03="Detalle" nombre_04="material" header_04="Material" nombre_05="largo" header_05="Largo" nombre_06="ancho" header_06="Ancho" nombre_07="alto" header_07="Alto" nombre_08="estado" header_08="Estado" nombre_09="categoria.nombre" header_09="Categoria" body={actionBodyTemplate} />
       {/** Modal de CREAR y ACTUALIZAR */}
-      <DialogCreateUpdate visible={productDialog} header={modalTitle} footer={productDialogFooter}
-        onHide={hideDialog} htmlFor_01="nombre" label_01="Nombre" id_01="nombre"
-        value_01={product.nombre} onChange_01={(e) => onInputChange(e, 'nombre')}
-        className_01={classNames({ 'p-invalid': submitted && !product.nombre })} msgRequired_01={submitted
+      <DialogCreateUpdate isCategory={false} visible={productDialog} header={modalTitle} footer={productDialogFooter}
+        onHide={hideDialog} htmlFor_00="nombre" label_00="Nombre" id_00="nombre"
+        value_00={product.nombre} onChange_00={(e) => onInputChange(e, 'nombre')}
+        className_00={classNames({ 'p-invalid': submitted && !product.nombre })} msgRequired_00={submitted
           && !product.nombre && <small className="p-error">El nombre es obligatorio.</small>}
-        htmlFor_02="precio" label_02="Precio" id_02="precio"
-        value_02={product.precio} onChange_02={(e) => onInputChange(e, 'precio')}
-        className_02={classNames({ 'p-invalid': submitted && !product.precio })}
-        msgRequired_02={submitted && !product.precio && <small className="p-error">El precio es
+        htmlFor_01="precio" label_01="Precio" id_01="precio"
+        value_01={product.precio} onChange_01={(e) => onInputChange(e, 'precio')}
+        className_01={classNames({ 'p-invalid': submitted && !product.precio })}
+        msgRequired_01={submitted && !product.precio && <small className="p-error">El precio es
           obligatorio.</small>}
-        htmlFor_03="stock" label_03="Stock" id_03="stock"
-        value_03={product.stock} onChange_03={(e) => onInputChange(e, 'stock')}
-        className_03={classNames({ 'p-invalid': submitted && !product.stock })}
-        msgRequired_03={submitted && !product.stock && <small className="p-error">El stock es
+        htmlFor_02="stock" label_02="Stock" id_02="stock"
+        value_02={product.stock} onChange_02={(e) => onInputChange(e, 'stock')}
+        className_02={classNames({ 'p-invalid': submitted && !product.stock })}
+        msgRequired_02={submitted && !product.stock && <small className="p-error">El stock es
           obligatorio.</small>}
-        htmlFor_04="detalle" label_04="Detalle" id_04="detalle"
-        value_04={product.detalle} onChange_04={(e) => onInputChange(e, 'detalle')}
-        className_04={classNames({ 'p-invalid': submitted && !product.detalle })}
-        msgRequired_04={submitted && !product.detalle && <small className="p-error">El detalle es
+        htmlFor_03="detalle" label_03="Detalle" id_03="detalle"
+        value_03={product.detalle} onChange_03={(e) => onInputChange(e, 'detalle')}
+        className_03={classNames({ 'p-invalid': submitted && !product.detalle })}
+        msgRequired_03={submitted && !product.detalle && <small className="p-error">El detalle es
           obligatorio.</small>}
-        htmlFor_05="material" label_05="Material" id_05="material"
-        value_05={product.material} onChange_05={(e) => onInputChange(e, 'material')}
-        className_05={classNames({ 'p-invalid': submitted && !product.material })}
-        msgRequired_05={submitted && !product.material && <small className="p-error">El material es
+        htmlFor_04="material" label_04="Material" id_04="material"
+        value_04={product.material} onChange_04={(e) => onInputChange(e, 'material')}
+        className_04={classNames({ 'p-invalid': submitted && !product.material })}
+        msgRequired_04={submitted && !product.material && <small className="p-error">El material es
           obligatorio.</small>}
-        htmlFor_06="largo" label_06="Largo" id_06="largo"
-        value_06={product.largo} onChange_06={(e) => onInputChange(e, 'largo')}
-        className_06={classNames({ 'p-invalid': submitted && !product.largo })}
-        msgRequired_06={submitted && !product.largo && <small className="p-error">El largo es
+        htmlFor_05="largo" label_05="Largo" id_05="largo"
+        value_05={product.largo} onChange_05={(e) => onInputChange(e, 'largo')}
+        className_05={classNames({ 'p-invalid': submitted && !product.largo })}
+        msgRequired_05={submitted && !product.largo && <small className="p-error">El largo es
           obligatorio.</small>}
-        htmlFor_07="ancho" label_07="Ancho" id_07="ancho"
-        value_07={product.ancho} onChange_07={(e) => onInputChange(e, 'ancho')}
-        className_07={classNames({ 'p-invalid': submitted && !product.ancho })}
-        msgRequired_07={submitted && !product.ancho && <small className="p-error">El ancho es
+        htmlFor_06="ancho" label_06="Ancho" id_06="ancho"
+        value_06={product.ancho} onChange_06={(e) => onInputChange(e, 'ancho')}
+        className_06={classNames({ 'p-invalid': submitted && !product.ancho })}
+        msgRequired_06={submitted && !product.ancho && <small className="p-error">El ancho es
           obligatorio.</small>}
-        htmlFor_08="alto" label_08="Alto" id_08="alto"
-        value_08={product.alto} onChange_08={(e) => onInputChange(e, 'alto')}
-        className_08={classNames({ 'p-invalid': submitted && !product.alto })}
-        msgRequired_08={submitted && !product.alto && <small className="p-error">El alto es
+        htmlFor_07="alto" label_07="Alto" id_07="alto"
+        value_07={product.alto} onChange_07={(e) => onInputChange(e, 'alto')}
+        className_07={classNames({ 'p-invalid': submitted && !product.alto })}
+        msgRequired_07={submitted && !product.alto && <small className="p-error">El alto es
           obligatorio.</small>}
-        htmlFor_09="estado" label_09="Estado" id_09="estado"
-        value_09={product.estado} onChange_09={(e) => onInputChange(e, 'estado')}
-        className_09={classNames({ 'p-invalid': submitted && !product.estado })}
-        msgRequired_09={submitted && !product.estado && <small className="p-error">El estado es
+        htmlFor_08="estado" label_08="Estado" id_08="estado"
+        value_08={product.estado} onChange_08={(e) => onInputChange(e, 'estado')}
+        className_08={classNames({ 'p-invalid': submitted && !product.estado })}
+        msgRequired_08={submitted && !product.estado && <small className="p-error">El estado es
           obligatorio.</small>}
         label="Categoría"
         value={product.categoria.id} onChange={(event) =>

@@ -5,43 +5,25 @@ import { Column } from 'primereact/column';
 
 const Table = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { refToast, left, right, refDT, value, selection, onSelectionChange, dataKey, globalFilter, header, nombre_01, header_01, nombre_02, header_02, nombre_03, header_03, nombre_04, header_04, nombre_05, header_05, nombre_06, header_06, nombre_07, header_07, nombre_08, header_08, nombre_09, header_09, nombre_10, header_10, body, isCategory } = props;
+  const { refToast, left, right, refDT, value, selection, onSelectionChange, dataKey, globalFilter, header, nombre_00, header_00, nombre_01, header_01, body, isCategory } = props;
 
-  let visibleColumns = [
+  const visibleColumns = [
+    { field: nombre_00, header: header_00, minWidth: '12rem' },
     { field: nombre_01, header: header_01, minWidth: '12rem' },
-    { field: nombre_02, header: header_02, minWidth: '12rem' },
-    // Resto de las columnas visibles
   ];
 
   if (!isCategory) {
-    // Agrega las demás columnas si no es una categoría
-    visibleColumns = [
-      ...visibleColumns,
-      {
-        field: nombre_03, header: header_03, minWidth: '12rem'
-      },
-      {
-        field: nombre_04, header: header_04, minWidth: '12rem'
-      },
-      {
-        field: nombre_05, header: header_05, minWidth: '12rem'
-      },
-      {
-        field: nombre_06, header: header_06, minWidth: '12rem'
-      },
-      {
-        field: nombre_07, header: header_07, minWidth: '12rem'
-      },
-      {
-        field: nombre_08, header: header_08, minWidth: '12rem'
-      },
-      {
-        field: nombre_09, header: header_09, minWidth: '12rem'
-      },
-      {
-        field: nombre_10, header: header_10, minWidth: '12rem'
-      },
-    ];
+    const columnCounts = [1, 4, 9];
+    const maxColumns = Math.max(...columnCounts);
+
+    for (let i = 2; i <= maxColumns; i++) {
+      const fieldName = props[`nombre_0${i}`];
+      const headerName = props[`header_0${i}`];
+
+      if (fieldName && headerName) {
+        visibleColumns.push({ field: fieldName, header: headerName, minWidth: '12rem' });
+      }
+    }
   }
   return (
     <>

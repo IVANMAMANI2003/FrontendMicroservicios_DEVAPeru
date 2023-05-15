@@ -224,18 +224,18 @@ export default function Category() {
       {/** TABLA de la categoría */}
       <Table isCategory={true} refToast={toast} left={leftToolbarTemplate} right={rightToolbarTemplate} refDT={dt} value={categorias}
         selection={selectedCategorias} onSelectionChange={(e) => setSelectedCategorias(e.value)} dataKey="id"
-        globalFilter={globalFilter} header={header} nombre_01="nombre" header_01="Nombre"
-        nombre_02="estado" header_02="Estado" body={actionBodyTemplate} />
+        globalFilter={globalFilter} header={header} nombre_00="nombre" header_00="Nombre"
+        nombre_01="estado" header_01="Estado" body={actionBodyTemplate} />
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate isCategory={true} visible={categoriaDialog} header={modalTitle} footer={categoriaDialogFooter}
-        onHide={hideDialog} htmlFor_01="nombre" label_01="Nombre" id_01="nombre"
-        value_01={categoria.nombre} onChange_01={(e) => onInputChange(e, 'nombre')}
-        className_01={classNames({ 'p-invalid': submitted && !categoria.nombre })} msgRequired_01={submitted
+        onHide={hideDialog} htmlFor_00="nombre" label_00="Nombre" id_00="nombre"
+        value_00={categoria.nombre} onChange_00={(e) => onInputChange(e, 'nombre')}
+        className_00={classNames({ 'p-invalid': submitted && !categoria.nombre })} msgRequired_00={submitted
           && !categoria.nombre && <small className="p-error">El nombre es obligatorio.</small>}
-        htmlFor_02="estado" label_02="Estado" id_02="estado"
-        value_02={categoria.estado} onChange_02={(e) => onInputChange(e, 'estado')}
-        className_02={classNames({ 'p-invalid': submitted && !categoria.estado })}
-        msgRequired_02={submitted && !categoria.estado && <small className="p-error">El estado es
+        htmlFor_01="estado" label_01="Estado" id_01="estado"
+        value_01={categoria.estado} onChange_01={(e) => onInputChange(e, 'estado')}
+        className_01={classNames({ 'p-invalid': submitted && !categoria.estado })}
+        msgRequired_01={submitted && !categoria.estado && <small className="p-error">El estado es
           obligatorio.</small>} />
       {/** Modal de ELIMINAR una categoría */}
       <DialogDelete visible={deleteCategoriaDialog} footer={deleteCategoriaDialogFooter}
