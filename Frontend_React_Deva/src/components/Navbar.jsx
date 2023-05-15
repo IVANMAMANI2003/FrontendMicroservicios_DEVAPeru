@@ -34,7 +34,7 @@ function Navbar() {
 
                 <Button icon="pi pi-align-justify" size="small" onClick={() => setVisible(true)} />
 
-                <Sidebar visible={visible} onHide={() => setVisible(false)} style={{ borderBottomRightRadius: 15, borderTopRightRadius: 15, width: '18rem' }}>
+                <Sidebar visible={visible} onHide={() => setVisible(false)} style={{ borderBottomRightRadius: 15, borderTopRightRadius: 15, width: '20rem' }}>
                     <div style={{ position: 'absolute', top: 0, left: 10, display: 'flex', flexDirection: 'row', alignItems: 'center', alignSelf: 'center', height: '12%' }}>
                         <img src={devaImage} style={{ height: 50, width: 50 }} />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>

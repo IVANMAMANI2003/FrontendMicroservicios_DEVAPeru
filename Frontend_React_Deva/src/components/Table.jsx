@@ -33,7 +33,7 @@ const Table = (props) => {
         <DataTable ref={refDT} value={value} selection={selection} onSelectionChange={onSelectionChange}
           dataKey={dataKey} paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} clientes" globalFilter={globalFilter} header={header} emptyMessage="No se encontraron resultados">
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" globalFilter={globalFilter} header={header} emptyMessage="No se encontraron resultados">
           <Column selectionMode="multiple" exportable={false}></Column>
           {visibleColumns.map((column, index) => (
             <Column

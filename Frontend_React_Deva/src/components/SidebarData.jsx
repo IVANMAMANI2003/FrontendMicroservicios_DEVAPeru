@@ -29,7 +29,7 @@ export const SidebarData = [
     {
         title: 'Mensajes',
         path: '/mensajes',
-        icon: "pi pi-envelope",
+        icon: "pi pi-comments",
         cName: 'nav-text'
     },
     {
