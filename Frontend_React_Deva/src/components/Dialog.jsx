@@ -4,7 +4,7 @@ import { Dropdown } from 'primereact/dropdown';
 
 export const DialogCreateUpdate = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { visible, header, footer, onHide, value, onChange, options, optionValue, optionLabel, placeholder, htmlFor_00, label_00, id_00, value_00, onChange_00, className_00, msgRequired_00, htmlFor_01, label_01, id_01, value_01, onChange_01, className_01, msgRequired_01, htmlFor_02, label_02, id_02, value_02, onChange_02, className_02, msgRequired_02, htmlFor_03, label_03, id_03, value_03, onChange_03, className_03, msgRequired_03, htmlFor_04, label_04, id_04, value_04, onChange_04, className_04, msgRequired_04, htmlFor_05, label_05, id_05, value_05, onChange_05, className_05, msgRequired_05, htmlFor_06, label_06, id_06, value_06, onChange_06, className_06, msgRequired_06, htmlFor_07, label_07, id_07, value_07, onChange_07, className_07, msgRequired_07, htmlFor_08, label_08, id_08, value_08, onChange_08, className_08, msgRequired_08, label, isCategory } = props;
+  const { classDrowp, msgRequired,visible, header, footer, onHide, value, onChange, options, optionValue, optionLabel, placeholder, htmlFor_00, label_00, id_00, value_00, onChange_00, className_00, msgRequired_00, htmlFor_01, label_01, id_01, value_01, onChange_01, className_01, msgRequired_01, htmlFor_02, label_02, id_02, value_02, onChange_02, className_02, msgRequired_02, htmlFor_03, label_03, id_03, value_03, onChange_03, className_03, msgRequired_03, htmlFor_04, label_04, id_04, value_04, onChange_04, className_04, msgRequired_04, htmlFor_05, label_05, id_05, value_05, onChange_05, className_05, msgRequired_05, htmlFor_06, label_06, id_06, value_06, onChange_06, className_06, msgRequired_06, htmlFor_07, label_07, id_07, value_07, onChange_07, className_07, msgRequired_07, htmlFor_08, label_08, id_08, value_08, onChange_08, className_08, msgRequired_08, label, isCategory } = props;
 
   let visibleInputs = [
     {
@@ -62,12 +62,14 @@ export const DialogCreateUpdate = (props) => {
             <Dropdown
               value={value}
               onChange={onChange}
-              options={options}
+              options={[{ label: "Opción por defecto", value: "default" }, ...options]}
               optionValue={optionValue}
               optionLabel={optionLabel}
               placeholder={placeholder}
-              className="form-select"
+              className={classDrowp}
+              required
             />
+            {msgRequired}
           </div>
         </div>
       )}

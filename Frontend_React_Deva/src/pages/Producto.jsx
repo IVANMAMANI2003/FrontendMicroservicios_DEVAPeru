@@ -7,13 +7,7 @@ import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 import Table from "../components/Table";
 import { DialogCreateUpdate, DialogDelete } from "../components/Dialog";
-import {
-  createProduct,
-  deleteProduct,
-  deleteSelectedProducts,
-  getProductList,
-  updateProduct,
-} from "../services/ProductoService";
+import * as ProductoService from "../services/ProductoService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFilePro";
 import { getCategoryList } from "../services/CategoriaService";
 
@@ -64,7 +58,7 @@ export default function Product() {
   };
 
   const getProducts = () => {
-    getProductList()
+    ProductoService.getProductList()
       .then((response) => {
         setProducts(response.data);
       })
@@ -78,7 +72,7 @@ export default function Product() {
 
     if (product.nombre && product.estado) {
       if (product.id || isCreating === false) {
-        updateProduct(product)
+        ProductoService.updateProduct(product)
           .then(() => {
             getProducts();
             getCategories();
@@ -94,7 +88,7 @@ export default function Product() {
             console.error("Error al actualizar el producto:", error);
           });
       } else {
-        createProduct(product)
+        ProductoService.createProduct(product)
           .then(() => {
             getProducts();
             getCategories();
@@ -115,7 +109,7 @@ export default function Product() {
   };
 
   const removeProduct = () => {
-    deleteProduct(product.id)
+    ProductoService.deleteProduct(product.id)
       .then(() => {
         getProducts();
         getCategories();
@@ -134,7 +128,7 @@ export default function Product() {
 
   const removeSelectedProducts = () => {
     const productIds = selectedProducts.map((product) => product.id);
-    deleteSelectedProducts(productIds)
+    ProductoService.deleteSelectedProducts(productIds)
       .then(() => {
         setProducts((prevproducts) =>
           prevproducts.filter((c) => !productIds.includes(c.id))
@@ -519,6 +513,13 @@ export default function Product() {
         optionValue="id"
         optionLabel="nombre"
         placeholder="Selecciona una categoría"
+        classDrowp={classNames({ "p-invalid": submitted && !product.categoria.id })}
+        msgRequired={
+          submitted &&
+          !product.categoria.id && (
+            <small className="p-error">La categoria es obligatorio.</small>
+          )
+        }
       />
       {/** Modal de ELIMINAR una categoría */}
       <DialogDelete
