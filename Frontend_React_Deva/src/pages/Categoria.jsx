@@ -17,18 +17,18 @@ import {
 import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
 
 export default function Category() {
-  let datosCategoria = {
+  let dataCategory = {
     id: null,
     nombre: "",
     estado: "",
   };
 
-  const [categorias, setCategorias] = useState([]);
-  const [categoriaDialog, setCategoriaDialog] = useState(false);
-  const [deleteCategoriaDialog, setDeleteCategoriaDialog] = useState(false);
-  const [deleteCategoriasDialog, setDeleteCategoriasDialog] = useState(false);
-  const [categoria, setCategoria] = useState(datosCategoria);
-  const [selectedCategorias, setSelectedCategorias] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [categoryDialog, setCategoryDialog] = useState(false);
+  const [deleteCategoryDialog, setDeleteCategoryDialog] = useState(false);
+  const [deleteCategoriesDialog, setDeleteCategoriesDialog] = useState(false);
+  const [category, setCategory] = useState(dataCategory);
+  const [selectedCategories, setSelectedCategories] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [modalTitle, setModalTitle] = useState("");
@@ -43,7 +43,7 @@ export default function Category() {
   const getCategories = () => {
     getCategoryList()
       .then((response) => {
-        setCategorias(response.data);
+        setCategories(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -53,12 +53,12 @@ export default function Category() {
   const saveUpdate = () => {
     setSubmitted(true);
 
-    if (categoria.nombre && categoria.estado) {
-      if (categoria.id || isCreating === false) {
-        updateCategory(categoria)
+    if (category.nombre && category.estado) {
+      if (category.id || isCreating === false) {
+        updateCategory(category)
           .then(() => {
             getCategories();
-            setCategoriaDialog(false);
+            setCategoryDialog(false);
             toast.current.show({
               severity: "success",
               summary: "Éxito",
@@ -67,13 +67,13 @@ export default function Category() {
             });
           })
           .catch((error) => {
-            console.error("Error al actualizar el categoria:", error);
+            console.error("Error al actualizar la categoría:", error);
           });
       } else {
-        createCategory(categoria)
+        createCategory(category)
           .then(() => {
             getCategories();
-            setCategoriaDialog(false);
+            setCategoryDialog(false);
             toast.current.show({
               severity: "success",
               summary: "Éxito",
@@ -89,15 +89,15 @@ export default function Category() {
     }
   };
 
-  const deleteCategoria = () => {
-    deleteCategory(categoria.id)
+  const removeCategory = () => {
+    deleteCategory(category.id)
       .then(() => {
         getCategories();
       })
       .catch((error) => {
         console.log(error);
       });
-    setDeleteCategoriaDialog(false);
+    setDeleteCategoryDialog(false);
     toast.current.show({
       severity: "success",
       summary: "Successful",
@@ -106,14 +106,14 @@ export default function Category() {
     });
   };
 
-  const deleteSelectedCategorias = () => {
-    const categoryIds = selectedCategorias.map((categoria) => categoria.id);
+  const removeSelectedCategories = () => {
+    const categoryIds = selectedCategories.map((category) => category.id);
     deleteSelectedCategories(categoryIds)
       .then(() => {
-        setCategorias((prevCategorias) =>
-          prevCategorias.filter((c) => !categoryIds.includes(c.id))
+        setCategories((prevCategories) =>
+          prevCategories.filter((c) => !categoryIds.includes(c.id))
         );
-        setSelectedCategorias(null);
+        setSelectedCategories(null);
         toast.current.show({
           severity: "success",
           summary: "Successful",
@@ -125,41 +125,41 @@ export default function Category() {
       .catch((error) => {
         console.error("Error al eliminar las categorías:", error);
       });
-    setDeleteCategoriasDialog(false);
+    setDeleteCategoriesDialog(false);
   };
 
   const openNew = () => {
-    setCategoria(datosCategoria);
+    setCategory(dataCategory);
     setSubmitted(false);
-    setCategoriaDialog(true);
+    setCategoryDialog(true);
     setModalTitle("Crear Categoria");
     setIsCreating(true);
   };
 
-  const editCategoria = (categoria) => {
-    setCategoria({ ...categoria });
+  const editCategory = (category) => {
+    setCategory({ ...category });
     setSubmitted(false);
-    setCategoriaDialog(true);
-    setModalTitle("Editar categoria");
+    setCategoryDialog(true);
+    setModalTitle("Editar category");
     setIsCreating(false);
   };
 
-  const confirmDeleteCategoria = (categoria) => {
-    setCategoria(categoria);
-    setDeleteCategoriaDialog(true);
+  const confirmDeleteCategory = (category) => {
+    setCategory(category);
+    setDeleteCategoryDialog(true);
   };
 
   const hideDialog = () => {
     setSubmitted(false);
-    setCategoriaDialog(false);
+    setCategoryDialog(false);
   };
 
-  const hideDeleteCategoriaDialog = () => {
-    setDeleteCategoriaDialog(false);
+  const hideDeleteCategoryDialog = () => {
+    setDeleteCategoryDialog(false);
   };
 
-  const hideDeleteCategoriasDialog = () => {
-    setDeleteCategoriasDialog(false);
+  const hideDeleteCategoriesDialog = () => {
+    setDeleteCategoriesDialog(false);
   };
 
   const exportCSV = () => {
@@ -167,24 +167,24 @@ export default function Category() {
   };
 
   const exportExcel = () => {
-    exportToExcel(categorias);
+    exportToExcel(categories);
   };
 
   const exportPDF = () => {
-    exportToPdf(categorias);
+    exportToPdf(categories);
   };
 
   const confirmDeleteSelected = () => {
-    setDeleteCategoriasDialog(true);
+    setDeleteCategoriesDialog(true);
   };
 
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
-    let _categoria = { ...categoria };
+    let _category = { ...category };
 
-    _categoria[`${name}`] = val;
+    _category[`${name}`] = val;
 
-    setCategoria(_categoria);
+    setCategory(_category);
   };
 
   const leftToolbarTemplate = () => {
@@ -201,7 +201,7 @@ export default function Category() {
           icon="pi pi-trash"
           severity="danger"
           onClick={confirmDeleteSelected}
-          disabled={!selectedCategorias || !selectedCategorias.length}
+          disabled={!selectedCategories || !selectedCategories.length}
         />
       </div>
     );
@@ -249,14 +249,14 @@ export default function Category() {
             rounded
             outlined
             className="mr-2"
-            onClick={() => editCategoria(rowData)}
+            onClick={() => editCategory(rowData)}
           />
           <Button
             icon="pi pi-trash"
             rounded
             outlined
             severity="danger"
-            onClick={() => confirmDeleteCategoria(rowData)}
+            onClick={() => confirmDeleteCategory(rowData)}
           />
         </div>
       </React.Fragment>
@@ -276,7 +276,7 @@ export default function Category() {
       </span>
     </div>
   );
-  const categoriaDialogFooter = (
+  const categoryDialogFooter = (
     <React.Fragment>
       <Button
         label="Cancelar"
@@ -287,38 +287,38 @@ export default function Category() {
       <Button label="Guardar" icon="pi pi-check" onClick={saveUpdate} />
     </React.Fragment>
   );
-  const deleteCategoriaDialogFooter = (
+  const deleteCategoryDialogFooter = (
     <React.Fragment>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
           label="Cancelar"
           icon="pi pi-times"
           outlined
-          onClick={hideDeleteCategoriaDialog}
+          onClick={hideDeleteCategoryDialog}
         />
         <Button
           label="Aceptar"
           icon="pi pi-check"
           severity="danger"
-          onClick={deleteCategoria}
+          onClick={removeCategory}
         />
       </div>
     </React.Fragment>
   );
-  const deleteCategoriasDialogFooter = (
+  const deleteCategoriesDialogFooter = (
     <React.Fragment>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
           label="Cancelar"
           icon="pi pi-times"
           outlined
-          onClick={hideDeleteCategoriasDialog}
+          onClick={hideDeleteCategoriesDialog}
         />
         <Button
           label="Aceptar"
           icon="pi pi-check"
           severity="danger"
-          onClick={deleteSelectedCategorias}
+          onClick={removeSelectedCategories}
         />
       </div>
     </React.Fragment>
@@ -333,9 +333,9 @@ export default function Category() {
         left={leftToolbarTemplate}
         right={rightToolbarTemplate}
         refDT={dt}
-        value={categorias}
-        selection={selectedCategorias}
-        onSelectionChange={(e) => setSelectedCategorias(e.value)}
+        value={categories}
+        selection={selectedCategories}
+        onSelectionChange={(e) => setSelectedCategories(e.value)}
         dataKey="id"
         globalFilter={globalFilter}
         header={header}
@@ -348,62 +348,62 @@ export default function Category() {
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate
         isCategory={true}
-        visible={categoriaDialog}
+        visible={categoryDialog}
         header={modalTitle}
-        footer={categoriaDialogFooter}
+        footer={categoryDialogFooter}
         onHide={hideDialog}
         htmlFor_00="nombre"
         label_00="Nombre"
         id_00="nombre"
-        value_00={categoria.nombre}
+        value_00={category.nombre}
         onChange_00={(e) => onInputChange(e, "nombre")}
         className_00={classNames({
-          "p-invalid": submitted && !categoria.nombre,
+          "p-invalid": submitted && !category.nombre,
         })}
         msgRequired_00={
           submitted &&
-          !categoria.nombre && (
+          !category.nombre && (
             <small className="p-error">El nombre es obligatorio.</small>
           )
         }
         htmlFor_01="estado"
         label_01="Estado"
         id_01="estado"
-        value_01={categoria.estado}
+        value_01={category.estado}
         onChange_01={(e) => onInputChange(e, "estado")}
         className_01={classNames({
-          "p-invalid": submitted && !categoria.estado,
+          "p-invalid": submitted && !category.estado,
         })}
         msgRequired_01={
           submitted &&
-          !categoria.estado && (
+          !category.estado && (
             <small className="p-error">El estado es obligatorio.</small>
           )
         }
       />
       {/** Modal de ELIMINAR una categoría */}
       <DialogDelete
-        visible={deleteCategoriaDialog}
-        footer={deleteCategoriaDialogFooter}
-        onHide={hideDeleteCategoriaDialog}
+        visible={deleteCategoryDialog}
+        footer={deleteCategoryDialogFooter}
+        onHide={hideDeleteCategoryDialog}
         msgDialogModal={
-          categoria && (
+          category && (
             <span>
-              ¿Estás seguro de que quieres eliminar <b>{categoria.nombre}</b>? No
+              ¿Estás seguro de que quieres eliminar <b>{category.nombre}</b>? No
               podrás revertir esto.
             </span>
           )
         }
       />
-      {/** Modal de ELIMINAR varias categorias */}
+      {/** Modal de ELIMINAR varias categorys */}
       <DialogDelete
-        visible={deleteCategoriasDialog}
-        footer={deleteCategoriasDialogFooter}
-        onHide={hideDeleteCategoriasDialog}
+        visible={deleteCategoriesDialog}
+        footer={deleteCategoriesDialogFooter}
+        onHide={hideDeleteCategoriesDialog}
         msgDialogModal={
-          categoria && (
+          category && (
             <span>
-              ¿Estás seguro de que desea eliminar los categorias seleccionadas?
+              ¿Estás seguro de que desea eliminar las categorias seleccionadas?
               No podrás revertir esto.
             </span>
           )
