@@ -62,7 +62,7 @@ export const DialogCreateUpdate = (props) => {
             <Dropdown
               value={value}
               onChange={onChange}
-              options={[{ label: "Opción por defecto", value: "default" }, ...options]}
+              options={Array.isArray(options) ? [{ label: "Opción por defecto", value: "default" }, ...options] : []}
               optionValue={optionValue}
               optionLabel={optionLabel}
               placeholder={placeholder}

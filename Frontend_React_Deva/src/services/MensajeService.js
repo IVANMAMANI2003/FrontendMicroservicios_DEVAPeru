@@ -19,7 +19,7 @@ export const deleteMensaje = (id) => {
   return axios.delete(url);
 };
 
-export const deleteSelectedCategories = (mensajeIds) => {
+export const deleteSelectedMensaje = (mensajeIds) => {
   const deleteRequests = mensajeIds.map((id) =>
     deleteMensaje(id)
   );

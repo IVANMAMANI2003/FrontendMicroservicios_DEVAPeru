@@ -3,6 +3,8 @@ import Category from "./pages/Categoria";
 import Product from "./pages/Producto";
 import { Routes, Route } from "react-router-dom";
 import User from "./pages/Usuario";
+import Mensaje from "./pages/Mensaje";
+
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
         <Route path='/categoria' Component={Category} />
         <Route path='/producto' Component={Product} />
         <Route path='/usuario' Component={User} />
+        <Route path='/mensaje' Component={Mensaje} />
       </Routes>
     </>
   )
