@@ -10,8 +10,8 @@ export const createProduct = (product) => {
   return axios.post(API_URL, product);
 };
 
-export const updateProduct = (product) => {
-  return axios.put(API_URL, product);
+export const updateProduct = (id, product) => {
+  return axios.put(`${API_URL}/imagen/${id}`, product);
 };
 
 export const deleteProduct = (id) => {
