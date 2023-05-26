@@ -5,7 +5,7 @@ import { Column } from 'primereact/column';
 
 const Table = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { refToast, left, right, refDT, value, selection, onSelectionChange, dataKey, globalFilter, header, nombre_00, header_00, nombre_01, header_01, body, isCategory, bodyImage, fieldImage, headerImage } = props;
+  const { refToast, left, right, refDT, value, selection, onSelectionChange, dataKey,filters, globalFilterFields, filterDisplay, header, nombre_00, header_00, nombre_01, header_01, body, isCategory, bodyImage, fieldImage, headerImage } = props;
 
   const visibleColumns = [
     { field: nombre_00, header: header_00, minWidth: '12rem' },
@@ -33,7 +33,8 @@ const Table = (props) => {
         <DataTable ref={refDT} value={value} selection={selection} onSelectionChange={onSelectionChange}
           dataKey={dataKey} paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" globalFilter={globalFilter} header={header} emptyMessage="No se encontraron resultados">
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" filterDisplay={filterDisplay}
+          filters={filters} globalFilterFields={globalFilterFields} header={header} emptyMessage="No se encontraron resultados">
           <Column selectionMode="multiple" exportable={false}></Column>
           {isCategory == false && (
             <Column field={fieldImage} header={headerImage} body={bodyImage} style={{ minWidth: '7rem' }}></Column>
