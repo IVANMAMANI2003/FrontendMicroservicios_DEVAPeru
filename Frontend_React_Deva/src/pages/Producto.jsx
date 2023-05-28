@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 // Importaciones de PrimeReact
+import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -39,7 +40,11 @@ export default function Product() {
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState(null);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    nombre: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+  });
   const [modalTitle, setModalTitle] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const toast = useRef(null);
@@ -197,10 +202,10 @@ export default function Product() {
         getCategories();
         setProducts((prevCategorias) => prevCategorias.filter((c) => !ids.includes(c.id)));
         setSelectedProducts(null);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Imágenes Eliminados', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Productos Eliminados', life: 3000 });
       })
       .catch((error) => {
-        console.error('Error al eliminar las imágenes:', error);
+        console.error('Error al eliminar los productos:', error);
       });
     setDeleteProductsDialog(false);
     getProducts();
@@ -211,14 +216,14 @@ export default function Product() {
     setProduct(dataProduct);
     setSubmitted(false);
     setProductDialog(true);
-    setModalTitle("Crear Imagen");
+    setModalTitle("Crear Producto");
     setIsCreating(true);
   };
 
   const editproduct = (product) => {
     setProduct({ ...product, id: product.id, preview: product.imagen, fileName: product.file ? product.file.name : product.imagen });
     setSelectedFile(null);
-    setModalTitle('Editar Imagen');
+    setModalTitle('Editar Producto');
     setIsCreating(false);
     setProductDialog(true);
   };
@@ -281,13 +286,13 @@ export default function Product() {
     return (
       <div className="flex flex-wrap gap-2">
         <Button
-          label="New"
+          label="Nuevo"
           icon="pi pi-plus"
           severity="success"
           onClick={openNew}
         />
         <Button
-          label="Delete"
+          label="Eliminar"
           icon="pi pi-trash"
           severity="danger"
           onClick={confirmDeleteSelected}
@@ -351,14 +356,24 @@ export default function Product() {
     );
   };
 
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilter(value);
+  };
+
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-      <h4 className="m-0">Administrar Productos</h4>
+      <h4 className="m-0 text-xl">Administrar Productos</h4>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
           type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
+          value={globalFilter} onChange={onGlobalFilterChange}
           placeholder="Buscar..."
         />
       </span>
@@ -429,30 +444,32 @@ export default function Product() {
         selection={selectedProducts}
         onSelectionChange={(e) => setSelectedProducts(e.value)}
         dataKey="id"
-        globalFilter={globalFilter}
+        filters={filters} filterDisplay="menu" globalFilterFields={['nombre']}
         header={header}
         fieldImage="imagen" headerImage="Imagen"
         bodyImage={imageBodyTemplate}
         nombre_00="nombre"
         header_00="Nombre"
-        nombre_01="precio"
-        header_01="Precio"
-        nombre_02="stock"
-        header_02="Stock"
-        nombre_03="detalle"
-        header_03="Detalle"
-        nombre_04="material"
-        header_04="Material"
-        nombre_05="largo"
-        header_05="Largo"
-        nombre_06="ancho"
-        header_06="Ancho"
-        nombre_07="alto"
-        header_07="Alto"
-        nombre_08="estado"
-        header_08="Estado"
-        nombre_09="categoria.nombre"
-        header_09="Categoria"
+        nombre_01="categoria.nombre"
+        header_01="Categoria"
+        nombre_02="precio"
+        header_02="Precio"
+        nombre_03="stock"
+        header_03="Stock"
+        nombre_04="detalle"
+        header_04="Detalle"
+        nombre_05="material"
+        header_05="Material"
+        nombre_06="largo"
+        header_06="Largo"
+        nombre_07="ancho"
+        header_07="Ancho"
+        nombre_08="alto"
+        header_08="Alto"
+        nombre_09="estado"
+        header_09="Estado"
+        fieldTimeC="fechaCreacion"
+        headerTimeC="Creado"
         body={actionBodyTemplate}
       />
       {/** Modal de CREAR y ACTUALIZAR */}

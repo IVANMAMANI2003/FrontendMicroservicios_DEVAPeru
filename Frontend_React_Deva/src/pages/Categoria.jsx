@@ -34,7 +34,7 @@ export default function Category() {
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     nombre: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-});
+  });
   const [modalTitle, setModalTitle] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const toast = useRef(null);
@@ -136,7 +136,7 @@ export default function Category() {
     setCategory(dataCategory);
     setSubmitted(false);
     setCategoryDialog(true);
-    setModalTitle("Crear Categoria");
+    setModalTitle("Crear Categoría");
     setIsCreating(true);
   };
 
@@ -144,7 +144,7 @@ export default function Category() {
     setCategory({ ...category });
     setSubmitted(false);
     setCategoryDialog(true);
-    setModalTitle("Editar category");
+    setModalTitle("Editar Categoría");
     setIsCreating(false);
   };
 
@@ -195,13 +195,13 @@ export default function Category() {
     return (
       <div className="flex flex-wrap gap-2">
         <Button
-          label="New"
+          label="Nuevo"
           icon="pi pi-plus"
           severity="success"
           onClick={openNew}
         />
         <Button
-          label="Delete"
+          label="Eliminar"
           icon="pi pi-trash"
           severity="danger"
           onClick={confirmDeleteSelected}
@@ -275,11 +275,11 @@ export default function Category() {
 
     setFilters(_filters);
     setGlobalFilter(value);
-};
+  };
 
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-      <h4 className="m-0">Administrar Categorías</h4>
+      <h4 className="m-0 text-xl">Administrar Categorías</h4>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
