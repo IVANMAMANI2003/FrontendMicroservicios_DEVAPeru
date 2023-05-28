@@ -15,7 +15,7 @@ import {
     deleteSelectedMensaje,
 } from "../services/MensajeService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
-import { DialogCreateUpdate } from "../components/Dialog";
+import { DialogCreateUpdate } from "../components/DialogMensaje";
 export default function mensaje() {
     let dataMensaje = {
       id: null,
@@ -50,6 +50,40 @@ export default function mensaje() {
             console.log(error);
           });
       };
+      const validate = (data) => {
+        let errors = {};
+
+        if (!data.name) {
+            errors.name = 'Name is required.';
+        }
+
+        if (!data.email) {
+            errors.email = 'Email is required.';
+        }
+        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)) {
+            errors.email = 'Invalid email address. E.g. example@email.com';
+        }
+
+        if (!data.password) {
+            errors.password = 'Password is required.';
+        }
+
+        if (!data.accept) {
+            errors.accept = 'You need to agree to the terms and conditions.';
+        }
+
+        return errors;
+    };
+    const onSubmit = (data, form) => {
+      setFormData(data);
+      setShowMessage(true);
+
+      form.restart();
+  };
+  const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
+  const getFormErrorMessage = (meta) => {
+      return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
+  };
       const saveUpdate = () => {
         setSubmitted(true);
     
@@ -409,7 +443,9 @@ export default function mensaje() {
         msgRequired_04={
           submitted &&
           !mensaje.asunto && <small className="p-error">El asunto es obligatorio.</small>
+          
         }
+        
       />
          {/** Modal de ELIMINAR un Mensaje */}
          <DialogDelete
@@ -437,8 +473,10 @@ export default function mensaje() {
               No podrás revertixr esto.
             </span>
           )
+          
         }
       />
+      
     </div>
   );
 }
