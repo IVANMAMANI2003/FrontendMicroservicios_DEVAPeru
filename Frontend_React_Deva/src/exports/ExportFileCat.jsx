@@ -22,7 +22,7 @@ export const exportToPdf = (categorias) => {
         body: rows,
         startY: 10,
     });
-    doc.save("categorias.pdf");
+    doc.save("categories.pdf");
 };
 
 // Exporta los datos a un archivo Excel (XLSX)
@@ -32,7 +32,7 @@ export const exportToExcel = (categorias) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Categorias');
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const categoria = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    saveAs(categoria, 'categorias.xlsx');
+    saveAs(categoria, 'categories.xlsx');
 };
 
 // Exporta los datos a un archivo CSV

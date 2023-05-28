@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 // Importaciones de PrimeReact
+import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -18,7 +19,6 @@ import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
 
 export default function Category() {
   let dataCategory = {
-    id: null,
     nombre: "",
     estado: "",
   };
@@ -30,7 +30,11 @@ export default function Category() {
   const [category, setCategory] = useState(dataCategory);
   const [selectedCategories, setSelectedCategories] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState(null);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    nombre: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+  });
   const [modalTitle, setModalTitle] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const toast = useRef(null);
@@ -132,7 +136,7 @@ export default function Category() {
     setCategory(dataCategory);
     setSubmitted(false);
     setCategoryDialog(true);
-    setModalTitle("Crear Categoria");
+    setModalTitle("Crear Categoría");
     setIsCreating(true);
   };
 
@@ -140,7 +144,7 @@ export default function Category() {
     setCategory({ ...category });
     setSubmitted(false);
     setCategoryDialog(true);
-    setModalTitle("Editar category");
+    setModalTitle("Editar Categoría");
     setIsCreating(false);
   };
 
@@ -191,13 +195,13 @@ export default function Category() {
     return (
       <div className="flex flex-wrap gap-2">
         <Button
-          label="New"
+          label="Nuevo"
           icon="pi pi-plus"
           severity="success"
           onClick={openNew}
         />
         <Button
-          label="Delete"
+          label="Eliminar"
           icon="pi pi-trash"
           severity="danger"
           onClick={confirmDeleteSelected}
@@ -263,14 +267,24 @@ export default function Category() {
     );
   };
 
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilter(value);
+  };
+
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-      <h4 className="m-0">Administrar Categorías</h4>
+      <h4 className="m-0 text-xl">Administrar Categorías</h4>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
           type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
+          value={globalFilter} onChange={onGlobalFilterChange}
           placeholder="Buscar..."
         />
       </span>
@@ -337,7 +351,7 @@ export default function Category() {
         selection={selectedCategories}
         onSelectionChange={(e) => setSelectedCategories(e.value)}
         dataKey="id"
-        globalFilter={globalFilter}
+        filters={filters} filterDisplay="menu" globalFilterFields={['nombre']}
         header={header}
         nombre_00="nombre"
         header_00="Nombre"

@@ -5,11 +5,11 @@ import { Column } from 'primereact/column';
 
 const Table = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { refToast, left, right, refDT, value, selection, onSelectionChange, dataKey, globalFilter, header, nombre_00, header_00, nombre_01, header_01, body, isCategory } = props;
+  const { refToast, left, right, refDT, value, selection, onSelectionChange, dataKey,filters, globalFilterFields, filterDisplay, header, nombre_00, header_00, nombre_01, header_01, body, isCategory, bodyImage, fieldImage, headerImage } = props;
 
   const visibleColumns = [
-    { field: nombre_00, header: header_00, minWidth: '12rem' },
-    { field: nombre_01, header: header_01, minWidth: '12rem' },
+    { field: nombre_00, header: header_00, minWidth: '7rem' },
+    { field: nombre_01, header: header_01, minWidth: '7rem' },
   ];
 
   if (!isCategory) {
@@ -21,7 +21,7 @@ const Table = (props) => {
       const headerName = props[`header_0${i}`];
 
       if (fieldName && headerName) {
-        visibleColumns.push({ field: fieldName, header: headerName, minWidth: '12rem' });
+        visibleColumns.push({ field: fieldName, header: headerName, minWidth: '5rem' });
       }
     }
   }
@@ -33,8 +33,13 @@ const Table = (props) => {
         <DataTable ref={refDT} value={value} selection={selection} onSelectionChange={onSelectionChange}
           dataKey={dataKey} paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" globalFilter={globalFilter} header={header} emptyMessage="No se encontraron resultados">
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" filterDisplay={filterDisplay}
+          filters={filters} globalFilterFields={globalFilterFields} header={header} emptyMessage="No se encontraron resultados">
           <Column selectionMode="multiple" exportable={false}></Column>
+          {isCategory == false && (
+            <Column field={fieldImage} header={headerImage} body={bodyImage} style={{ minWidth: '7rem' }}></Column>
+          )}
+
           {visibleColumns.map((column, index) => (
             <Column
               key={index}
@@ -44,6 +49,8 @@ const Table = (props) => {
               style={{ minWidth: column.minWidth }}
             />
           ))}
+          <Column field='fechaCreacion' header='Creado' style={{ minWidth: '7rem' }}></Column>
+          <Column field='fechaActualizacion' header='Actualizado' style={{ minWidth: '7rem' }}></Column>
           <Column body={body} exportable={false} style={{ minWidth: '12rem' }}></Column>
         </DataTable>
       </div>
