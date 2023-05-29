@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 import Table from "../components/Table";
-import { DialogCreateUpdate, DialogDelete } from "../components/Dialog";
+import { DialogCreateUpdate, DialogDelete } from "../components/DialogCatalogo";
 import * as ProductoService from "../services/ProductoService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFilePro";
 import { getCategoryList } from "../services/CategoriaService";
@@ -196,20 +196,35 @@ export default function Product() {
 
   const removeSelectedProducts = () => {
     const ids = selectedProducts.map((product) => product.id);
+    const isMultiple = selectedProducts.length > 1;
+
     ProductoService.deleteSelectedProducts(ids)
       .then(() => {
         getProducts();
         getCategories();
-        setProducts((prevCategorias) => prevCategorias.filter((c) => !ids.includes(c.id)));
-        setSelectedProducts(null);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Productos Eliminados', life: 3000 });
+        setProducts((prevProducts) => prevProducts.filter((p) => !ids.includes(p.id)));
+        setSelectedProducts([]);
+        if (isMultiple) {
+          toast.current.show({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Productos Eliminados',
+            life: 3000
+          });
+        } else {
+          toast.current.show({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Producto Eliminado',
+            life: 3000
+          });
+        }
       })
       .catch((error) => {
         console.error('Error al eliminar los productos:', error);
       });
     setDeleteProductsDialog(false);
     getProducts();
-    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Producto Eliminado', life: 3000 });
   };
 
   const openNew = () => {
@@ -474,6 +489,7 @@ export default function Product() {
       />
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate
+        width='45rem'
         isCategory={false}
         visible={productDialog}
         header={modalTitle}
@@ -613,12 +629,15 @@ export default function Product() {
           )
         }
         onChangeFile={handleFileChange} valueFile={product.fileName}
-        imagen={product.preview && (
-          <img
-            src={product.preview}
-            alt="Vista previa"
-            style={{ marginTop: "10px", maxWidth: "200px" }}
-          />
+        imagen={(
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <img
+              src={product.preview || "https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"}
+              alt="Vista previa"
+              style={{ marginTop: "10px", maxWidth: "200px" }}
+            />
+          </div>
+
         )}
       />
       {/** Modal de ELIMINAR una categoría */}

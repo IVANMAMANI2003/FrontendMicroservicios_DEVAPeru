@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 import Table from "../components/Table";
-import { DialogCreateUpdate, DialogDelete } from "../components/Dialog";
+import { DialogCreateUpdate, DialogDelete } from "../components/DialogCatalogo";
 import {
   createCategory,
   deleteCategory,
@@ -111,25 +111,37 @@ export default function Category() {
   };
 
   const removeSelectedCategories = () => {
-    const categoryIds = selectedCategories.map((category) => category.id);
-    deleteSelectedCategories(categoryIds)
+    const ids = selectedCategories.map((c) => c.id);
+    const isMultiple = selectedCategories.length > 1;
+
+    deleteSelectedCategories(ids)
       .then(() => {
-        setCategories((prevCategories) =>
-          prevCategories.filter((c) => !categoryIds.includes(c.id))
-        );
-        setSelectedCategories(null);
-        toast.current.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Categorías Eliminadas",
-          life: 3000,
-        });
         getCategories();
+        setCategories((prevCategories) =>
+          prevCategories.filter((c) => !ids.includes(c.id))
+        );
+        setSelectedCategories([]);
+        if (isMultiple) {
+          toast.current.show({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Categorías Eliminados',
+            life: 3000
+          });
+        } else {
+          toast.current.show({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Categoría Eliminado',
+            life: 3000
+          });
+        }
       })
       .catch((error) => {
         console.error("Error al eliminar las categorías:", error);
       });
     setDeleteCategoriesDialog(false);
+    getCategories();
   };
 
   const openNew = () => {
@@ -361,6 +373,7 @@ export default function Category() {
       />
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate
+        width='30rem'
         isCategory={true}
         visible={categoryDialog}
         header={modalTitle}
