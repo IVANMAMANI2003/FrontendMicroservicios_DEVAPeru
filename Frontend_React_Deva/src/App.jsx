@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import User from "./pages/Usuario";
 import Mensaje from "./pages/Mensaje";
 import newmensaje from "./pages/ReactFinalFormDemo";
+import Image from "./pages/Imagen";
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path='/' Component={Category} />
+        <Route path='/' Component={Image} />
         <Route path='/categoria' Component={Category} />
         <Route path='/producto' Component={Product} />
         <Route path='/usuario' Component={User} />
