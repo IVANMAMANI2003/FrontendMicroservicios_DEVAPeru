@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 
 export const DialogCreateUpdate = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { width, visible, header, footer, onHide, htmlFor_00, label_00, id_00, value_00, onChange_00, className_00, msgRequired_00, valueFile, imagen, onChangeFile } = props;
+  const { width, visible, header, footer, onHide, htmlFor_00, label_00, id_00, value_00, onChange_00, className_00, msgRequired_00,htmlFor_01, label_01, id_01, value_01, onChange_01, className_01, msgRequired_01, valueFile, imagen, onChangeFile } = props;
 
   const fileInputRef = React.createRef();
 
@@ -37,6 +37,19 @@ export const DialogCreateUpdate = (props) => {
           className={className_00}
         />
         {msgRequired_00}
+      </div><div className="field">
+        <label htmlFor={htmlFor_01} className="font-bold">
+          {label_01}
+        </label>
+        <InputText
+          id={id_01}
+          value={value_01}
+          onChange={onChange_01}
+          required
+          autoFocus
+          className={className_01}
+        />
+        {msgRequired_01}
       </div>
       <div className="field">
         <div className="p-field">
