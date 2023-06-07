@@ -22,6 +22,8 @@ export default function Post() {
   };
 
   const [products, setProducts] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [images, setImages] = useState([]);
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
   const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
@@ -40,8 +42,8 @@ export default function Post() {
   const dt = useRef(null);
 
   useEffect(() => {
-    getImages();
     getPosts();
+    getImages();
   }, []);
 
 
@@ -54,17 +56,18 @@ export default function Post() {
         console.log(error);
       });
   };
+
   const getImages = () => {
     ImageService.getImageList()
       .then((response) => {
-        setProducts(response.data);
+        setImages(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  /*const saveUpdate = (event) => {
+  const saveUpdate = (event) => {
     event.preventDefault();
     setSubmitted(true);
  
@@ -94,6 +97,7 @@ export default function Post() {
  
           PostService.updatePost(product.id, formData)
             .then(() => {
+              getPosts();
               getImages();
               setProductDialog(false);
               toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Imagen actualizado', life: 3000 });
@@ -114,6 +118,7 @@ export default function Post() {
         
         PostService.createPost(formData)
           .then(() => {
+            getPosts();
             getImages();
             setProductDialog(false);
             toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Imagen creado', life: 3000 });
@@ -123,127 +128,13 @@ export default function Post() {
           });
       }
     }
-  }; */
-
-  const saveUpdate = (event) => {
-    event.preventDefault();
-    setSubmitted(true);
-
-    if (product.nombre) {
-      if (product.id || isCreating === false) {
-        let hasChanges = false;
-
-        // Verificar si hay cambios en la propiedad 'type'
-        const originalProduct = products.find((img) => img.id === product.id);
-        if (product.estado !== originalProduct?.estado) {
-          hasChanges = true;
-        }
-        if (product.nombre !== originalProduct?.nombre) {
-          hasChanges = true;
-        }
-
-        if (hasChanges) {
-          const updateProduct = { ...product };
-
-          if (selectedFile) {
-            const formData = new FormData();
-            formData.append("file", selectedFile);
-
-            PostService.uploadImage(formData)
-              .then((response) => {
-                updateProduct.file = response.data;
-                updateProduct.preview = URL.createObjectURL(selectedFile);
-                updateProduct.fileName = selectedFile.name;
-                updateProduct.url = response.data.url;
-
-                PostService.updatePost(product.id, updateProduct)
-                  .then(() => {
-                    getImages();
-                    setProductDialog(false);
-                    toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Noticia actualizado', life: 3000 });
-                  })
-                  .catch((error) => {
-                    console.error("Error al actualizar la noticia:", error);
-                  });
-              })
-              .catch((error) => {
-                console.error("Error al subir la noticia:", error);
-              });
-          } else {
-            PostService.updatePost(product.id, updateProduct)
-              .then(() => {
-                getImages();
-                setProductDialog(false);
-                toast.current.show({
-                  severity: "success",
-                  summary: "Éxito",
-                  detail: "Noticia actualizada",
-                  life: 3000,
-                });
-              })
-              .catch((error) => {
-                console.error("Error al actualizar la noticia:", error);
-              });
-          }
-        } else {
-          setProductDialog(false);
-        }
-      } else {
-        const newProduct = { ...product };
-        if (selectedFile) {
-          const formData = new FormData();
-          formData.append("file", selectedFile);
-
-          ImageService.createImage(formData)
-            .then((response) => {
-              getImages();
-              newProduct.file = response.data;
-              newProduct.preview = URL.createObjectURL(selectedFile);
-              newProduct.fileName = selectedFile.name;
-
-              PostService.createPost(newProduct)
-                .then(() => {
-                  getPosts();
-                  setProductDialog(false);
-                  toast.current.show({
-                    severity: "success",
-                    summary: "Éxito",
-                    detail: "Noticia creada",
-                    life: 3000,
-                  });
-                })
-                .catch((error) => {
-                  console.error("Error al crear la noticia:", error);
-                });
-            })
-            .catch((error) => {
-              console.error("Error al subir la noticia:", error);
-            });
-        } else {
-          PostService.createPost(newProduct)
-            .then(() => {
-              getImages();
-              setProductDialog(false);
-              toast.current.show({
-                severity: "success",
-                summary: "Éxito",
-                detail: "Noticia creada",
-                life: 3000,
-              });
-            })
-            .catch((error) => {
-              console.error("Error al crear la noticia:", error);
-            });
-        }
-      }
-    }
-  };
-
+  }; 
 
   const removeProduct = () => {
     setProducts((prevProducts) => prevProducts.filter((c) => c.id !== product.id));
     PostService.deletePost(product.id)
       .then(() => {
+        getPosts();
         getImages();
       })
       .catch((error) => {
@@ -259,6 +150,7 @@ export default function Post() {
 
     PostService.deleteSelectedPosts(ids)
       .then(() => {
+        getPosts();
         getImages();
         setProducts((prevProducts) => prevProducts.filter((p) => !ids.includes(p.id)));
         setSelectedProducts([]);
@@ -294,7 +186,7 @@ export default function Post() {
   };
 
   const editproduct = (product) => {
-    setProduct({ ...product, id: product.id, preview: product.url, fileName: product.file ? product.file.name : product.url });
+    setProduct({ ...product, id: product.id, preview: product.image.url, fileName: product.file ? product.file.name : product.image.url });
     setSelectedFile(null);
     setModalTitle('Editar Imagen');
     setIsCreating(false);
@@ -501,7 +393,7 @@ export default function Post() {
   );
 
   const imageBodyTemplate = (rowData) => {
-    return <img src={rowData.url} alt="Product" className="shadow-2 border-round" style={{ width: '64px' }} />;
+    return <img src={rowData.image.url} alt="Product" className="shadow-2 border-round" style={{ width: '64px' }} />;
   };
 
   return (
@@ -519,12 +411,12 @@ export default function Post() {
         dataKey="id"
         filters={filters} filterDisplay="menu" globalFilterFields={['nombre']}
         header={header}
-        fieldImage="url" headerImage="Imagen"
+        fieldImage="image" headerImage="Imagen"
         bodyImage={imageBodyTemplate}
         nombre_00="nombre"
         header_00="Nombre"
         nombre_01="estado"
-        header_01="Estado por Id"
+        header_01="Estado"
         body={actionBodyTemplate}
       />
       {/** Modal de CREAR y ACTUALIZAR */}
