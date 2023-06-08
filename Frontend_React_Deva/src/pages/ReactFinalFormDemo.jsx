@@ -71,7 +71,18 @@ export default function  ReactFinalFormDemo(){
         setMensaje(_mensaje);
       };
     return (
-        <div>
+      
+        <div class="">
+      <div className="p-2 text-center text-5xl bg-white">
+  <div className="pr-0 sm:px-0">
+    <h1 className="text-2xl font-bold text-center  items-center  ">
+      <u>CONTÁCTANOS</u>
+    </h1>
+  </div>
+</div>
+
+
+           
       <div className="grid lg:grid-cols-1 lg:p-5 justify-center ">
         <div className="bg-white flex flex-1 items-center justify-center md:items-stretch md:justify-start">
           <div className="max-w-sm w-full lg:max-w-full lg:flex justify-center">
