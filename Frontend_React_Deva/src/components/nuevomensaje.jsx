@@ -19,8 +19,8 @@ export const DialogCreateUpdate = (props) => {
     
         <>
       
-          <div>
-            <div>
+  
+           
               <div className="field">
                 <label htmlFor={htmlFor_00} className="font-bold">
                   {label_00}
@@ -62,9 +62,9 @@ export const DialogCreateUpdate = (props) => {
                   {msgRequired_02}
                 </div>
               </div>
-            </div>
-          </div>
-          <div style={{  }}>
+
+     
+          
             <div className="field" style={{ width: '30rem' }}>
               <label htmlFor={htmlFor_03} className="font-bold">
                 {label_03}
@@ -90,10 +90,7 @@ export const DialogCreateUpdate = (props) => {
                 className={className_04}
               />
               {msgRequired_04}
-            </div>
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-        </div>
+            </div>    
         </>
 
   );
