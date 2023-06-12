@@ -15,7 +15,7 @@ import {
     deleteSelectedMensaje,
 } from "../services/MensajeService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
-import { DialogCreateUpdate } from "../components/DialogMensaje";
+import { DialogCreateUpdate } from "../components/Mensaje";
 export default function mensaje() {
     let dataMensaje = {
       id: null,
