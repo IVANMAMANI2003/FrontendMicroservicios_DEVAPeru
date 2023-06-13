@@ -6,7 +6,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 import Table from "../components/Table";
-import { DialogDelete } from "../components/Dialog";
+import { DialogDelete } from "../components/DialogDelete";
 import {
   getMensajeList,
   deleteMensaje,
@@ -57,35 +57,43 @@ export default function mensaje() {
     toast.current.show({
       severity: "success",
       summary: "Successful",
-      detail: "Usuario Eliminado",
+      detail: "Mensaje Eliminado",
       life: 3000,
     });
   };
   const removeSelectedMensajes = () => {
     const mensajeIds = selectedMensajes.map((mensaje) => mensaje.id);
+    const isMultiple = selectedMensajes.length > 1;
+
     deleteSelectedMensaje(mensajeIds)
       .then(() => {
-        setMensaje((prevmensajes) =>
+        getMensajes();
+        setMensajes((prevmensajes) =>
           prevmensajes.filter((c) => !mensajeIds.includes(c.id))
         );
-        setSelectedMensajes(null);
-        toast.current.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Usuarios Eliminados",
-          life: 3000,
-        });
-        getMensajes();
+        setSelectedMensajes([]);
+        if (isMultiple) {
+          toast.current.show({
+            severity: "success",
+            summary: "Successful",
+            detail: "Mensajes Eliminados",
+            life: 3000,
+          });
+        } else {
+          toast.current.show({
+            severity: "success",
+            summary: "Successful",
+            detail: "Mensaje Eliminado",
+            life: 3000,
+          });
+        }
       })
       .catch((error) => {
-        console.error("Error al eliminar las usuarios:", error);
+        console.error("Error al eliminar los mensajes:", error);
       });
     setDeleteMensajesDialog(false);
   };
 
-  const editmensaje = (mensaje) => {
-    setMensaje({ ...mensaje });
-  };
   const confirmDeleteMensaje = (mensaje) => {
     setMensaje(mensaje);
     setDeleteMensajeDialog(true);
@@ -165,13 +173,6 @@ export default function mensaje() {
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
-        <Button
-          icon="pi pi-pencil"
-          rounded
-          outlined
-          className="mr-2"
-          onClick={() => editmensaje(rowData)}
-        />
         <Button
           icon="pi pi-trash"
           rounded

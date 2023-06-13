@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 
 // Importaciones de PrimeReact
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 import Table from "../components/Table";
-import { DialogCreateUpdate, DialogDelete } from "../components/DialogCatalogo";
+import { DialogCreateUpdate } from "../components/DialogCatalogo";
+import { DialogDelete } from "../components/DialogDelete";
 import {
   createCategory,
   deleteCategory,
@@ -33,7 +34,10 @@ export default function Category() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    nombre: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    nombre: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+    },
   });
   const [modalTitle, setModalTitle] = useState("");
   const [isCreating, setIsCreating] = useState(false);
@@ -123,17 +127,17 @@ export default function Category() {
         setSelectedCategories([]);
         if (isMultiple) {
           toast.current.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Categorías Eliminados',
-            life: 3000
+            severity: "success",
+            summary: "Successful",
+            detail: "Categorías Eliminados",
+            life: 3000,
           });
         } else {
           toast.current.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Categoría Eliminado',
-            life: 3000
+            severity: "success",
+            summary: "Successful",
+            detail: "Categoría Eliminado",
+            life: 3000,
           });
         }
       })
@@ -283,7 +287,7 @@ export default function Category() {
     const value = e.target.value;
     let _filters = { ...filters };
 
-    _filters['global'].value = value;
+    _filters["global"].value = value;
 
     setFilters(_filters);
     setGlobalFilter(value);
@@ -296,7 +300,8 @@ export default function Category() {
         <i className="pi pi-search" />
         <InputText
           type="search"
-          value={globalFilter} onChange={onGlobalFilterChange}
+          value={globalFilter}
+          onChange={onGlobalFilterChange}
           placeholder="Buscar..."
         />
       </span>
@@ -363,7 +368,9 @@ export default function Category() {
         selection={selectedCategories}
         onSelectionChange={(e) => setSelectedCategories(e.value)}
         dataKey="id"
-        filters={filters} filterDisplay="menu" globalFilterFields={['nombre']}
+        filters={filters}
+        filterDisplay="menu"
+        globalFilterFields={["nombre"]}
         header={header}
         nombre_00="nombre"
         header_00="Nombre"
@@ -373,7 +380,7 @@ export default function Category() {
       />
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate
-        width='30rem'
+        width="30rem"
         isCategory={true}
         visible={categoryDialog}
         header={modalTitle}

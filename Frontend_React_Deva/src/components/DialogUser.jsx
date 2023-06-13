@@ -61,16 +61,3 @@ export const DialogCreateUpdate = (props) => {
     </Dialog>
   );
 };
-
-export const DialogDelete = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { visible, footer, onHide, msgDialogModal } = props;
-  return (
-    <Dialog visible={visible} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={footer} onHide={onHide}>
-      <div className="confirmation-content">
-        <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-        {msgDialogModal}
-      </div>
-    </Dialog>
-  )
-}
