@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from "react";
 
 // Importaciones de PrimeReact
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -11,6 +12,7 @@ import { DialogCreateUpdate, DialogDelete } from "../components/DialogPost";
 import * as ImageService from "../services/ImagenService";
 import * as PostService from "../services/PostService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFilePro";
+import { Carousel } from "primereact/carousel";
 
 export default function Post() {
   let dataPost = {
@@ -29,12 +31,16 @@ export default function Post() {
   const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
   const [product, setProduct] = useState(dataPost);
   const [selectedProducts, setSelectedProducts] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState([]);
+  const [uploadClicked, setUploadClicked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    nombre: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    nombre: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+    },
   });
   const [modalTitle, setModalTitle] = useState("");
   const [isCreating, setIsCreating] = useState(false);
@@ -45,7 +51,6 @@ export default function Post() {
     getPosts();
     getImages();
   }, []);
-
 
   const getPosts = () => {
     PostService.getPostList()
@@ -70,12 +75,12 @@ export default function Post() {
   const saveUpdate = (event) => {
     event.preventDefault();
     setSubmitted(true);
- 
+
     if (product.nombre) {
       if (product.id || isCreating === false) {
         const formData = new FormData();
         let hasChanges = false;
- 
+
         // Verificar si hay cambios en la propiedad 'type'
         const originalProduct = products.find((img) => img.id === product.id);
         if (product.estado !== originalProduct?.estado) {
@@ -86,21 +91,25 @@ export default function Post() {
           formData.append("nombre", product.nombre);
           hasChanges = true;
         }
- 
+
         // Verificar si hay cambios en el archivo seleccionado
         if (selectedFile) {
           formData.append("file", selectedFile);
           hasChanges = true;
         }
- 
+
         if (hasChanges) {
- 
           PostService.updatePost(product.id, formData)
             .then(() => {
               getPosts();
               getImages();
               setProductDialog(false);
-              toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Imagen actualizado', life: 3000 });
+              toast.current.show({
+                severity: "success",
+                summary: "Éxito",
+                detail: "Imagen actualizado",
+                life: 3000,
+              });
             })
             .catch((error) => {
               console.error("Error al actualizar la imagen:", error);
@@ -109,39 +118,57 @@ export default function Post() {
           setProductDialog(false);
         }
       } else {
-        const formData = new FormData();
-        formData.append("nombre", product.nombre);
-        formData.append("estado", product.estado);
-        if (selectedFile) {
-          formData.append("file", selectedFile);
-        }
-        
-        PostService.createPost(formData)
-          .then(() => {
-            getPosts();
-            getImages();
-            setProductDialog(false);
-            toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Imagen creado', life: 3000 });
-          })
-          .catch((error) => {
-            console.error("Error al crear al imagen:", error);
+        if (uploadClicked) {
+          const formData = new FormData();
+          formData.append("nombre", product.nombre);
+          formData.append("estado", product.estado);
+          selectedFile.forEach((file) => {
+            formData.append("file", file);
           });
+
+          PostService.createPost(formData)
+            .then(() => {
+              getPosts();
+              getImages();
+              setProductDialog(false);
+              toast.current.show({
+                severity: "success",
+                summary: "Éxito",
+                detail: "Imagen creado",
+                life: 3000,
+              });
+            })
+            .catch((error) => {
+              console.error("Error al crear al imagen:", error);
+            });
+        }
       }
     }
-  }; 
+  };
 
   const removeProduct = () => {
-    setProducts((prevProducts) => prevProducts.filter((c) => c.id !== product.id));
-    PostService.deletePost(product.id)
-      .then(() => {
-        getPosts();
-        getImages();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const imageableId = product.imageableId; // Obtener el imageable_id del producto actual
+
+    setProducts((prevProducts) =>
+      prevProducts.filter((p) => p.imageableId !== imageableId)
+    );
+
+    // Eliminar las imágenes con el mismo imageable_id
+    const filteredImages = images.filter(
+      (image) => image.imageableId !== imageableId
+    );
+
+    // Lógica adicional para eliminar las imágenes en el servidor o hacer otras acciones necesarias
+
+    setImages(filteredImages); // Actualizar el estado de las imágenes
+
     setDeleteProductDialog(false);
-    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Imagen Eliminado', life: 3000 });
+    toast.current.show({
+      severity: "success",
+      summary: "Successful",
+      detail: "Imagen Eliminado",
+      life: 3000,
+    });
   };
 
   const removeSelectedProducts = () => {
@@ -152,26 +179,28 @@ export default function Post() {
       .then(() => {
         getPosts();
         getImages();
-        setProducts((prevProducts) => prevProducts.filter((p) => !ids.includes(p.id)));
+        setProducts((prevProducts) =>
+          prevProducts.filter((p) => !ids.includes(p.id))
+        );
         setSelectedProducts([]);
         if (isMultiple) {
           toast.current.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Imágenes Eliminados',
-            life: 3000
+            severity: "success",
+            summary: "Successful",
+            detail: "Imágenes Eliminados",
+            life: 3000,
           });
         } else {
           toast.current.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Imagen Eliminado',
-            life: 3000
+            severity: "success",
+            summary: "Successful",
+            detail: "Imagen Eliminado",
+            life: 3000,
           });
         }
       })
       .catch((error) => {
-        console.error('Error al eliminar las imágenes:', error);
+        console.error("Error al eliminar las imágenes:", error);
       });
     setDeleteProductsDialog(false);
     getImages();
@@ -186,9 +215,14 @@ export default function Post() {
   };
 
   const editproduct = (product) => {
-    setProduct({ ...product, id: product.id, preview: product.image.url, fileName: product.file ? product.file.name : product.image.url });
+    setProduct({
+      ...product,
+      id: product.id,
+      preview: product.image.url,
+      fileName: product.file ? product.file.name : product.image.url,
+    });
     setSelectedFile(null);
-    setModalTitle('Editar Imagen');
+    setModalTitle("Editar Imagen");
     setIsCreating(false);
     setProductDialog(true);
   };
@@ -228,7 +262,7 @@ export default function Post() {
   };
 
   const onInputChange = (e, name) => {
-    const val = e.target.value || '';
+    const val = e.target.value || "";
     setProduct((prevImage) => ({
       ...prevImage,
       [name]: val,
@@ -236,7 +270,7 @@ export default function Post() {
   };
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
+    const file = event.files[0];
     const preview = URL.createObjectURL(file);
     setSelectedFile(file);
     setProduct((prevImage) => ({
@@ -325,7 +359,7 @@ export default function Post() {
     const value = e.target.value;
     let _filters = { ...filters };
 
-    _filters['global'].value = value;
+    _filters["global"].value = value;
 
     setFilters(_filters);
     setGlobalFilter(value);
@@ -338,7 +372,8 @@ export default function Post() {
         <i className="pi pi-search" />
         <InputText
           type="search"
-          value={globalFilter} onChange={onGlobalFilterChange}
+          value={globalFilter}
+          onChange={onGlobalFilterChange}
           placeholder="Buscar..."
         />
       </span>
@@ -392,8 +427,65 @@ export default function Post() {
     </React.Fragment>
   );
 
-  const imageBodyTemplate = (rowData) => {
-    return <img src={rowData.image.url} alt="Product" className="shadow-2 border-round" style={{ width: '64px' }} />;
+  const imageBodyTemplate = () => {
+    return <ImageSlider images={images} />;
+  };
+
+  const handleFileUpload = (event) => {
+    const files = event.files;
+    setSelectedFile(Array.from(files));
+    setUploadClicked(true);
+  };
+
+  const handleClear = () => {
+    setSelectedFile([]);
+  };
+
+  const ImageSlider = ({ images }) => {
+    const groupedImages = images.reduce((groups, image) => {
+      const imageableId = image.imageableId;
+      if (!groups[imageableId]) {
+        groups[imageableId] = [];
+      }
+      groups[imageableId].push(image);
+      return groups;
+    }, {});
+
+    const imageableIds = Object.keys(groupedImages);
+
+    const carouselSettings = {
+      circular: true,
+      autoplayInterval: 3000,
+      numVisible: 1,
+      numScroll: 1,
+      showIndicators: false,
+    };
+
+    const productTemplate = (image) => {
+      return (
+        <div className="product-item">
+          <div className="product-item-content">
+            <div>
+              <img src={image.url} alt="Product" className="product-image" />
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    return (
+      <div className="carousel-demo">
+        {imageableIds.map((imageableId) => (
+          <div className="cards" key={imageableId}>
+            <Carousel
+              value={groupedImages[imageableId]}
+              {...carouselSettings}
+              itemTemplate={productTemplate}
+            />
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -409,9 +501,12 @@ export default function Post() {
         selection={selectedProducts}
         onSelectionChange={(e) => setSelectedProducts(e.value)}
         dataKey="id"
-        filters={filters} filterDisplay="menu" globalFilterFields={['nombre']}
+        filters={filters}
+        filterDisplay="menu"
+        globalFilterFields={["nombre"]}
         header={header}
-        fieldImage="image" headerImage="Imagen"
+        fieldImage="image"
+        headerImage="Imagen"
         bodyImage={imageBodyTemplate}
         nombre_00="nombre"
         header_00="Nombre"
@@ -421,7 +516,7 @@ export default function Post() {
       />
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate
-        width='45rem'
+        width="45rem"
         isCategory={false}
         visible={productDialog}
         header={modalTitle}
@@ -451,17 +546,24 @@ export default function Post() {
             <small className="p-error">El nombre es obligatorio.</small>
           )
         }
-        onChangeFile={handleFileChange} valueFile={product.fileName}
-        imagen={(
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <img
-              src={product.preview || "https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"}
-              alt="Vista previa"
-              style={{ marginTop: "10px", maxWidth: "200px" }}
-            />
-          </div>
-
-        )}
+        uploadHandler={handleFileUpload}
+        onChangeFile={handleFileChange}
+        imagen={
+          selectedFile &&
+          Array.isArray(selectedFile) &&
+          selectedFile.map((file, index) => <div key={index}>{file.name}</div>)
+        }
+        emptyTemplate={
+          <img
+            src={
+              product.preview ||
+              "https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
+            }
+            alt="Vista previa"
+            style={{ marginTop: "10px", maxWidth: "200px" }}
+          />
+        }
+        onClearFile={handleClear}
       />
       {/** Modal de ELIMINAR una categoría */}
       <DialogDelete
