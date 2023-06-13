@@ -2,11 +2,11 @@ import { useState } from "react";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import "jspdf-autotable";
-import { CreateUpdate } from "../components/FormMensaje";
-import { createMensaje } from "../services/MensajeService";
+import { CreateUpdate } from "../../components/FormMensaje";
+import { createMensaje } from "../../services/MensajeService";
 import { useRef } from "react";
 
-export default function ReactFinalFormDemo() {
+export default function Message() {
   let dataMensaje = {
     id: null,
     nombre: "",
@@ -17,10 +17,30 @@ export default function ReactFinalFormDemo() {
   };
   const [mensaje, setMensaje] = useState(dataMensaje);
   const [submitted, setSubmitted] = useState(false);
+  const toastComponentRef = useRef(null);
   const toast = useRef(null);
 
   const saveUpdate = () => {
     setSubmitted(true);
+    if (
+      !mensaje.nombre ||
+      !mensaje.correo ||
+      !mensaje.fecha ||
+      !mensaje.telefono ||
+      !mensaje.asunto
+    ) {
+      console.error("Campos vacíos");
+      toast.current.show({
+        severity: "success",
+        summary: "Éxito",
+        detail: "Completa los campos",
+        life: 3000,
+      });
+
+      return;
+    }
+    toast.current = toastComponentRef.current;
+
     createMensaje(mensaje)
       .then(() => {
         toast.current.show({
@@ -44,11 +64,16 @@ export default function ReactFinalFormDemo() {
 
     setMensaje(_mensaje);
   };
+
+  const isFieldInvalid = (field) => {
+    return submitted && !mensaje[field];
+  };
+
   return (
     <div>
-      <div className="p-2  text-center text-5xl bg-white  md:px-10 px-5 bg-white md:flex-row lg:max-w-full md:max-w-full text-justify justify-between">
+      <div className="p-2 text-5xl bg-white md:px-10 px-5 md:flex-row lg:max-w-full md:max-w-full text-justify justify-between">
         <div className="pr-0 sm:px-0">
-          <h1 className="text-2xl font-bold text-center  items-center  ">
+          <h1 className="text-2xl font-bold text-center items-center">
             <u>CONTÁCTANOS</u>
           </h1>
         </div>
@@ -56,7 +81,7 @@ export default function ReactFinalFormDemo() {
       <div className="mt-3">
         <div className="bg-white flex flex-1 items-center justify-center md:items-stretch md:justify-start">
           <div className="max-w-sm w-full lg:max-w-full lg:flex justify-center">
-            <div className="rounded-xl shadow-xl focus:ring-indigo-400 sm:text-sm  m-6">
+            <div className="rounded-xl shadow-xl focus:ring-indigo-400 sm:text-sm m-6">
               <div className="flex flex-col items-center text-left">
                 <span className="my-2 font-bold m-3">
                   <ion-icon name="location-outline"></ion-icon>
@@ -99,11 +124,10 @@ export default function ReactFinalFormDemo() {
                 value_00={mensaje.nombre}
                 onChange_00={(e) => onInputChange(e, "nombre")}
                 className_00={classNames({
-                  "p-invalid": submitted && !mensaje.nombre,
+                  "p-invalid": isFieldInvalid("nombre"),
                 })}
                 msgRequired_00={
-                  submitted &&
-                  !mensaje.nombre && (
+                  isFieldInvalid("nombre") && (
                     <small className="p-error">El nombre es obligatorio.</small>
                   )
                 }
@@ -113,11 +137,10 @@ export default function ReactFinalFormDemo() {
                 value_01={mensaje.correo}
                 onChange_01={(e) => onInputChange(e, "correo")}
                 className_01={classNames({
-                  "p-invalid": submitted && !mensaje.correo,
+                  "p-invalid": isFieldInvalid("correo"),
                 })}
                 msgRequired_01={
-                  submitted &&
-                  !mensaje.correo && (
+                  isFieldInvalid("correo") && (
                     <small className="p-error">El correo es obligatorio.</small>
                   )
                 }
@@ -127,12 +150,11 @@ export default function ReactFinalFormDemo() {
                 value_02={mensaje.fecha}
                 onChange_02={(e) => onInputChange(e, "fecha")}
                 className_02={classNames({
-                  "p-invalid": submitted && !mensaje.fecha,
+                  "p-invalid": isFieldInvalid("fecha"),
                 })}
                 msgRequired_02={
-                  submitted &&
-                  !mensaje.fecha && (
-                    <small className="p-error">El fecha es obligatorio.</small>
+                  isFieldInvalid("fecha") && (
+                    <small className="p-error">La fecha es obligatoria.</small>
                   )
                 }
                 htmlFor_03="telefono"
@@ -141,13 +163,12 @@ export default function ReactFinalFormDemo() {
                 value_03={mensaje.telefono}
                 onChange_03={(e) => onInputChange(e, "telefono")}
                 className_03={classNames({
-                  "p-invalid": submitted && !mensaje.telefono,
+                  "p-invalid": isFieldInvalid("telefono"),
                 })}
                 msgRequired_03={
-                  submitted &&
-                  !mensaje.telefono && (
+                  isFieldInvalid("telefono") && (
                     <small className="p-error">
-                      La telefono es obligatorio.
+                      El teléfono es obligatorio.
                     </small>
                   )
                 }
@@ -157,11 +178,10 @@ export default function ReactFinalFormDemo() {
                 value_04={mensaje.asunto}
                 onChange_04={(e) => onInputChange(e, "asunto")}
                 className_04={classNames({
-                  "p-invalid": submitted && !mensaje.asunto,
+                  "p-invalid": isFieldInvalid("asunto"),
                 })}
                 msgRequired_04={
-                  submitted &&
-                  !mensaje.asunto && (
+                  isFieldInvalid("asunto") && (
                     <small className="p-error">El asunto es obligatorio.</small>
                   )
                 }

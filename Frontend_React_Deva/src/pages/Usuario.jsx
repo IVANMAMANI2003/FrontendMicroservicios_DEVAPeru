@@ -6,14 +6,8 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 import Table from "../components/Table";
-import { DialogDelete } from "../components/Dialog";
-import {
-  createUser,
-  deleteUser,
-  deleteSelectedUsers,
-  getUserList,
-  updateUser,
-} from "../services/UsuarioService";
+import { DialogDelete } from "../components/DialogDelete";
+import * as UsuarioService from "../services/UsuarioService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
 import { DialogCreateUpdate } from "../components/DialogUser";
 
@@ -45,7 +39,7 @@ export default function User() {
   }, []);
 
   const getUsers = () => {
-    getUserList()
+    UsuarioService.getUserList()
       .then((response) => {
         setUsers(response.data);
       })
@@ -59,7 +53,7 @@ export default function User() {
 
     if (user.nombre && user.dni) {
       if (user.id || isCreating === false) {
-        updateUser(user)
+        UsuarioService.updateUser(user)
           .then(() => {
             getUsers();
             setUserDialog(false);
@@ -74,7 +68,7 @@ export default function User() {
             console.error("Error al actualizar el usuario:", error);
           });
       } else {
-        createUser(user)
+        UsuarioService.createUser(user)
           .then(() => {
             getUsers();
             setUserDialog(false);
@@ -94,7 +88,7 @@ export default function User() {
   };
 
   const removeUser = () => {
-    deleteUser(user.id)
+    UsuarioService.deleteUser(user.id)
       .then(() => {
         getUsers();
       })
@@ -112,7 +106,7 @@ export default function User() {
 
   const removeSelectedUsers = () => {
     const userIds = selectedUsers.map((user) => user.id);
-    deleteSelectedUsers(userIds)
+    UsuarioService.deleteSelectedUsers(userIds)
       .then(() => {
         setUsers((prevusers) =>
           prevusers.filter((c) => !userIds.includes(c.id))
@@ -440,8 +434,8 @@ export default function User() {
         msgDialogModal={
           user && (
             <span>
-              ¿Estás seguro de que desea eliminar los usuarios seleccionados?
-              No podrás revertir esto.
+              ¿Estás seguro de que desea eliminar los usuarios seleccionados? No
+              podrás revertir esto.
             </span>
           )
         }

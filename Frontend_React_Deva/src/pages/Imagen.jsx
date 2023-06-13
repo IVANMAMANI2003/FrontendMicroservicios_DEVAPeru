@@ -7,7 +7,8 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 import Table from "../components/Table";
-import { DialogCreateUpdate, DialogDelete } from "../components/DialogImagen";
+import { DialogCreateUpdate } from "../components/DialogImagen";
+import { DialogDelete } from "../components/DialogDelete";
 import * as ImageService from "../services/ImagenService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFilePro";
 
