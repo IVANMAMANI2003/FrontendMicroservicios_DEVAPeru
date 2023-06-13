@@ -309,6 +309,7 @@ export default function Post() {
           label="CSV"
           type="button"
           icon="pi pi-file"
+          severity="info"
           rounded
           onClick={exportCSV}
           data-pr-tooltip="CSV"

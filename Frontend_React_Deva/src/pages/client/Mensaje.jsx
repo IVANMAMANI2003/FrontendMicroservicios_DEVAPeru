@@ -71,7 +71,7 @@ export default function Message() {
 
   return (
     <div>
-      <div className="p-2 text-center text-5xl bg-white md:px-10 px-5 bg-white md:flex-row lg:max-w-full md:max-w-full text-justify justify-between">
+      <div className="p-2 text-5xl bg-white md:px-10 px-5 md:flex-row lg:max-w-full md:max-w-full text-justify justify-between">
         <div className="pr-0 sm:px-0">
           <h1 className="text-2xl font-bold text-center items-center">
             <u>CONTÁCTANOS</u>

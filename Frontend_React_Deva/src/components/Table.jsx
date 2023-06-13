@@ -28,7 +28,7 @@ const Table = (props) => {
   return (
     <>
       <Toast ref={refToast} />
-      <div className="card" style={{ padding: 15 }}>
+      <div className="card shadow-lg p-4">
         <Toolbar className="mb-4" left={left} right={right}></Toolbar>
         <DataTable ref={refDT} value={value} selection={selection} onSelectionChange={onSelectionChange}
           dataKey={dataKey} paginator rows={5} rowsPerPageOptions={[5, 10, 25]}

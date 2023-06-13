@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Navbar from "./components/Navbar";
 import Category from "./pages/Categoria";
 import Product from "./pages/Producto";
@@ -6,11 +7,13 @@ import User from "./pages/Usuario";
 import Mensaje from "./pages/Mensaje";
 import Post from "./pages/Post";
 import Message from "./pages/client/Mensaje";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
     <>
-      <Navbar />
+      <Sidebar></Sidebar>
+      {/* <Navbar />
       <Routes>
         <Route path='/' Component={Post} />
         <Route path='/categoria' Component={Category} />
@@ -18,9 +21,11 @@ function App() {
         <Route path='/usuario' Component={User} />
         <Route path='/mensaje' Component={Mensaje} />
         <Route path='/newmensaje' Component={Message} />
-      </Routes>
+        </Routes>
+        <Route path='/newmensaje' Component={newmensaje} />
+      </Routes> */}
     </>
-  )
+  );
 }
 
 export default App;

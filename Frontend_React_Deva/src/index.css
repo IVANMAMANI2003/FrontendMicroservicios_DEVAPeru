@@ -1,3 +1,7 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 html {
   font-size: 14px;
 }
@@ -5,9 +9,8 @@ html {
 body {
   font-family: var(--font-family);
   font-weight: normal;
-  background: var(--surface-ground);
+  background: #efeff0;
   color: var(--text-color);
-  padding: 1rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -784,4 +787,27 @@ img.flag {
 }
 .flag-zw {
   background-position: 0 100%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #a3a3a3;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #737373;
 }
