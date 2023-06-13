@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 //import { creamensaje } from "../components/Mensaje";
-import { DialogCreateUpdate } from "../components/nuevomensaje"
+import { CreateUpdate } from "../components/nuevomensaje"
 
 import {
   createMensaje,
@@ -114,74 +114,73 @@ export default function ReactFinalFormDemo() {
                 </div>
               </div>
             </div>
-            <DialogCreateUpdate
-              width='30rem'
-              ismensaje={true}
-              header={modalTitle}
-              onHide={hideDialog}
-              htmlFor_00="nombre"
-              label_00="Nombre"
-              id_00="nombre"
-              value_00={mensaje.nombre}
-              onChange_00={(e) => onInputChange(e, "nombre")}
-              className_00={classNames({ "p-invalid": submitted && !mensaje.nombre })}
-              msgRequired_00={
-                submitted &&
-                !mensaje.nombre && (
-                  <small className="p-error">El nombre es obligatorio.</small>
-                )
-              }
-              htmlFor_01="correo"
-              label_01="Correo"
-              id_01="correo"
-              value_01={mensaje.correo}
-              onChange_01={(e) => onInputChange(e, "correo")}
-              className_01={classNames({ "p-invalid": submitted && !mensaje.correo })}
-              msgRequired_01={
-                submitted &&
-                !mensaje.correo && <small className="p-error">El correo es obligatorio.</small>
-              }
-              htmlFor_02="fecha"
-              label_02="Fecha"
-              id_02="fecha"
-              value_02={mensaje.fecha}
-              onChange_02={(e) => onInputChange(e, "fecha")}
-              className_02={classNames({ "p-invalid": submitted && !mensaje.fecha })}
-              msgRequired_02={
-                submitted &&
-                !mensaje.fecha && (
-                  <small className="p-error">El fecha es obligatorio.</small>
-                )
-              }
-              htmlFor_03="telefono"
-              label_03="Telefono"
-              id_03="telefono"
-              value_03={mensaje.telefono}
-              onChange_03={(e) => onInputChange(e, "telefono")}
-              className_03={classNames({
-                "p-invalid": submitted && !mensaje.telefono,
-              })}
-              msgRequired_03={
-                submitted &&
-                !mensaje.telefono && (
-                  <small className="p-error">La telefono es obligatorio.</small>
-                )
-              }
-              htmlFor_04="asunto"
-              label_04="Asunto"
-              id_04="asunto"
-              value_04={mensaje.asunto}
-              onChange_04={(e) => onInputChange(e, "asunto")}
-              className_04={classNames({ "p-invalid": submitted && !mensaje.asunto })}
-              msgRequired_04={
-                submitted &&
-                !mensaje.asunto && <small className="p-error">El asunto es obligatorio.</small>
+            <div className="order-last w-full">
+              <CreateUpdate
+                width='30rem'
+                ismensaje={true}
+                header={modalTitle}
+                onHide={hideDialog}
+                htmlFor_00="nombre"
+                label_00="Nombre"
+                id_00="nombre"
+                value_00={mensaje.nombre}
+                onChange_00={(e) => onInputChange(e, "nombre")}
+                className_00={classNames({
+                  "p-invalid": submitted && mensaje.nombre
+                })}
+                htmlFor_01="correo"
+                label_01="Correo"
+                id_01="correo"
+                value_01={mensaje.correo}
+                onChange_01={(e) => onInputChange(e, "correo")}
+                className_01={classNames({ "p-invalid": submitted && !mensaje.correo })}
+                msgRequired_01={
+                  submitted &&
+                  !mensaje.correo && <small className="p-error">El correo es obligatorio.</small>
+                }
+                htmlFor_02="fecha"
+                label_02="Fecha"
+                id_02="fecha"
+                value_02={mensaje.fecha}
+                onChange_02={(e) => onInputChange(e, "fecha")}
+                className_02={classNames({ "p-invalid": submitted && !mensaje.fecha })}
+                msgRequired_02={
+                  submitted &&
+                  !mensaje.fecha && (
+                    <small className="p-error">El fecha es obligatorio.</small>
+                  )
+                }
+                htmlFor_03="telefono"
+                label_03="Telefono"
+                id_03="telefono"
+                value_03={mensaje.telefono}
+                onChange_03={(e) => onInputChange(e, "telefono")}
+                className_03={classNames({
+                  "p-invalid": submitted && !mensaje.telefono,
+                })}
+                msgRequired_03={
+                  submitted &&
+                  !mensaje.telefono && (
+                    <small className="p-error">La telefono es obligatorio.</small>
+                  )
+                }
+                htmlFor_04="asunto"
+                label_04="Asunto"
+                id_04="asunto"
+                value_04={mensaje.asunto}
+                onChange_04={(e) => onInputChange(e, "asunto")}
+                className_04={classNames({ "p-invalid": submitted && !mensaje.asunto })}
+                msgRequired_04={
+                  submitted &&
+                  !mensaje.asunto && <small className="p-error">El asunto es obligatorio.</small>
 
-              }
-            />
-
+                }
+              />
+            </div>
           </div>
-          
+          <div className="mt-4">
+            <Button className="" label="Enviar" icon="pi pi-send" onClick={saveUpdate} />
+          </div>
         </div>
         <Button label="Guardar" icon="pi pi-send" onClick={saveUpdate} />
       </div>

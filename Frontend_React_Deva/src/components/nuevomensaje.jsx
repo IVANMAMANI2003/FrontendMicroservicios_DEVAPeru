@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Button } from 'primereact/button';
 import mensaje from '../pages/Mensaje';
 
-export const DialogCreateUpdate = (props) => {
+export const CreateUpdate = (props) => {
   // eslint-disable-next-line react/prop-types
   const { htmlFor_00, label_00, id_00, value_00, onChange_00, className_00, msgRequired_00, htmlFor_01, label_01, id_01, value_01, onChange_01, className_01, msgRequired_01, htmlFor_02, label_02, id_02, value_02, onChange_02, className_02, msgRequired_02, htmlFor_03, label_03, id_03, value_03, onChange_03, className_03, msgRequired_03, htmlFor_04, label_04, id_04, value_04, onChange_04, className_04, msgRequired_04, isCategory } = props;
   const fileInputRef = React.createRef();
@@ -21,9 +21,9 @@ export const DialogCreateUpdate = (props) => {
 
     <>
       <div style={{ position: 'flex flex-col' }}>
-        <div className='flex' >
-          <div className="field">
-            <label htmlFor={htmlFor_00} className="font-bold">
+        <div className=' mt-5' >
+          <div className="field  ">
+            <label htmlFor={htmlFor_00} className="font-bold text-center items-center">
               {label_00}
             </label>
             <InputText
@@ -32,23 +32,25 @@ export const DialogCreateUpdate = (props) => {
               onChange={onChange_00}
               style={{ width: "full" }}
               required
-              className={className_00}
+              className={className_00 + " w-full"}
             />
             {msgRequired_00}
           </div>
-          <div className="field">
-            <label htmlFor={htmlFor_02} className="font-bold">
-              {label_02}
-            </label>
-            <DatePicker
-              id={id_02}
-              selected={value_02} // Pasa el valor de la fecha seleccionada
-              onChange={date => onChange_02(date)} // Actualiza el valor de la fecha cuando cambie
-              className={className_02}
-              required
-            />
-            {msgRequired_02}
-          </div>
+      
+            <div className="field">
+              <label htmlFor={htmlFor_02} className="font-bold">
+                {label_02}
+              </label>
+              <InputText
+                id={id_02}
+                selected={value_02} // Pasa el valor de la fecha seleccionada
+                onChange={date => onChange_02(date)} // Actualiza el valor de la fecha cuando cambie
+                className={className_02+" w-full"}
+                required
+              />
+              {msgRequired_02}
+            </div>
+          
         </div>
         <div className='flex'>
           <div style={{ position: 'flex flex-col' }}>
@@ -61,7 +63,7 @@ export const DialogCreateUpdate = (props) => {
                 value={value_01}
                 onChange={onChange_01}
                 required
-                className={className_01}
+                className={className_01 + " w-full"}
               />
               {msgRequired_01}
             </div>
@@ -75,7 +77,7 @@ export const DialogCreateUpdate = (props) => {
                 value={value_03}
                 onChange={onChange_03}
                 required
-                className={className_03}
+                className={className_03 + " w-full"}
               />
               {msgRequired_03}
             </div>
@@ -89,8 +91,8 @@ export const DialogCreateUpdate = (props) => {
               value={value_04}
               onChange={onChange_04}
               required
-              className={className_04}
-              style={{ width: '190px', height: '200px' }}
+              className={className_04 + " w-full"}
+              style={{ height: '150px' }}
             />
             {msgRequired_04}
           </div>
