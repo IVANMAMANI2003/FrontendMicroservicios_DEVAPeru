@@ -9,6 +9,7 @@ import newmensaje from "./pages/ReactFinalFormDemo";
 //import Image from "./pages/Imagen";
 import Post from "./pages/Post";
 import Sidebar from "./components/Sidebar";
+//import { FormPage } from "./components/FormMensaje";
 
 
 function App() {
