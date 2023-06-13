@@ -7,6 +7,7 @@ import Mensaje from "./pages/Mensaje";
 import newmensaje from "./pages/ReactFinalFormDemo";
 //import Image from "./pages/Imagen";
 import Post from "./pages/Post";
+//import { FormPage } from "./components/FormMensaje";
 
 
 function App() {

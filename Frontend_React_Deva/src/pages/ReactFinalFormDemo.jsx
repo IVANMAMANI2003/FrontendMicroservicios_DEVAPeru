@@ -1,19 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
-//import { creamensaje } from "../components/Mensaje";
-import { CreateUpdate } from "../components/nuevomensaje"
-
-import {
-  createMensaje,
-} from "../services/MensajeService";
-import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
-
+import { CreateUpdate } from "../components/FormMensaje";
+import { createMensaje } from "../services/MensajeService";
+import { useRef } from "react";
 
 export default function ReactFinalFormDemo() {
-  const [mensajeDialog, setMensajeDialog] = useState(true);
   let dataMensaje = {
     id: null,
     nombre: "",
@@ -22,46 +15,27 @@ export default function ReactFinalFormDemo() {
     telefono: "",
     asunto: "",
   };
-  const [mensajes, setMensajes] = useState([]);
   const [mensaje, setMensaje] = useState(dataMensaje);
-  const [submitted, setSubmitted] = useState(true);
-  const [globalFilter, setGlobalFilter] = useState(null);
-  const [modalTitle, setModalTitle] = useState("");
-  const [isCreating, setIsCreating] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const toast = useRef(null);
-  const dt = useRef(null);
 
-
-  useEffect(() => {
-
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const onSubmit = (data, form) => {
-    setFormData(data);
-    setShowMessage(true);
-
-    form.restart();
-  };
-
-  const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
-  const getFormErrorMessage = (meta) => {
-    return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
-  };
   const saveUpdate = () => {
     setSubmitted(true);
     createMensaje(mensaje)
+      .then(() => {
+        toast.current.show({
+          severity: "success",
+          summary: "Éxito",
+          detail: "Mensaje Enviado",
+          life: 3000,
+        });
+      })
+      .catch((error) => {
+        console.error("Error al enviar el mensaje", error);
+        console.log("Error al enviar el mensaje", error);
+      });
   };
-  const openNew = () => {
-    setMensaje(dataMensaje);
-    setSubmitted(false);
-    setMensajeDialog(true);
-    setModalTitle("Crear Mensaje");
-    setIsCreating(true);
-  };
-  const hideDialog = () => {
-    setSubmitted(false);
-    setMensajeDialog(false);
-  };
+
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
     let _mensaje = { ...mensaje };
@@ -71,8 +45,7 @@ export default function ReactFinalFormDemo() {
     setMensaje(_mensaje);
   };
   return (
-
-    <div >
+    <div>
       <div className="p-2  text-center text-5xl bg-white  md:px-10 px-5 bg-white md:flex-row lg:max-w-full md:max-w-full text-justify justify-between">
         <div className="pr-0 sm:px-0">
           <h1 className="text-2xl font-bold text-center  items-center  ">
@@ -89,7 +62,8 @@ export default function ReactFinalFormDemo() {
                   <ion-icon name="location-outline"></ion-icon>
                   Dirección
                   <p className="font-normal">
-                    Lorem ipsum dolor sit amet <br /> consectetur adipiscing elit ultrices
+                    Lorem ipsum dolor sit amet <br /> consectetur adipiscing
+                    elit ultrices
                   </p>
                   <br />
                   <ion-icon name="call-outline"></ion-icon>
@@ -102,7 +76,9 @@ export default function ReactFinalFormDemo() {
                   <br />
                   <ion-icon name="mail-outline"></ion-icon>
                   Correo Electrónico <br />
-                  <a className="font-normal hover:text-green-500">admin@grupodeva.pe</a>
+                  <a className="font-normal hover:text-green-500">
+                    admin@grupodeva.pe
+                  </a>
                 </span>
                 <div className="flex flex-shrink-0 items-center justify-center">
                   <iframe
@@ -116,34 +92,43 @@ export default function ReactFinalFormDemo() {
             </div>
             <div className="order-last w-full">
               <CreateUpdate
-                width='30rem'
-                ismensaje={true}
-                header={modalTitle}
-                onHide={hideDialog}
+                width="30rem"
                 htmlFor_00="nombre"
                 label_00="Nombre"
                 id_00="nombre"
                 value_00={mensaje.nombre}
                 onChange_00={(e) => onInputChange(e, "nombre")}
                 className_00={classNames({
-                  "p-invalid": submitted && mensaje.nombre
+                  "p-invalid": submitted && !mensaje.nombre,
                 })}
+                msgRequired_00={
+                  submitted &&
+                  !mensaje.nombre && (
+                    <small className="p-error">El nombre es obligatorio.</small>
+                  )
+                }
                 htmlFor_01="correo"
                 label_01="Correo"
                 id_01="correo"
                 value_01={mensaje.correo}
                 onChange_01={(e) => onInputChange(e, "correo")}
-                className_01={classNames({ "p-invalid": submitted && !mensaje.correo })}
+                className_01={classNames({
+                  "p-invalid": submitted && !mensaje.correo,
+                })}
                 msgRequired_01={
                   submitted &&
-                  !mensaje.correo && <small className="p-error">El correo es obligatorio.</small>
+                  !mensaje.correo && (
+                    <small className="p-error">El correo es obligatorio.</small>
+                  )
                 }
                 htmlFor_02="fecha"
                 label_02="Fecha"
                 id_02="fecha"
                 value_02={mensaje.fecha}
                 onChange_02={(e) => onInputChange(e, "fecha")}
-                className_02={classNames({ "p-invalid": submitted && !mensaje.fecha })}
+                className_02={classNames({
+                  "p-invalid": submitted && !mensaje.fecha,
+                })}
                 msgRequired_02={
                   submitted &&
                   !mensaje.fecha && (
@@ -161,7 +146,9 @@ export default function ReactFinalFormDemo() {
                 msgRequired_03={
                   submitted &&
                   !mensaje.telefono && (
-                    <small className="p-error">La telefono es obligatorio.</small>
+                    <small className="p-error">
+                      La telefono es obligatorio.
+                    </small>
                   )
                 }
                 htmlFor_04="asunto"
@@ -169,84 +156,28 @@ export default function ReactFinalFormDemo() {
                 id_04="asunto"
                 value_04={mensaje.asunto}
                 onChange_04={(e) => onInputChange(e, "asunto")}
-                className_04={classNames({ "p-invalid": submitted && !mensaje.asunto })}
+                className_04={classNames({
+                  "p-invalid": submitted && !mensaje.asunto,
+                })}
                 msgRequired_04={
                   submitted &&
-                  !mensaje.asunto && <small className="p-error">El asunto es obligatorio.</small>
-
+                  !mensaje.asunto && (
+                    <small className="p-error">El asunto es obligatorio.</small>
+                  )
                 }
               />
             </div>
           </div>
           <div className="mt-4">
-            <Button className="" label="Enviar" icon="pi pi-send" onClick={saveUpdate} />
+            <Button
+              className=""
+              label="Enviar"
+              icon="pi pi-send"
+              onClick={saveUpdate}
+            />
           </div>
         </div>
-        <Button label="Guardar" icon="pi pi-send" onClick={saveUpdate} />
       </div>
-
-      {/* Incluir el componente de pie de página */}
     </div>
   );
 }
-
-
-{/** htmlFor="nombre"
-        label="Nombre"
-        id="nombre"
-        value={mensaje.nombre}
-        onChange={(e) => onInputChange(e, "nombre")}
-        className={classNames({ "p-invalid": submitted && !mensaje.nombre })}
-        msgRequired={
-          submitted &&
-          !mensaje.nombre && (
-            <small className="p-error">El nombre es obligatorio.</small>
-          )
-        }
-        htmlFor_01="correo"
-        label_01="Correo"
-        id_01="correo"
-        value_01={mensaje.correo}
-        onChange_01={(e) => onInputChange(e, "correo")}
-        className_01={classNames({ "p-invalid": submitted && !mensaje.correo })}
-        msgRequired_01={
-          submitted &&
-          !mensaje.correo && <small className="p-error">El correo es obligatorio.</small>
-        }
-        htmlFor_02="fecha"
-        label_02="Fecha"
-        id_02="fecha"
-        value_02={mensaje.fecha}
-        onChange_02={(e) => onInputChange(e, "fecha")}
-        className_02={classNames({ "p-invalid": submitted && !mensaje.fecha })}
-        msgRequired_02={
-          submitted &&
-          !mensaje.fecha && (
-            <small className="p-error">El fecha es obligatorio.</small>
-          )
-        }
-        htmlFor_03="telefono"
-        label_03="Telefono"
-        id_03="telefono"
-        value_03={mensaje.telefono}
-        onChange_03={(e) => onInputChange(e, "telefono")}
-        className_03={classNames({
-          "p-invalid": submitted && !mensaje.telefono,
-        })}
-        msgRequired_03={
-          submitted &&
-          !mensaje.telefono && (
-            <small className="p-error">La telefono es obligatorio.</small>
-          )
-        }
-        htmlFor_04="asunto"
-        label_04="Asunto"
-        id_04="asunto"
-        value_04={mensaje.asunto}
-        onChange_04={(e) => onInputChange(e, "asunto")}
-        className_04={classNames({ "p-invalid": submitted && !mensaje.asunto })}
-        msgRequired_04={
-          submitted &&
-          !mensaje.asunto && <small className="p-error">El asunto es obligatorio.</small>
-          
-        } */}
