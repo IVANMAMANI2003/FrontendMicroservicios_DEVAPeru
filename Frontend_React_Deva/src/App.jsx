@@ -15,8 +15,8 @@ import Sidebar from "./components/Sidebar";
 function App() {
   return (
     <>
-    <Sidebar></Sidebar>
-    
+      <Sidebar></Sidebar>
+
       {/* <Navbar />
       <Routes>
         <Route path='/' Component={Post} />
