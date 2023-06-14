@@ -1,0 +1,40 @@
+.sombra {
+    box-shadow: 0px 0px 30px 5px rgb(153, 153, 153);
+}
+
+.fondo-login {
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+.cont-area {
+    position: absolute;
+    background-color: rgb(255 255 255 / 0.8);
+    width: 100%;
+}
+
+.input-login {
+    background-color: rgb(255 255 255 / 1);
+    border-width: 1px;
+    --tw-border-opacity: 1;
+    border-color: rgb(209 213 219 / 1);
+    border-radius: 0.5rem/* 8px */;
+    width: 100%;
+    padding: 0.625rem/* 10px */;
+    padding-left: 2.5rem/* 40px */;
+}
+
+.btn-ingresar {
+    border-radius: 0.5rem/* 8px */;
+    color: rgb(255 255 255 / 1);
+    font-weight: 500;
+    padding-bottom: 0.625rem/* 10px */;
+    padding-left: 2.5rem/* 40px */;
+    padding-right: 1.25rem/* 20px */;
+    padding-top: 0.625rem/* 10px */;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}

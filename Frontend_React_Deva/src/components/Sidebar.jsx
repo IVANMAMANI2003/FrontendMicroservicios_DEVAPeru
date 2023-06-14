@@ -169,7 +169,7 @@ const Sidebar = () => {
                                     /
                                 </span>
                                 <div className="text-neutral-500 dark:text-neutral-400 text-sm">
-                                    {location.pathname === "/"
+                                    {location.pathname === "/sistema-dashboard"
                                         ? "Dashboard"
                                         : location.pathname === "/sistema-categorias"
                                             ? "Categorias"
@@ -250,7 +250,7 @@ const Sidebar = () => {
                 <div className="p-4">
                     <div>
                         <Routes>
-                            <Route path="/" Component={Post} />
+                            <Route path="/sistema-dashboard" Component={Post} />
                             <Route path="/sistema-categorias" Component={Category} />
                             <Route path="/sistema-productos" Component={Product} />
                             <Route path="/sistema-usuarios" Component={User} />

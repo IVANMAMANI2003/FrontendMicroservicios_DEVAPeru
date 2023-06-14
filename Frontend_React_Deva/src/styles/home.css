@@ -1,0 +1,10 @@
+.pilares {
+    justify-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/img/fondopilares.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.circles {
+    background: linear-gradient(rgba(243 244 246 / 0.4), rgba(243 244 246 / 0.4));
+}

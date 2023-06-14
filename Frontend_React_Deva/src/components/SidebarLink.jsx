@@ -21,7 +21,7 @@ const SidebarLink = ({ active, icon, children, ...props }) => {
 
 SidebarLink.propTypes = {
     active: PropTypes.bool.isRequired,
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
     children: PropTypes.node.isRequired,
 };
 

@@ -1,0 +1,12 @@
+.fondo {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 10)), url('/img/pie.png');
+    background-position: left 100%;
+    background-size: 150%;
+    animation: linear;
+}
+
+.linea {
+    border-left: 1px solid white;
+    margin-left: 10px; 
+    margin-right: 10px;
+}
