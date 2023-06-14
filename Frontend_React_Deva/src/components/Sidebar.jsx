@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import SidebarLink from "./SidebarLink";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
-import Post from "../pages/Post";
-import Category from "../pages/Categoria";
-import Product from "../pages/Producto";
-import User from "../pages/Usuario";
-import mensaje from "../pages/Mensaje";
+import Post from "../admin/pages/Post";
+import Category from "../admin/pages/Categoria";
+import Product from "../admin/pages/Producto";
+import User from "../admin/pages/Usuario";
+import mensaje from "../admin/pages/Mensaje";
 import Dropdown from "./Dropdown";
 import DropdownLink from "./DropdownLink";
 
