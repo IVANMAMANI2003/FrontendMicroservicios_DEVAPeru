@@ -256,6 +256,7 @@ export default function Image() {
           label="CSV"
           type="button"
           icon="pi pi-file"
+          severity="info"
           rounded
           onClick={exportCSV}
           data-pr-tooltip="CSV"
@@ -273,7 +274,7 @@ export default function Image() {
           label="PDF"
           type="button"
           icon="pi pi-file-pdf"
-          severity="warning"
+          severity="secondary"
           rounded
           onClick={exportPDF}
           data-pr-tooltip="PDF"

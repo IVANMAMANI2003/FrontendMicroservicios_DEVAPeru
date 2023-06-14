@@ -327,7 +327,7 @@ export default function Post() {
           label="PDF"
           type="button"
           icon="pi pi-file-pdf"
-          severity="warning"
+          severity="secondary"
           rounded
           onClick={exportPDF}
           data-pr-tooltip="PDF"
