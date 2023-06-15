@@ -1,8 +1,50 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/login.css'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
+
+    const navigate = useNavigate();
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [registerMode, setRegisterMode] = useState(false);
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:9090/auth/login", {
+                userName: userName,
+                password: password,
+            });
+            // Procesar la respuesta del backend, por ejemplo, guardar el token en el almacenamiento local
+            const token = response.data.token;
+            console.log("Guardado exitoso");
+            console.log("token", token);
+            // Almacenar el token en el almacenamiento local
+            localStorage.setItem("token", token);
+            navigate("/sistema-dashboard");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:9090/auth/create", {
+                userName: userName,
+                password: password,
+            });
+            console.log("Registro exitoso");
+            console.log(response);
+            setRegisterMode(false);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <>
             <img src="/img/fondo-login.png" className="fondo-login" />
@@ -57,13 +99,13 @@ function Login() {
                                     <img className="w-14 h-14 mr-2" src="img/deva.png" alt="logo" />
                                     DEVAPerú SAC
                                 </span>
-                                <form className="flex flex-col gap-4" method="POST" action="{{ route('login') }}" autoComplete="off">
+                                <form className="flex flex-col gap-4" onSubmit={registerMode ? handleRegister : handleLogin} autoComplete="off">
                                     <div className="">
                                         <label className="block mb-2 text-sm font-normal">
                                             Correo electrónico
                                         </label>
                                         <label className="relative">
-                                            <input type="email" name="email" id="email"
+                                            <input type="userName" value={userName} onChange={(e) => setUserName(e.target.value)}
                                                 className="input-login text-xs sm:text-sm placeholder-gray-400 focus:ring-green-600 focus:border-green-600"
                                                 placeholder="name@company.com" required />
                                             <div className="absolute inset-y-0 left-0 pl-3 pt-1 flex items-center text-sm leading-5">
@@ -78,7 +120,7 @@ function Login() {
                                             <div className="absolute inset-y-0 left-0 pl-3 pt-1 flex items-center text-sm leading-5">
                                                 <i className="pi pi-lock"></i>
                                             </div>
-                                            <input id="password" type="password" name="password" required
+                                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
                                                 autoComplete="current-password" placeholder="••••••••"
                                                 className="input-login text-xs sm:text-sm placeholder-gray-400 focus:ring-green-600 focus:border-green-600" />
                                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
