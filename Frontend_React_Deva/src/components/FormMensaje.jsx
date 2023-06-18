@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
+import { Button } from 'primereact/button';
 
 export const CreateUpdate = (props) => {
   const {
@@ -65,9 +66,6 @@ export const CreateUpdate = (props) => {
             </label>
             <InputText
               id={id_00}
-              style={{ '@media (min-width: 640px)': {
-                fontSize: '0.875rem'
-              }}}
               value={value_00}
               onChange={onChange_00}
               required
@@ -86,9 +84,7 @@ export const CreateUpdate = (props) => {
             </label>
             <Calendar
               id={id_02}
-              style={{width: '8rem', textAlign:'center', alignItems:'center',  '@media (min-width: 640px)': {
-                fontSize: '0.875rem'
-              }  }}
+              style={{width: '12rem', textAlign:'center', alignItems:'center'  }}
               value={value_02}
               onChange={onChange_02}
               dateFormat="yy-mm-dd"
@@ -97,8 +93,12 @@ export const CreateUpdate = (props) => {
             />
             {msgRequired_02}
           </div>
+         
+          
+        </div>
+        <div>
           <div style={{ position: "relative" }}>
-            <div style={{ padding: '1rem' }}>
+            <div style={{   gridColumn: 'span 10',  padding: '1rem' }}>
               <label htmlFor={htmlFor_01} className="font-bold">
                 {label_01}
               </label>
@@ -106,26 +106,28 @@ export const CreateUpdate = (props) => {
                 id={id_01}
                 value={value_01}
                 onChange={onChange_01}
+                style={{width:'27.3rem'}}
                 required
                 className={className_01}
               />
               {msgRequired_01}
             </div>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{   gridColumn: 'span 10',  padding: '1rem' }}>
               <label htmlFor={htmlFor_03} className="font-bold">
                 {label_03}
               </label>
               <InputText
                 id={id_03}
                 value={value_03}
+                style={{width:'27.3rem'}}
                 onChange={onChange_03}
                 required
                 className={className_03}
               />
               {msgRequired_03}
             </div>
-            <div style={{ padding: '1rem' }}>
+            <div style={{   gridColumn: 'span 10',  padding: '1rem' }}>
               <label htmlFor={htmlFor_04} className="font-bold">
                 {label_04}
               </label>
@@ -134,14 +136,27 @@ export const CreateUpdate = (props) => {
                 value={value_04}
                 onChange={onChange_04}
                 required
+                
                 className={className_04}
-                style={{ height: "150px" }}
+                style={{ height: "150px", width:'27.3rem'}}
               />
               {msgRequired_04}
             </div>
           </div>
-        </div>
+          </div>
       </div>
+{/*      <div style={{padding: '1rem',
+      paddingBottom: '1.5rem',
+      display: 'flex',
+      flex: '1',
+      alignItems: 'center',
+      justifyContent: 'center',
+      '@media (min-width: 768px)': {
+        alignItems: 'stretch',
+        justifyContent: 'flex-start'
+      }}}>
+        
+    </div>*/}
     </div>
   );
 };

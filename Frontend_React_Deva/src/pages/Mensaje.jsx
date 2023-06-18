@@ -116,7 +116,7 @@ export default function ReactFinalFormDemo() {
                     className="items-center"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3844.2890361930595!2d-70.11398948454165!3d-15.52262852046589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9167f5484b369675%3A0xfdbeb0b4e54aafe0!2sDEVAPERU!5e0!3m2!1ses!2spe!4v1669720678058!5m2!1ses!2spe"
                     width="300"
-                    height="300"
+                    height="385"
                   ></iframe>
                 </div>
               </div>
@@ -133,7 +133,7 @@ export default function ReactFinalFormDemo() {
                 <div style={{ display: 'grid', gap: '1.1rem' }}>
                   <div style={{
                     marginTop: '0.01rem', '@media (min-width: 768px)': {
-                        gridColumn: 'span 2', marginTop: '0'
+                      gridColumn: 'span 2', marginTop: '0'
                     }
                   }}>
                     <CreateUpdate
@@ -197,18 +197,31 @@ export default function ReactFinalFormDemo() {
 
                       }
                     />
+                    <div style={{
+                      padding: '0.1rem',
+                      paddingBottom: '0.1rem',
+                      display: 'flex',
+                      backgroundColor: 'white',
+                      flex: '1',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '@media (min-width: 768px)': {
+                        alignItems: 'stretch',
+                        justifyContent: 'flex-start'
+                      }
+                    }}>
+                      <Button label="Enviar" icon="pi pi-send" onClick={saveUpdate} />
+                    </div>
                   </div>
 
                 </div>
+
               </div>
 
             </div>
           </div>
-          <div className="mt-4">
-            <Button className="" label="Enviar" icon="pi pi-send" onClick={saveUpdate} />
-          </div>
+
         </div>
-        <Button label="Guardar" icon="pi pi-send" onClick={saveUpdate} />
       </div>
 
       {/* Incluir el componente de pie de página */}
