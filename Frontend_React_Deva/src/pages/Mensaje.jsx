@@ -1,19 +1,20 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect, useRef } from "react";
-
-// Importaciones de PrimeReact
+import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
-import Table from "../components/Table";
-import { DialogDelete } from "../components/DialogDelete";
+//import { creamensaje } from "../components/Mensaje";
+import { CreateUpdate } from "../components/FormMensaje"
+import Footer from '../partials/Footer';
+
 import {
-  getMensajeList,
-  deleteMensaje,
-  deleteSelectedMensaje,
+  createMensaje,
 } from "../services/MensajeService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
-export default function mensaje() {
+
+
+export default function ReactFinalFormDemo() {
+  const [mensajeDialog, setMensajeDialog] = useState(true);
   let dataMensaje = {
     id: null,
     nombre: "",
@@ -22,273 +23,197 @@ export default function mensaje() {
     telefono: "",
     asunto: "",
   };
-  const [mensajes, setMensajes] = useState([]);
-  const [deleteMensajeDialog, setDeleteMensajeDialog] = useState(false);
-  const [deleteMensajesDialog, setDeleteMensajesDialog] = useState(false);
+
   const [mensaje, setMensaje] = useState(dataMensaje);
-  const [selectedMensajes, setSelectedMensajes] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
+  const [modalTitle, setModalTitle] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
   const toast = useRef(null);
   const dt = useRef(null);
 
+
   useEffect(() => {
-    getMensajes();
-  }, []);
 
-  const getMensajes = () => {
-    getMensajeList()
-      .then((response) => {
-        setMensajes(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onSubmit = (data, form) => {
+    setFormData(data);
+    setShowMessage(true);
+
+    form.restart();
   };
 
-  const removeMensaje = () => {
-    deleteMensaje(mensaje.id)
-      .then(() => {
-        getMensajes();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setDeleteMensajeDialog(false);
-    toast.current.show({
-      severity: "success",
-      summary: "Successful",
-      detail: "Mensaje Eliminado",
-      life: 3000,
-    });
+  const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
+  const getFormErrorMessage = (meta) => {
+    return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
   };
-  const removeSelectedMensajes = () => {
-    const mensajeIds = selectedMensajes.map((mensaje) => mensaje.id);
-    const isMultiple = selectedMensajes.length > 1;
-
-    deleteSelectedMensaje(mensajeIds)
-      .then(() => {
-        getMensajes();
-        setMensajes((prevmensajes) =>
-          prevmensajes.filter((c) => !mensajeIds.includes(c.id))
-        );
-        setSelectedMensajes([]);
-        if (isMultiple) {
-          toast.current.show({
-            severity: "success",
-            summary: "Successful",
-            detail: "Mensajes Eliminados",
-            life: 3000,
-          });
-        } else {
-          toast.current.show({
-            severity: "success",
-            summary: "Successful",
-            detail: "Mensaje Eliminado",
-            life: 3000,
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error al eliminar los mensajes:", error);
-      });
-    setDeleteMensajesDialog(false);
+  const saveUpdate = () => {
+    setSubmitted(true);
+    createMensaje(mensaje)
   };
-
-  const confirmDeleteMensaje = (mensaje) => {
-    setMensaje(mensaje);
-    setDeleteMensajeDialog(true);
+  const openNew = () => {
+    setMensaje(dataMensaje);
+    setSubmitted(false);
+    setMensajeDialog(true);
+    setModalTitle("Crear Mensaje");
+    setIsCreating(true);
   };
-
-  const hideDeleteMensajeDialog = () => {
-    setDeleteMensajeDialog(false);
+  const hideDialog = () => {
+    setSubmitted(false);
+    setMensajeDialog(false);
   };
+  const onInputChange = (e, name) => {
+    const val = (e.target && e.target.value) || "";
+    let _mensaje = { ...mensaje };
 
-  const hideDeleteMensajesDialog = () => {
-    setDeleteMensajesDialog(false);
+    _mensaje[`${name}`] = val;
+
+    setMensaje(_mensaje);
   };
-
-  const exportCSV = () => {
-    dt.current.exportCSV();
-  };
-
-  const exportExcel = () => {
-    exportToExcel(mensajes);
-  };
-
-  const exportPDF = () => {
-    exportToPdf(mensajes);
-  };
-
-  const confirmDeleteSelected = () => {
-    setDeleteMensajesDialog(true);
-  };
-
-  const leftToolbarTemplate = () => {
-    return (
-      <div className="flex flex-wrap gap-2">
-        <Button
-          label="Delete"
-          icon="pi pi-trash"
-          severity="danger"
-          onClick={confirmDeleteSelected}
-          disabled={!selectedMensajes || !selectedMensajes.length}
-        />
-      </div>
-    );
-  };
-
-  const rightToolbarTemplate = () => {
-    return (
-      <div className="flex align-items-center justify-content-end gap-2">
-        <Button
-          label="CSV"
-          type="button"
-          icon="pi pi-file"
-          rounded
-          onClick={exportCSV}
-          data-pr-tooltip="CSV"
-        />
-        <Button
-          label="XLSX"
-          type="button"
-          icon="pi pi-file-excel"
-          severity="success"
-          rounded
-          onClick={exportExcel}
-          data-pr-tooltip="XLS"
-        />
-        <Button
-          label="PDF"
-          type="button"
-          icon="pi pi-file-pdf"
-          severity="warning"
-          rounded
-          onClick={exportPDF}
-          data-pr-tooltip="PDF"
-        />
-      </div>
-    );
-  };
-
-  const actionBodyTemplate = (rowData) => {
-    return (
-      <React.Fragment>
-        <Button
-          icon="pi pi-trash"
-          rounded
-          outlined
-          severity="danger"
-          onClick={() => confirmDeleteMensaje(rowData)}
-        />
-      </React.Fragment>
-    );
-  };
-
-  const header = (
-    <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-      <h4 className="m-0">Administrar Mensajes</h4>
-      <span className="p-input-icon-left">
-        <i className="pi pi-search" />
-        <InputText
-          type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Buscar..."
-        />
-      </span>
-    </div>
-  );
-  const deleteMensajeDialogFooter = (
-    <React.Fragment>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          label="Cancelar"
-          icon="pi pi-times"
-          outlined
-          onClick={hideDeleteMensajeDialog}
-        />
-        <Button
-          label="Aceptar"
-          icon="pi pi-check"
-          severity="danger"
-          onClick={removeMensaje}
-        />
-      </div>
-    </React.Fragment>
-  );
-
-  const deleteMensajesDialogFooter = (
-    <React.Fragment>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          label="Cancelar"
-          icon="pi pi-times"
-          outlined
-          onClick={hideDeleteMensajesDialog}
-        />
-        <Button
-          label="Aceptar"
-          icon="pi pi-check"
-          severity="danger"
-          onClick={removeSelectedMensajes}
-        />
-      </div>
-    </React.Fragment>
-  );
-
   return (
-    <div>
-      {/** TABLA del Usuario */}
-      <Table
-        refToast={toast}
-        left={leftToolbarTemplate}
-        right={rightToolbarTemplate}
-        refDT={dt}
-        value={mensajes}
-        selection={selectedMensajes}
-        onSelectionChange={(e) => setSelectedMensajes(e.value)}
-        dataKey="id"
-        globalFilter={globalFilter}
-        header={header}
-        nombre_00="nombre"
-        header_00="Nombre"
-        nombre_01="correo"
-        header_01="Correo"
-        nombre_02="fecha"
-        header_02="Fecha"
-        nombre_03="telefono"
-        header_03="Telefono"
-        nombre_04="asunto"
-        header_04="Asunto"
-        body={actionBodyTemplate}
-      />
-      {/** Modal de ELIMINAR un Mensaje */}
-      <DialogDelete
-        visible={deleteMensajeDialog}
-        footer={deleteMensajeDialogFooter}
-        onHide={hideDeleteMensajeDialog}
-        msgDialogModal={
-          mensaje && (
-            <span>
-              ¿Estás seguro de que quieres eliminar a <b>{mensaje.nombre}</b>?
-              No podrás revertir esto.
-            </span>
-          )
-        }
-      />
-      {/** Modal de ELIMINAR varios Mensajes */}
-      <DialogDelete
-        visible={deleteMensajesDialog}
-        footer={deleteMensajesDialogFooter}
-        onHide={hideDeleteMensajesDialog}
-        msgDialogModal={
-          mensaje && (
-            <span>
-              ¿Estás seguro de que desea eliminar los mensajes seleccionados? No
-              podrás revertixr esto.
-            </span>
-          )
-        }
-      />
+
+    <div >
+      <div style={{ padding: '2rem', textAlign: 'center', fontSize: '3.10rem', backgroundColor: 'white' }}>
+        <a style={{ fontFamily: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif", borderBottomWidth: '2px', borderBottomColor: 'black' }} >
+          CONTÁCTANOS
+        </a>
+      </div>
+      <div style={{ padding: '2.4rem', textAlign: 'center' }}>
+        <span>
+          ¡Bienvenidos a DEVAPERÚ! Estamos comprometidos en brindarle un servicio excepcional y satisfacer todas sus necesidades. Nos enorgullece ofrecer soluciones personalizadas y de calidad que superen sus expectativas
+        </span>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', padding: '1rem', justifyContent: 'center' }} >
+        <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'row', flex: '1', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ maxWidth: '20rem', width: '100%', display: 'flex', justifyContent: 'center' }} >
+            <div style={{
+              borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
+              outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem'
+            }} >
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'left' }}>
+                <span style={{ marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: 'bold', margin: '0.75rem' }}>
+                  <i className="pi pi-map-marker"></i>
+                  Dirección
+                  <p style={{ fontWeight: 'normal' }}>
+                    Lorem ipsum dolor sit amet <br /> consectetur adipiscing elit ultrices
+                  </p>
+                  <br />
+                  <i className="pi pi-phone"></i>
+                  Teléfonos
+                  <p className="font-normal">
+                    (+51) 999 999 999 <br />
+                    254 - 3412 <br />
+                    354 - 4589
+                  </p>
+                  <br />
+                  <i className="pi pi-envelope"></i>
+                  Correo Electrónico <br />
+                  <a className="font-normal hover:text-green-500">admin@grupodeva.pe</a>
+                </span>
+                <div className="flex flex-shrink-0 items-center justify-center">
+                  <iframe
+                    className="items-center"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3844.2890361930595!2d-70.11398948454165!3d-15.52262852046589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9167f5484b369675%3A0xfdbeb0b4e54aafe0!2sDEVAPERU!5e0!3m2!1ses!2spe!4v1669720678058!5m2!1ses!2spe"
+                    width="300"
+                    height="300"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+            <div style={{
+              borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)', outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem'
+            }}>
+              <div style={{
+                marginTop: '1.5rem', '@media (min-width: 640px)': {
+                  marginTop: '0'
+                }
+              }}>
+                {/*gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'*/}
+                <div style={{ display: 'grid', gap: '1.1rem' }}>
+                  <div style={{
+                    marginTop: '0.01rem', '@media (min-width: 768px)': {
+                        gridColumn: 'span 2', marginTop: '0'
+                    }
+                  }}>
+                    <CreateUpdate
+                      width='30rem'
+                      ismensaje={true}
+                      header={modalTitle}
+                      onHide={hideDialog}
+                      htmlFor_00="nombre"
+                      label_00="Nombre"
+                      id_00="nombre"
+                      value_00={mensaje.nombre}
+                      onChange_00={(e) => onInputChange(e, "nombre")}
+                      className_00={classNames({
+                        "p-invalid": submitted && mensaje.nombre
+                      })}
+                      htmlFor_01="correo"
+                      label_01="Correo"
+                      id_01="correo"
+                      value_01={mensaje.correo}
+                      onChange_01={(e) => onInputChange(e, "correo")}
+                      className_01={classNames({ "p-invalid": submitted && !mensaje.correo })}
+                      msgRequired_01={
+                        submitted &&
+                        !mensaje.correo && <small className="p-error">El correo es obligatorio.</small>
+                      }
+                      htmlFor_02="fecha"
+                      label_02="Fecha"
+                      id_02="fecha"
+                      value_02={mensaje.fecha}
+                      onChange_02={(e) => onInputChange(e, "fecha")}
+                      className_02={classNames({ "p-invalid": submitted && !mensaje.fecha })}
+                      msgRequired_02={
+                        submitted &&
+                        !mensaje.fecha && (
+                          <small className="p-error">El fecha es obligatorio.</small>
+                        )
+                      }
+                      htmlFor_03="telefono"
+                      label_03="Telefono"
+                      id_03="telefono"
+                      value_03={mensaje.telefono}
+                      onChange_03={(e) => onInputChange(e, "telefono")}
+                      className_03={classNames({
+                        "p-invalid": submitted && !mensaje.telefono,
+                      })}
+                      msgRequired_03={
+                        submitted &&
+                        !mensaje.telefono && (
+                          <small className="p-error">La telefono es obligatorio.</small>
+                        )
+                      }
+                      htmlFor_04="asunto"
+                      label_04="Asunto"
+                      id_04="asunto"
+                      value_04={mensaje.asunto}
+                      onChange_04={(e) => onInputChange(e, "asunto")}
+                      className_04={classNames({ "p-invalid": submitted && !mensaje.asunto })}
+                      msgRequired_04={
+                        submitted &&
+                        !mensaje.asunto && <small className="p-error">El asunto es obligatorio.</small>
+
+                      }
+                    />
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div className="mt-4">
+            <Button className="" label="Enviar" icon="pi pi-send" onClick={saveUpdate} />
+          </div>
+        </div>
+        <Button label="Guardar" icon="pi pi-send" onClick={saveUpdate} />
+      </div>
+
+      {/* Incluir el componente de pie de página */}
+      <Footer />
     </div>
+
   );
 }

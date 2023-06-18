@@ -42,80 +42,104 @@ export const CreateUpdate = (props) => {
   } = props;
 
   return (
-    <div style={{ position: "relative" }}>
-      <div className=" mt-5">
-        <div className="field">
-          <label htmlFor={htmlFor_00} className="font-bold">
-            {label_00}
-          </label>
-          <InputText
-            id={id_00}
-            value={value_00}
-            onChange={onChange_00}
-            required
-            className={className_00}
-          />
-          {msgRequired_00}
-        </div>
-
-        <div className="field">
-          <label htmlFor={htmlFor_02} className="font-bold">
-            {label_02}
-          </label>
-          <Calendar
-            id={id_02}
-            value={value_02}
-            onChange={onChange_02}
-            dateFormat="yy-mm-dd"
-            required
-            className={className_02}
-          />
-          {msgRequired_02}
-        </div>
-      </div>
-      <div className="flex">
-        <div style={{ position: "relative" }}>
-          <div className="field">
-            <label htmlFor={htmlFor_01} className="font-bold">
-              {label_01}
+    <div style={{
+      boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
+      borderRadius: '0.375rem',
+      '@media (min-width: 640px)': {
+        borderRadius: '0.5rem'
+      }
+    }}>
+      <div style={{
+        backgroundColor: 'white', paddingTop: '1rem', paddingBottom: '2.25rem'
+        , paddingRight: '2rem', paddingLeft: '2rem', '@media (min-width: 640px)': { padding: '3rem' }
+      }} >
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+          <div style={{ padding: '1rem' }}>
+            <label  htmlFor={htmlFor_00} style={{
+              display: 'block',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              color: 'black'
+            }}>
+              {label_00}
             </label>
             <InputText
-              id={id_01}
-              value={value_01}
-              onChange={onChange_01}
+              id={id_00}
+              style={{ '@media (min-width: 640px)': {
+                fontSize: '0.875rem'
+              }}}
+              value={value_00}
+              onChange={onChange_00}
               required
-              className={className_01}
+              className={className_00}
             />
-            {msgRequired_01}
+            {msgRequired_00}
           </div>
-
-          <div className="field">
-            <label htmlFor={htmlFor_03} className="font-bold">
-              {label_03}
+          <div style={{ padding: '1rem' }} >
+            <label htmlFor={htmlFor_02} style={{
+              display: 'block',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              color: 'black'
+            }}>
+              {label_02}
             </label>
-            <InputText
-              id={id_03}
-              value={value_03}
-              onChange={onChange_03}
+            <Calendar
+              id={id_02}
+              style={{width: '8rem', textAlign:'center', alignItems:'center',  '@media (min-width: 640px)': {
+                fontSize: '0.875rem'
+              }  }}
+              value={value_02}
+              onChange={onChange_02}
+              dateFormat="yy-mm-dd"
               required
-              className={className_03}
+              className={className_02}
             />
-            {msgRequired_03}
+            {msgRequired_02}
           </div>
-        </div>
-        <div className="field">
-          <label htmlFor={htmlFor_04} className="font-bold">
-            {label_04}
-          </label>
-          <InputText
-            id={id_04}
-            value={value_04}
-            onChange={onChange_04}
-            required
-            className={className_04}
-            style={{ height: "150px" }}
-          />
-          {msgRequired_04}
+          <div style={{ position: "relative" }}>
+            <div style={{ padding: '1rem' }}>
+              <label htmlFor={htmlFor_01} className="font-bold">
+                {label_01}
+              </label>
+              <InputText
+                id={id_01}
+                value={value_01}
+                onChange={onChange_01}
+                required
+                className={className_01}
+              />
+              {msgRequired_01}
+            </div>
+
+            <div style={{ padding: '1rem' }}>
+              <label htmlFor={htmlFor_03} className="font-bold">
+                {label_03}
+              </label>
+              <InputText
+                id={id_03}
+                value={value_03}
+                onChange={onChange_03}
+                required
+                className={className_03}
+              />
+              {msgRequired_03}
+            </div>
+            <div style={{ padding: '1rem' }}>
+              <label htmlFor={htmlFor_04} className="font-bold">
+                {label_04}
+              </label>
+              <InputText
+                id={id_04}
+                value={value_04}
+                onChange={onChange_04}
+                required
+                className={className_04}
+                style={{ height: "150px" }}
+              />
+              {msgRequired_04}
+            </div>
+          </div>
         </div>
       </div>
     </div>

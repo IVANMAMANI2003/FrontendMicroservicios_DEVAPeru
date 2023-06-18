@@ -33,12 +33,6 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Crear Mensajes',
-        path: '/newmensaje',
-        icon: "pi pi-comments",
-        cName: 'nav-text'
-    },
-    {
         title: 'Support',
         path: '/support',
         icon: "pi pi-cog",

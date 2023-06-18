@@ -26,7 +26,7 @@ function App() {
               <Route path='/producto' Component={Product} />
               <Route path='/usuario' Component={User} />
               <Route path='/mensaje' Component={mensaje} />
-              <Route path='/newmensaje' Component={mensaje} />
+              <Route path='/contactanos' Component={mensaje} />
             </Routes>
           </>
       }
