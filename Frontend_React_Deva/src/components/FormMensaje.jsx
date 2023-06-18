@@ -127,7 +127,7 @@ export const CreateUpdate = (props) => {
               />
               {msgRequired_03}
             </div>
-            <div style={{   gridColumn: 'span 10',  padding: '1rem' }}>
+            <div style={{ gridColumn: 'span 10',  padding: '1rem' }}>
               <label htmlFor={htmlFor_04} className="font-bold">
                 {label_04}
               </label>
@@ -135,8 +135,7 @@ export const CreateUpdate = (props) => {
                 id={id_04}
                 value={value_04}
                 onChange={onChange_04}
-                required
-                
+                required  
                 className={className_04}
                 style={{ height: "150px", width:'27.3rem'}}
               />
