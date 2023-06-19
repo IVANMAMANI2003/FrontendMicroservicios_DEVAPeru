@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
-import { Button } from 'primereact/button';
 
 export const CreateUpdate = (props) => {
   const {
@@ -45,7 +44,7 @@ export const CreateUpdate = (props) => {
   return (
     <div style={{
       boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
-      borderRadius: '0.375rem',
+      borderRadius: '0.375rem',color: 'black',
       '@media (min-width: 640px)': {
         borderRadius: '0.5rem'
       }

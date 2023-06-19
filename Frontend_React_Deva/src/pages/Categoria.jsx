@@ -9,13 +9,7 @@ import "jspdf-autotable";
 import Table from "../components/Table";
 import { DialogCreateUpdate } from "../components/DialogCatalogo";
 import { DialogDelete } from "../components/DialogDelete";
-import {
-  createCategory,
-  deleteCategory,
-  deleteSelectedCategories,
-  getCategoryList,
-  updateCategory,
-} from "../services/CategoriaService";
+import * as CategoryService from "../services/CategoriaService";
 import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
 
 export default function Category() {
@@ -49,7 +43,7 @@ export default function Category() {
   }, []);
 
   const getCategories = () => {
-    getCategoryList()
+    CategoryService.getCategoryList()
       .then((response) => {
         setCategories(response.data);
       })
@@ -63,14 +57,14 @@ export default function Category() {
 
     if (category.nombre && category.estado) {
       if (category.id || isCreating === false) {
-        updateCategory(category)
+        CategoryService.updateCategory(category)
           .then(() => {
             getCategories();
             setCategoryDialog(false);
             toast.current.show({
               severity: "success",
               summary: "Éxito",
-              detail: "Categoría actualizado",
+              detail: "Categoría Actualizado",
               life: 3000,
             });
           })
@@ -78,27 +72,27 @@ export default function Category() {
             console.error("Error al actualizar la categoría:", error);
           });
       } else {
-        createCategory(category)
+        CategoryService.createCategory(category)
           .then(() => {
             getCategories();
             setCategoryDialog(false);
             toast.current.show({
               severity: "success",
               summary: "Éxito",
-              detail: "Categoría creado",
+              detail: "Categoría Creado",
               life: 3000,
             });
           })
           .catch((error) => {
-            console.error("Error al crear el categoría", error);
-            console.log("Error al crear el categoría:", error);
+            console.error("Error al crear la categoría", error);
+            console.log("Error al crear la categoría:", error);
           });
       }
     }
   };
 
   const removeCategory = () => {
-    deleteCategory(category.id)
+    CategoryService.deleteCategory(category.id)
       .then(() => {
         getCategories();
       })
@@ -118,7 +112,7 @@ export default function Category() {
     const ids = selectedCategories.map((c) => c.id);
     const isMultiple = selectedCategories.length > 1;
 
-    deleteSelectedCategories(ids)
+    CategoryService.deleteSelectedCategories(ids)
       .then(() => {
         getCategories();
         setCategories((prevCategories) =>
@@ -129,7 +123,7 @@ export default function Category() {
           toast.current.show({
             severity: "success",
             summary: "Successful",
-            detail: "Categorías Eliminados",
+            detail: "Categorías Eliminadas",
             life: 3000,
           });
         } else {
@@ -263,7 +257,7 @@ export default function Category() {
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="flex justify-center">
           <Button
             icon="pi pi-pencil"
             rounded
@@ -320,7 +314,7 @@ export default function Category() {
   );
   const deleteCategoryDialogFooter = (
     <React.Fragment>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="flex justify-center">
         <Button
           label="Cancelar"
           icon="pi pi-times"
@@ -437,7 +431,7 @@ export default function Category() {
         msgDialogModal={
           category && (
             <span>
-              ¿Estás seguro de que desea eliminar las categorias seleccionadas?
+              ¿Estás seguro de que desea eliminar las categorías seleccionadas?
               No podrás revertir esto.
             </span>
           )
