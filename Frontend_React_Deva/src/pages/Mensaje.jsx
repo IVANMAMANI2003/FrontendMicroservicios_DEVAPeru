@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
@@ -32,7 +33,18 @@ export default function ReactFinalFormDemo() {
 
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  
+
+  const onSubmit = (data, form) => {
+    // setFormData(data);
+    // setShowMessage(true);
+
+    form.restart();
+  };
+
+  const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
+  const getFormErrorMessage = (meta) => {
+    return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
+  };
   const saveUpdate = () => {
     setSubmitted(true);
     createMensaje(mensaje)
