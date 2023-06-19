@@ -11,6 +11,7 @@ import Login from "./auth/Login";
 import Nosotros from "./pages/Nosotros";
 import Post from "./admin/pages/Post";
 import mensaje from "./pages/Mensaje";
+import galeria from "./pages/Categoria/galeria";
 
 function App() {
   return (
@@ -28,8 +29,8 @@ function App() {
                 <Route path='/nosotros' Component={Nosotros} />
                 <Route path='/producto' Component={Product} />
                 <Route path='/usuario' Component={User} />
-                <Route path='/mensaje' Component={mensaje} />
                 <Route path='/contactanos' Component={mensaje} />
+                <Route path='/galeria' Component={galeria} />
               </Routes>
             </>
             : null
