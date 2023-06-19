@@ -12,7 +12,7 @@ import {
 } from "../services/MensajeService";
 
 
-export default function ReactFinalFormDemo() {
+export default function Contatanos() {
   const [mensajeDialog, setMensajeDialog] = useState(true);
   let dataMensaje = {
     id: null,

@@ -4,8 +4,8 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import Category from "./pages/Categoria";
 import Product from "./pages/Producto";
-import User from "./pages/Usuario";
-import mensaje from "./pages/Mensaje";
+import User from "./pages/client/Galeria";
+import Contactanos from "./pages/Mensaje";
 import Inicio from "./pages/Inicio";
 import Login from "./auth/Login";
 import Nosotros from "./pages/Nosotros";
@@ -24,9 +24,8 @@ function App() {
               <Route path='/inicio' Component={Inicio} />
               <Route path='/nosotros' Component={Nosotros} />
               <Route path='/producto' Component={Product} />
-              <Route path='/usuario' Component={User} />
-              <Route path='/mensaje' Component={mensaje} />
-              <Route path='/contactanos' Component={mensaje} />
+              <Route path='/galeria' Component={User} />
+              <Route path='/contactanos' Component={Contactanos} />
             </Routes>
           </>
       }
