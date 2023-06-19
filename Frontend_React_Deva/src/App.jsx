@@ -2,15 +2,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import Category from "./pages/Categoria";
 import Product from "./pages/Producto";
-import User from "./pages/client/Galeria";
+import Galeria from "./pages/client/Galeria";
 import Contactanos from "./pages/Mensaje";
 import Inicio from "./pages/Inicio";
 import Login from "./auth/Login";
 import Nosotros from "./pages/Nosotros";
-import Post from "./admin/pages/Post";
-
 
 function App() {
   return (
@@ -27,7 +24,7 @@ function App() {
                 <Route path='/inicio' Component={Inicio} />
                 <Route path='/nosotros' Component={Nosotros} />
                 <Route path='/producto' Component={Product} />
-                <Route path='/usuario' Component={User} />
+                <Route path='/galeria' Component={Galeria} />
                 <Route path='/contactanos' Component={Contactanos} />
               </Routes>
             </>

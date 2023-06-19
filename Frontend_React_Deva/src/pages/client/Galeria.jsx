@@ -8,7 +8,7 @@ export default class Galeria extends Component {
 
   render() {
     return (
-      <div className='grid  text-center place-content-center'>
+      <div className='  text-center  p-[30%]'>
         <h1>Pagina Galeria </h1>
       </div>
     );
