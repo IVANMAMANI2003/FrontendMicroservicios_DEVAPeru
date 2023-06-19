@@ -9,30 +9,30 @@ import mensaje from "./pages/Nosotros";
 import Inicio from "./pages/Inicio";
 import Login from "./auth/Login";
 import Nosotros from "./pages/Nosotros";
+import Post from "./admin/pages/Post";
 
 function App() {
   return (
     <>
-      {location.pathname === ("/sistema-dashboard" || "/sistema-categorias" || "/sistema-productos" || "/sistema-banners" || "/sistema-videos" || "/sistema-mensajes" || "/sistema-usuarios" || "/sistema-perfil")
+      {location.pathname === "/sistema-dashboard" || location.pathname === "/sistema-categorias" || location.pathname === "/sistema-productos" || location.pathname === "/sistema-usuarios"
         ? <Sidebar />
         : location.pathname === "/logindev"
           ? <Login />
-          : <>
-            <Navbar />
-            <Routes>
-              <Route path='/' element={<Navigate to="/inicio" />} />
-              <Route path='/inicio' Component={Inicio} />
-              <Route path='/nosotros' Component={Nosotros} />
-              <Route path='/producto' Component={Product} />
-              <Route path='/usuario' Component={User} />
-              <Route path='/mensaje' Component={mensaje} />
-              <Route path='/contactanos' Component={mensaje} />
-            </Routes>
-          </>
+          : location.pathname === "/" || location.pathname === "/inicio" || location.pathname === "/nosotros" || location.pathname === "/producto"
+            ? <>
+              <Navbar />
+              <Routes>
+                <Route path='/' element={<Navigate to="/inicio" />} />
+                <Route path='/inicio' Component={Inicio} />
+                <Route path='/nosotros' Component={Nosotros} />
+                <Route path='/producto' Component={Product} />
+                <Route path='/usuario' Component={User} />
+                <Route path='/mensaje' Component={mensaje} />
+                <Route path='/contactanos' Component={mensaje} />
+              </Routes>
+            </>
+            : null
       }
-
-
-
     </>
   );
 }

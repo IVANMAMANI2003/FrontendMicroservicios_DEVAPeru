@@ -25,6 +25,7 @@ function Login() {
             // Almacenar el token en el almacenamiento local
             localStorage.setItem("token", token);
             navigate("/sistema-dashboard");
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }
