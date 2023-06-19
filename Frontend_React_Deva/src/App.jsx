@@ -10,6 +10,7 @@ import Inicio from "./pages/Inicio";
 import Login from "./auth/Login";
 import Nosotros from "./pages/Nosotros";
 import Post from "./admin/pages/Post";
+import mensaje from "./admin/pages/Mensaje";
 
 function App() {
   return (
