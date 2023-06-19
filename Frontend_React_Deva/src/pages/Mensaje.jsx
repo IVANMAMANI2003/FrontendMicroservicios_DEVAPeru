@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
 //import { creamensaje } from "../components/Mensaje";
 import { CreateUpdate } from "../components/FormMensaje"
@@ -10,7 +9,6 @@ import Footer from '../partials/Footer';
 import {
   createMensaje,
 } from "../services/MensajeService";
-import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
 
 
 export default function ReactFinalFormDemo() {
@@ -26,9 +24,6 @@ export default function ReactFinalFormDemo() {
 
   const [mensaje, setMensaje] = useState(dataMensaje);
   const [submitted, setSubmitted] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState(null);
-  const [modalTitle, setModalTitle] = useState("");
-  const [isCreating, setIsCreating] = useState(false);
   const toast = useRef(null);
   const dt = useRef(null);
 
@@ -37,27 +32,10 @@ export default function ReactFinalFormDemo() {
 
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onSubmit = (data, form) => {
-    setFormData(data);
-    setShowMessage(true);
-
-    form.restart();
-  };
-
-  const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
-  const getFormErrorMessage = (meta) => {
-    return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
-  };
+  
   const saveUpdate = () => {
     setSubmitted(true);
     createMensaje(mensaje)
-  };
-  const openNew = () => {
-    setMensaje(dataMensaje);
-    setSubmitted(false);
-    setMensajeDialog(true);
-    setModalTitle("Crear Mensaje");
-    setIsCreating(true);
   };
   const hideDialog = () => {
     setSubmitted(false);
@@ -84,14 +62,14 @@ export default function ReactFinalFormDemo() {
           ¡Bienvenidos a DEVAPERÚ! Estamos comprometidos en brindarle un servicio excepcional y satisfacer todas sus necesidades. Nos enorgullece ofrecer soluciones personalizadas y de calidad que superen sus expectativas
         </span>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', padding: '1rem', justifyContent: 'center' }} >
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', padding: '1rem', justifyContent: 'center'}} >
         <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'row', flex: '1', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ maxWidth: '20rem', width: '100%', display: 'flex', justifyContent: 'center' }} >
             <div style={{
               borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
-              outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem'
+              outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem', color: '#cdd3d0'
             }} >
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'left' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'left', color: 'black' }}>
                 <span style={{ marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: 'bold', margin: '0.75rem' }}>
                   <i className="pi pi-map-marker"></i>
                   Dirección
@@ -122,7 +100,7 @@ export default function ReactFinalFormDemo() {
               </div>
             </div>
             <div style={{
-              borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)', outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem'
+              borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)', outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem', color: '#cdd3d0'
             }}>
               <div style={{
                 marginTop: '1.5rem', '@media (min-width: 640px)': {
@@ -139,7 +117,6 @@ export default function ReactFinalFormDemo() {
                     <CreateUpdate
                       width='30rem'
                       ismensaje={true}
-                      header={modalTitle}
                       onHide={hideDialog}
                       htmlFor_00="nombre"
                       label_00="Nombre"
