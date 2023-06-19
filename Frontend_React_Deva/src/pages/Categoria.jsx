@@ -332,7 +332,7 @@ export default function Category() {
   );
   const deleteCategoriesDialogFooter = (
     <React.Fragment>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="flex justify-center">
         <Button
           label="Cancelar"
           icon="pi pi-times"
