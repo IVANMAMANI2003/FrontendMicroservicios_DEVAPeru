@@ -60,7 +60,9 @@ export default class Products extends Component {
                             <span className="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
                         </div>
                     </Button>
+                    
                 </div>
+                <Footer/>
             </div>
         );
 
