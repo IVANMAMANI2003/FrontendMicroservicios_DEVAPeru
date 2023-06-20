@@ -71,7 +71,7 @@ function Nosotros() {
           <div className=" w-full  md:h-auto ">
             <iframe className="rounded-xl w-full h-full" src="../video/devaperuhistoria.mp4" frameBorder="5"
               type='video/mp4' allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
+              allowFullScreen></iframe>
           </div>
         </div>
 

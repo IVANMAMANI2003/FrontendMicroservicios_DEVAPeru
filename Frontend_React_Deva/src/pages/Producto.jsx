@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 // Importaciones de PrimeReact
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -32,6 +32,15 @@ export default function Product() {
     fileName: "",
   };
 
+  const [error, setError] = useState("");
+
+  const handleBlur = () => {
+    if (!selectedFile) {
+      setError("Debe seleccionar un archivo");
+    } else {
+      setError("");
+    }
+  };
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [productDialog, setProductDialog] = useState(false);
@@ -44,7 +53,10 @@ export default function Product() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    nombre: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    nombre: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+    },
   });
   const [modalTitle, setModalTitle] = useState("");
   const [isCreating, setIsCreating] = useState(false);
@@ -143,7 +155,12 @@ export default function Product() {
               getProducts();
               getCategories();
               setProductDialog(false);
-              toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Producto actualizado', life: 3000 });
+              toast.current.show({
+                severity: "success",
+                summary: "Éxito",
+                detail: "Producto actualizado",
+                life: 3000,
+              });
             })
             .catch((error) => {
               console.error("Error al actualizar el producto:", error);
@@ -172,7 +189,12 @@ export default function Product() {
             getProducts();
             getCategories();
             setProductDialog(false);
-            toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Producto creado', life: 3000 });
+            toast.current.show({
+              severity: "success",
+              summary: "Éxito",
+              detail: "Producto creado",
+              life: 3000,
+            });
           })
           .catch((error) => {
             console.error("Error al crear el producto:", error);
@@ -182,7 +204,9 @@ export default function Product() {
   };
 
   const removeProduct = () => {
-    setProducts((prevProducts) => prevProducts.filter((c) => c.id !== product.id));
+    setProducts((prevProducts) =>
+      prevProducts.filter((c) => c.id !== product.id)
+    );
     ProductoService.deleteProduct(product.id)
       .then(() => {
         getProducts();
@@ -192,7 +216,12 @@ export default function Product() {
         console.log(error);
       });
     setDeleteProductDialog(false);
-    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Producto Eliminado', life: 3000 });
+    toast.current.show({
+      severity: "success",
+      summary: "Successful",
+      detail: "Producto Eliminado",
+      life: 3000,
+    });
   };
 
   const removeSelectedProducts = () => {
@@ -203,26 +232,28 @@ export default function Product() {
       .then(() => {
         getProducts();
         getCategories();
-        setProducts((prevProducts) => prevProducts.filter((p) => !ids.includes(p.id)));
+        setProducts((prevProducts) =>
+          prevProducts.filter((p) => !ids.includes(p.id))
+        );
         setSelectedProducts([]);
         if (isMultiple) {
           toast.current.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Productos Eliminados',
-            life: 3000
+            severity: "success",
+            summary: "Successful",
+            detail: "Productos Eliminados",
+            life: 3000,
           });
         } else {
           toast.current.show({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Producto Eliminado',
-            life: 3000
+            severity: "success",
+            summary: "Successful",
+            detail: "Producto Eliminado",
+            life: 3000,
           });
         }
       })
       .catch((error) => {
-        console.error('Error al eliminar los productos:', error);
+        console.error("Error al eliminar los productos:", error);
       });
     setDeleteProductsDialog(false);
     getProducts();
@@ -237,9 +268,14 @@ export default function Product() {
   };
 
   const editproduct = (product) => {
-    setProduct({ ...product, id: product.id, preview: product.imagen, fileName: product.file ? product.file.name : product.imagen });
+    setProduct({
+      ...product,
+      id: product.id,
+      preview: product.imagen,
+      fileName: product.file ? product.file.name : product.imagen,
+    });
     setSelectedFile(null);
-    setModalTitle('Editar Producto');
+    setModalTitle("Editar Producto");
     setIsCreating(false);
     setProductDialog(true);
   };
@@ -279,7 +315,15 @@ export default function Product() {
   };
 
   const onInputChange = (e, name) => {
-    const val = e.target.value || '';
+    const val = e.target.value || "";
+    setProduct((prevImage) => ({
+      ...prevImage,
+      [name]: val,
+    }));
+  };
+
+  const onInputNumberChange = (e, name) => {
+    const val = e.target.value || 0;
     setProduct((prevImage) => ({
       ...prevImage,
       [name]: val,
@@ -376,7 +420,7 @@ export default function Product() {
     const value = e.target.value;
     let _filters = { ...filters };
 
-    _filters['global'].value = value;
+    _filters["global"].value = value;
 
     setFilters(_filters);
     setGlobalFilter(value);
@@ -389,7 +433,8 @@ export default function Product() {
         <i className="pi pi-search" />
         <InputText
           type="search"
-          value={globalFilter} onChange={onGlobalFilterChange}
+          value={globalFilter}
+          onChange={onGlobalFilterChange}
           placeholder="Buscar..."
         />
       </span>
@@ -444,7 +489,14 @@ export default function Product() {
   );
 
   const imageBodyTemplate = (rowData) => {
-    return <img src={rowData.imagen} alt="Product" className="shadow-2 border-round" style={{ width: '64px' }} />;
+    return (
+      <img
+        src={rowData.imagen}
+        alt="Product"
+        className="shadow-2 border-round"
+        style={{ width: "64px" }}
+      />
+    );
   };
 
   return (
@@ -460,9 +512,12 @@ export default function Product() {
         selection={selectedProducts}
         onSelectionChange={(e) => setSelectedProducts(e.value)}
         dataKey="id"
-        filters={filters} filterDisplay="menu" globalFilterFields={['nombre']}
+        filters={filters}
+        filterDisplay="menu"
+        globalFilterFields={["nombre"]}
         header={header}
-        fieldImage="imagen" headerImage="Imagen"
+        fieldImage="imagen"
+        headerImage="Imagen"
         bodyImage={imageBodyTemplate}
         nombre_00="nombre"
         header_00="Nombre"
@@ -490,7 +545,7 @@ export default function Product() {
       />
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate
-        width='45rem'
+        width="45rem"
         isCategory={false}
         visible={productDialog}
         header={modalTitle}
@@ -512,7 +567,7 @@ export default function Product() {
         label_01="Precio"
         id_01="precio"
         value_01={product.precio}
-        onChange_01={(e) => onInputChange(e, "precio")}
+        onChange_01={(e) => onInputNumberChange(e, "precio")}
         className_01={classNames({ "p-invalid": submitted && !product.precio })}
         msgRequired_01={
           submitted &&
@@ -524,7 +579,7 @@ export default function Product() {
         label_02="Stock"
         id_02="stock"
         value_02={product.stock}
-        onChange_02={(e) => onInputChange(e, "stock")}
+        onChange_02={(e) => onInputNumberChange(e, "stock")}
         className_02={classNames({ "p-invalid": submitted && !product.stock })}
         msgRequired_02={
           submitted &&
@@ -622,24 +677,31 @@ export default function Product() {
         optionValue="id"
         optionLabel="nombre"
         placeholder="Selecciona una categoría"
-        classDrowp={classNames({ "p-invalid": submitted && !product.categoria.id })}
+        classDrowp={classNames({
+          "p-invalid": submitted && !product.categoria.id,
+        })}
         msgRequired={
           submitted &&
           !product.categoria.id && (
             <small className="p-error">La categoria es obligatorio.</small>
           )
         }
-        onChangeFile={handleFileChange} valueFile={product.fileName}
-        imagen={(
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+        onBlur={handleBlur}
+        error={error}
+        onChangeFile={handleFileChange}
+        valueFile={product.fileName}
+        imagen={
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <img
-              src={product.preview || "https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"}
+              src={
+                product.preview ||
+                "https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
+              }
               alt="Vista previa"
               style={{ marginTop: "10px", maxWidth: "200px" }}
             />
           </div>
-
-        )}
+        }
       />
       {/** Modal de ELIMINAR una categoría */}
       <DialogDelete
