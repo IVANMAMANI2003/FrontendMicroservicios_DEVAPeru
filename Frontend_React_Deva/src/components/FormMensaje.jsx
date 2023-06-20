@@ -45,13 +45,13 @@ export const CreateUpdate = (props) => {
     <div style={{
       boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
       borderRadius: '0.375rem',color: 'black',
-      '@media (min-width: 640px)': {
+      '@media (minWidth: 640px)': {
         borderRadius: '0.5rem'
       }
     }}>
       <div style={{
         backgroundColor: 'white', paddingTop: '1rem', paddingBottom: '2.25rem'
-        , paddingRight: '2rem', paddingLeft: '2rem', '@media (min-width: 640px)': { padding: '3rem' }
+        , paddingRight: '2rem', paddingLeft: '2rem', '@media (miNWidth: 640px)': { padding: '3rem' }
       }} >
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
           <div style={{ padding: '1rem' }}>

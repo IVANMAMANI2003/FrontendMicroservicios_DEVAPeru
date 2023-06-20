@@ -2,9 +2,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import Product from "./pages/Producto";
+import Product from "./pages/client/Products";
 import Galeria from "./pages/client/Galeria";
-import Contactanos from "./pages/Mensaje";
+import Contactanos from "./pages/client/Mensaje";
 import Inicio from "./pages/Inicio";
 import Login from "./auth/Login";
 import Nosotros from "./pages/Nosotros";

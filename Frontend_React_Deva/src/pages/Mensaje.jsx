@@ -115,14 +115,14 @@ export default function Contatanos() {
               borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)', outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem', color: '#cdd3d0'
             }}>
               <div style={{
-                marginTop: '1.5rem', '@media (min-width: 640px)': {
+                marginTop: '1.5rem', '@media (minWidth: 640px)': {
                   marginTop: '0'
                 }
               }}>
                 {/*gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'*/}
                 <div style={{ display: 'grid', gap: '1.1rem' }}>
                   <div style={{
-                    marginTop: '0.01rem', '@media (min-width: 768px)': {
+                    marginTop: '0.01rem', '@media (minWidth: 768px)': {
                       gridColumn: 'span 2', marginTop: '0'
                     }
                   }}>
@@ -194,7 +194,7 @@ export default function Contatanos() {
                       flex: '1',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      '@media (min-width: 768px)': {
+                      '@media (minWidth: 768px)': {
                         alignItems: 'stretch',
                         justifyContent: 'flex-start'
                       }
