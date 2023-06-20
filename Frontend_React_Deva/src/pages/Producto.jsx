@@ -92,99 +92,28 @@ export default function Product() {
     event.preventDefault();
     setSubmitted(true);
 
-    if (product.nombre) {
-      if (product.id || isCreating === false) {
-        const formData = new FormData();
-        let hasChanges = false;
+    const requiredFields = ['nombre', 'alto', 'ancho', 'categoria', 'detalle', 'estado', 'largo', 'material', 'precio'];
 
-        // Verificar si hay cambios en la propiedad 'type'
-        const originalProduct = products.find((img) => img.id === product.id);
-        if (product.nombre !== originalProduct?.nombre) {
-          formData.append("nombre", product.nombre);
-          hasChanges = true;
-        }
-        if (product.precio !== originalProduct?.precio) {
-          formData.append("precio", product.precio);
-          hasChanges = true;
-        }
-        if (product.stock !== originalProduct?.stock) {
-          formData.append("stock", product.stock);
-          hasChanges = true;
-        }
-        if (product.detalle !== originalProduct?.detalle) {
-          formData.append("detalle", product.detalle);
-          hasChanges = true;
-        }
-        if (product.material !== originalProduct?.material) {
-          formData.append("material", product.material);
-          hasChanges = true;
-        }
-        if (product.largo !== originalProduct?.largo) {
-          formData.append("largo", product.largo);
-          hasChanges = true;
-        }
-        if (product.ancho !== originalProduct?.ancho) {
-          formData.append("ancho", product.ancho);
-          hasChanges = true;
-        }
-        if (product.alto !== originalProduct?.alto) {
-          formData.append("alto", product.alto);
-          hasChanges = true;
-        }
-        if (product.estado !== originalProduct?.estado) {
-          formData.append("estado", product.estado);
-          hasChanges = true;
-        }
+    if (product.id || isCreating === false) {
+      const formData = new FormData();
+      let hasChanges = false;
 
-        // Verificar si hay cambios en la propiedad 'categoria'
-        const originalCategory = products.find((img) => img.id === product.id);
-        if (product.categoria.id !== originalCategory?.categoria.id) {
-          formData.append("categoria", product.categoria.id);
+      const originalProduct = products.find((img) => img.id === product.id);
+
+      requiredFields.forEach(field => {
+        if (product[field] !== originalProduct?.[field]) {
+          formData.append(field, product[field]);
           hasChanges = true;
         }
+      });
 
-        // Verificar si hay cambios en el archivo seleccionado
-        if (selectedFile) {
-          formData.append("file", selectedFile);
-          hasChanges = true;
-        }
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+        hasChanges = true;
+      }
 
-        if (hasChanges) {
-          ProductoService.updateProduct(product.id, formData)
-            .then(() => {
-              getProducts();
-              getCategories();
-              setProductDialog(false);
-              toast.current.show({
-                severity: "success",
-                summary: "Éxito",
-                detail: "Producto actualizado",
-                life: 3000,
-              });
-            })
-            .catch((error) => {
-              console.error("Error al actualizar el producto:", error);
-            });
-        } else {
-          // No hay cambios, simplemente cierra el diálogo
-          setProductDialog(false);
-        }
-      } else {
-        const formData = new FormData();
-        formData.append("nombre", product.nombre);
-        formData.append("precio", product.precio);
-        formData.append("stock", product.stock);
-        formData.append("detalle", product.detalle);
-        formData.append("material", product.material);
-        formData.append("largo", product.largo);
-        formData.append("ancho", product.ancho);
-        formData.append("alto", product.alto);
-        formData.append("estado", product.estado);
-        formData.append("categoria", product.categoria.id);
-        if (selectedFile) {
-          formData.append("file", selectedFile);
-        }
-        ProductoService.createProduct(formData)
+      if (hasChanges) {
+        ProductoService.updateProduct(product.id, formData)
           .then(() => {
             getProducts();
             getCategories();
@@ -192,16 +121,42 @@ export default function Product() {
             toast.current.show({
               severity: "success",
               summary: "Éxito",
-              detail: "Producto creado",
+              detail: "Producto actualizado",
               life: 3000,
             });
           })
           .catch((error) => {
-            console.error("Error al crear el producto:", error);
+            console.error("Error al actualizar el producto:", error);
           });
+      } else {
+        setProductDialog(false);
       }
+    } else {
+      const formData = new FormData();
+      requiredFields.forEach(field => {
+        formData.append(field, product[field]);
+      });
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+      }
+      ProductoService.createProduct(formData)
+        .then(() => {
+          getProducts();
+          getCategories();
+          setProductDialog(false);
+          toast.current.show({
+            severity: "success",
+            summary: "Éxito",
+            detail: "Producto creado",
+            life: 3000,
+          });
+        })
+        .catch((error) => {
+          console.error("Error al crear el producto:", error);
+        });
     }
   };
+
 
   const removeProduct = () => {
     setProducts((prevProducts) =>

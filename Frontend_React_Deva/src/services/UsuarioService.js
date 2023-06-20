@@ -1,46 +1,24 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:9090/usuario";
-const token = localStorage.getItem("token");
+import { API_URL_USE, headers } from "../config/config";
 
 export const getUserList = () => {
-  return axios.get(API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.get(API_URL_USE, { headers });
 };
 
 export const createUser = (user) => {
-  return axios.post(API_URL, user, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.post(API_URL_USE, user, { headers });
 };
 
 export const updateUser = (user) => {
-  return axios.put(API_URL, user, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.put(API_URL_USE, user, { headers });
 };
 
 export const deleteUser = (id) => {
-  const url = `${API_URL}/${id}`;
-  return axios.delete(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const url = `${API_URL_USE}/${id}`;
+  return axios.delete(url, { headers });
 };
 
 export const deleteSelectedUsers = (userIds) => {
   const deleteRequests = userIds.map((id) => deleteUser(id));
-  return Promise.all(deleteRequests, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return Promise.all(deleteRequests);
 };

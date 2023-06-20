@@ -1,20 +1,10 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:9090/auth";
-const token = localStorage.getItem("token");
+import { API_URL_AUTH, headers } from "../config/config";
 
 export const createUser = (user) => {
-    return axios.post(API_URL, user, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    return axios.post(API_URL_AUTH, user, { headers });
 };
 
 export const createLogin = (login) => {
-    return axios.post(API_URL, login, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    return axios.post(API_URL_AUTH, login, { headers });
 };

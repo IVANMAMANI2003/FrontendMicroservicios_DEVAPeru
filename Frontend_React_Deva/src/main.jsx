@@ -8,6 +8,7 @@ import "primereact/resources/primereact.css"; // core css
 import "primeicons/primeicons.css"; // icons
 import "primeflex/primeflex.css";
 import './index.css'
+import './styles/producto.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
