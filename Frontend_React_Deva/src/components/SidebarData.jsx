@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-
 export const SidebarData = [
     {
         title: 'Dashboard',
@@ -30,6 +27,12 @@ export const SidebarData = [
         title: 'Mensajes',
         path: '/mensaje',
         icon: "pi pi-comments",
+        cName: 'nav-text'
+    },
+    {
+        title: 'Banners',
+        path: '/sistema-banners',
+        icon: "pi pi-images",
         cName: 'nav-text'
     },
     {

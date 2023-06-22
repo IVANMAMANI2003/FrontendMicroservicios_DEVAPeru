@@ -2,6 +2,7 @@ const API_URL = "http://localhost:9090";
 
 export const API_URL_CAT = `${API_URL}/categoria`;
 export const API_URL_PRO = `${API_URL}/producto`;
+export const API_URL_BAN = `${API_URL}/banner`;
 export const API_URL_AUTH = `${API_URL}/auth`;
 export const API_URL_MEN = `${API_URL}/mensaje`;
 export const API_URL_VEN = `${API_URL}/venta`;
