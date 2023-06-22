@@ -92,7 +92,18 @@ export default function Product() {
     event.preventDefault();
     setSubmitted(true);
 
-    const requiredFields = ['nombre', 'alto', 'ancho', 'categoria', 'detalle', 'estado', 'largo', 'material', 'precio'];
+    const requiredFields = [
+      "nombre",
+      "precio",
+      "stock",
+      "detalle",
+      "material",
+      "largo",
+      "ancho",
+      "alto",
+      "estado",
+      "categoria"
+    ];
 
     if (product.id || isCreating === false) {
       const formData = new FormData();
@@ -100,7 +111,7 @@ export default function Product() {
 
       const originalProduct = products.find((img) => img.id === product.id);
 
-      requiredFields.forEach(field => {
+      requiredFields.forEach((field) => {
         if (product[field] !== originalProduct?.[field]) {
           formData.append(field, product[field]);
           hasChanges = true;
@@ -133,7 +144,7 @@ export default function Product() {
       }
     } else {
       const formData = new FormData();
-      requiredFields.forEach(field => {
+      requiredFields.forEach((field) => {
         formData.append(field, product[field]);
       });
       if (selectedFile) {
@@ -156,7 +167,6 @@ export default function Product() {
         });
     }
   };
-
 
   const removeProduct = () => {
     setProducts((prevProducts) =>

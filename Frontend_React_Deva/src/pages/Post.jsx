@@ -519,7 +519,6 @@ export default function Post() {
       {/** Modal de CREAR y ACTUALIZAR */}
       <DialogCreateUpdate
         width="45rem"
-        isCategory={false}
         visible={productDialog}
         header={modalTitle}
         footer={productDialogFooter}
