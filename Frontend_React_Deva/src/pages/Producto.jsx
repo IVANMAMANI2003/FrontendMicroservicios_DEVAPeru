@@ -102,7 +102,7 @@ export default function Product() {
       "ancho",
       "alto",
       "estado",
-      "categoria"
+      "categoria.id"
     ];
 
     if (product.id || isCreating === false) {
