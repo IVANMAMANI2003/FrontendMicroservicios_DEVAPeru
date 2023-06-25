@@ -8,7 +8,11 @@ function Login() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [registerMode, setRegisterMode] = useState(false);
+
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,6 +39,11 @@ function Login() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (password !== repeatPassword) {
+      setErrorMessage("Las contraseñas no coinciden");
+      setShowErrorMessage(true);
+      return;
+    }
     try {
       const response = await axios.post("http://localhost:9090/auth/create", {
         userName: userName,
@@ -48,6 +57,14 @@ function Login() {
     } finally {
       setUserName("");
       setPassword("");
+      setRepeatPassword("");
+    }
+  };
+
+  const handleRepeatPasswordChange = (e) => {
+    setRepeatPassword(e.target.value);
+    if (showErrorMessage) {
+      setShowErrorMessage(false);
     }
   };
 
@@ -157,6 +174,34 @@ function Login() {
                           </div>
                         </div>
                       </div>
+                      <div>
+                        <label className="block mb-2 text-sm font-normal text-gray-900">
+                          Repetir contraseña
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 pt-1 flex items-center text-sm leading-5">
+                            <i className="pi pi-lock"></i>
+                          </div>
+                          <input
+                            type="password"
+                            value={repeatPassword}
+                            onChange={handleRepeatPasswordChange}
+                            required
+                            autoComplete="new-password"
+                            placeholder="••••••••"
+                            className="input-login text-xs sm:text-sm placeholder-gray-400 focus:ring-green-600 focus:border-green-600"
+                          />
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                            <i className="pi pi-eye"></i>
+                          </div>
+                        </div>
+                        {showErrorMessage && (
+                          <div className="text-red-500 text-xs pt-1">
+                            {errorMessage}
+                          </div>
+                        )}
+                      </div>
+
                       <div className="flex items-center justify-between">
                         <div className="flex items-start">
                           <button
@@ -237,6 +282,7 @@ function Login() {
                             <i className="pi pi-eye"></i>
                           </div>
                         </div>
+
                         <div className="flex items-center justify-between pt-1">
                           <a
                             href="{{ route('password.request') }}"
