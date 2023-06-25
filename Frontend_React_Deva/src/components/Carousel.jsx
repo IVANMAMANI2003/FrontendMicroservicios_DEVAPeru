@@ -31,8 +31,8 @@ export const Carousels = (props) => {
             alt="banner"
             className="w-full h-[30vh] sm:h-[38vh] md:h-[50vh] lg:h-[78vh]"
           />
-          <div className="w-full hidden md:flex justify-center absolute bottom-0 right-0 left-0 p-2">
-            <div className="text-white rounded-lg text-center bg-black bg-opacity-60 p-2">
+          <div className="w-full hidden md:flex justify-center absolute bottom-0 p-2">
+            <div className="w-4/5 text-white rounded-lg text-center bg-black bg-opacity-60 p-2">
               <h5 className="text-xl">{rowData.nombre}</h5>
               <p>{rowData.tipo}</p>
             </div>

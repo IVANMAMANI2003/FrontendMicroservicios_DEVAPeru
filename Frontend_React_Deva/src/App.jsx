@@ -2,12 +2,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import Inicio from "./pages/client/Inicio";
+import Nosotros from "./pages/client/Nosotros";
+import Contactanos from "./pages/client/Mensaje";
 import Productos from "./pages/client/Productos";
 import Galeria from "./pages/client/Galeria";
-import Contactanos from "./pages/client/Mensaje";
-import Inicio from "./pages/client/Inicio";
 import Login from "./auth/Login";
-import Nosotros from "./pages/Nosotros";
 
 function App() {
   return (

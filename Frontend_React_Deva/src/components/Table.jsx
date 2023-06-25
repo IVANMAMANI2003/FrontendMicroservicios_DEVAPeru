@@ -74,15 +74,12 @@ const Table = (props) => {
           emptyMessage="No se encontraron resultados"
         >
           <Column selectionMode="multiple" exportable={false}></Column>
-          {isCategory == false && (
-            <Column
-              field={fieldImage}
-              header={headerImage}
-              body={bodyImage}
-              style={{ minWidth: "7rem" }}
-            ></Column>
-          )}
-
+          <Column
+            field={fieldImage}
+            header={headerImage}
+            body={bodyImage}
+            style={{ minWidth: "7rem" }}
+          ></Column>
           {visibleColumns.map((column, index) => (
             <Column
               key={index}

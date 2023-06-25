@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import { Component } from "react";
 export default class Galeria extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
     return (
-      <div className='  text-center  p-[30%]'>
+      <div className="  text-center  p-[30%]">
         <h1>Pagina Galeria </h1>
       </div>
     );

@@ -6,12 +6,12 @@ import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
-import Table from "../components/Table";
-import { DialogCreateUpdate } from "../components/DialogCatalogo";
-import { DialogDelete } from "../components/DialogDelete";
-import * as ProductoService from "../services/ProductoService";
-import { exportToExcel, exportToPdf } from "../exports/ExportFilePro";
-import { getCategoryList } from "../services/CategoriaService";
+import Table from "../../components/Table";
+import { DialogCreateUpdate } from "../../components/DialogCatalogo";
+import { DialogDelete } from "../../components/DialogDelete";
+import * as ProductoService from "../../services/ProductoService";
+import { exportToExcel, exportToPdf } from "../../exports/ExportFilePro";
+import { getCategoryList } from "../../services/CategoriaService";
 
 export default function Product() {
   let dataProduct = {
@@ -30,16 +30,6 @@ export default function Product() {
     file: null,
     preview: null,
     fileName: "",
-  };
-
-  const [error, setError] = useState("");
-
-  const handleBlur = () => {
-    if (!selectedFile) {
-      setError("Debe seleccionar un archivo");
-    } else {
-      setError("");
-    }
   };
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -102,7 +92,6 @@ export default function Product() {
       "ancho",
       "alto",
       "estado",
-      "categoria.id"
     ];
 
     if (product.id || isCreating === false) {
@@ -147,6 +136,7 @@ export default function Product() {
       requiredFields.forEach((field) => {
         formData.append(field, product[field]);
       });
+      formData.append("categoria", product.categoria.id);
       if (selectedFile) {
         formData.append("file", selectedFile);
       }
@@ -158,7 +148,7 @@ export default function Product() {
           toast.current.show({
             severity: "success",
             summary: "Éxito",
-            detail: "Producto creado",
+            detail: "Producto Creado",
             life: 3000,
           });
         })
@@ -504,8 +494,6 @@ export default function Product() {
         header_08="Alto"
         nombre_09="estado"
         header_09="Estado"
-        fieldTimeC="fechaCreacion"
-        headerTimeC="Creado"
         body={actionBodyTemplate}
       />
       {/** Modal de CREAR y ACTUALIZAR */}
@@ -651,8 +639,6 @@ export default function Product() {
             <small className="p-error">La categoria es obligatorio.</small>
           )
         }
-        onBlur={handleBlur}
-        error={error}
         onChangeFile={handleFileChange}
         valueFile={product.fileName}
         imagen={

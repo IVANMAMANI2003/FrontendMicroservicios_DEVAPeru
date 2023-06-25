@@ -10,8 +10,8 @@ export const createCategory = (categoria) => {
   return axios.post(API_URL_CAT, categoria, { headers });
 };
 
-export const updateCategory = (categoria) => {
-  return axios.put(API_URL_CAT, categoria, { headers });
+export const updateCategory = (id, categoria) => {
+  return axios.put(`${API_URL_CAT}/imagen/${id}`, categoria, { headers });
 };
 
 export const deleteCategory = (id) => {

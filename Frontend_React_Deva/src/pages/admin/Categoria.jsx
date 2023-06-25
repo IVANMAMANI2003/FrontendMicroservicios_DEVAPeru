@@ -6,16 +6,19 @@ import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
-import Table from "../components/Table";
-import { DialogCreateUpdate } from "../components/DialogCatalogo";
-import { DialogDelete } from "../components/DialogDelete";
-import * as CategoryService from "../services/CategoriaService";
-import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
+import Table from "../../components/Table";
+import { DialogCreateUpdate } from "../../components/DialogCatalogo";
+import { DialogDelete } from "../../components/DialogDelete";
+import * as CategoryService from "../../services/CategoriaService";
+import { exportToExcel, exportToPdf } from "../../exports/ExportFileCat";
 
 export default function Category() {
   let dataCategory = {
     nombre: "",
     estado: "",
+    file: null,
+    preview: null,
+    fileName: "",
   };
 
   const [categories, setCategories] = useState([]);
@@ -24,6 +27,7 @@ export default function Category() {
   const [deleteCategoriesDialog, setDeleteCategoriesDialog] = useState(false);
   const [category, setCategory] = useState(dataCategory);
   const [selectedCategories, setSelectedCategories] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const [filters, setFilters] = useState({
@@ -52,12 +56,32 @@ export default function Category() {
       });
   };
 
-  const saveUpdate = () => {
+  const saveUpdate = (event) => {
+    event.preventDefault();
     setSubmitted(true);
 
-    if (category.nombre && category.estado) {
-      if (category.id || isCreating === false) {
-        CategoryService.updateCategory(category)
+    const requiredFields = ["nombre", "estado"];
+
+    if (category.id || isCreating === false) {
+      const formData = new FormData();
+      let hasChanges = false;
+
+      const originalcategory = categories.find((img) => img.id === category.id);
+
+      requiredFields.forEach((field) => {
+        if (category[field] !== originalcategory?.[field]) {
+          formData.append(field, category[field]);
+          hasChanges = true;
+        }
+      });
+
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+        hasChanges = true;
+      }
+
+      if (hasChanges) {
+        CategoryService.updateCategory(category.id, formData)
           .then(() => {
             getCategories();
             setCategoryDialog(false);
@@ -72,22 +96,30 @@ export default function Category() {
             console.error("Error al actualizar la categoría:", error);
           });
       } else {
-        CategoryService.createCategory(category)
-          .then(() => {
-            getCategories();
-            setCategoryDialog(false);
-            toast.current.show({
-              severity: "success",
-              summary: "Éxito",
-              detail: "Categoría Creado",
-              life: 3000,
-            });
-          })
-          .catch((error) => {
-            console.error("Error al crear la categoría", error);
-            console.log("Error al crear la categoría:", error);
-          });
+        setCategoryDialog(false);
       }
+    } else {
+      const formData = new FormData();
+      requiredFields.forEach((field) => {
+        formData.append(field, category[field]);
+      });
+      if (selectedFile) {
+        formData.append("file", selectedFile);
+      }
+      CategoryService.createCategory(formData)
+        .then(() => {
+          getCategories();
+          setCategoryDialog(false);
+          toast.current.show({
+            severity: "success",
+            summary: "Éxito",
+            detail: "Categoría Creado",
+            life: 3000,
+          });
+        })
+        .catch((error) => {
+          console.error("Error al crear el categoría:", error);
+        });
     }
   };
 
@@ -151,11 +183,16 @@ export default function Category() {
   };
 
   const editCategory = (category) => {
-    setCategory({ ...category });
-    setSubmitted(false);
-    setCategoryDialog(true);
+    setCategory({
+      ...category,
+      id: category.id,
+      preview: category.imagen,
+      fileName: category.file ? category.file.name : category.imagen,
+    });
+    setSelectedFile(null);
     setModalTitle("Editar Categoría");
     setIsCreating(false);
+    setCategoryDialog(true);
   };
 
   const confirmDeleteCategory = (category) => {
@@ -199,6 +236,18 @@ export default function Category() {
     _category[`${name}`] = val;
 
     setCategory(_category);
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const preview = URL.createObjectURL(file);
+    setSelectedFile(file);
+    setCategory((prevImage) => ({
+      ...prevImage,
+      file,
+      preview,
+      fileName: file ? file.name : prevImage.fileName, // Actualizar el nombre del archivo
+    }));
   };
 
   const leftToolbarTemplate = () => {
@@ -349,11 +398,22 @@ export default function Category() {
     </React.Fragment>
   );
 
+  const imageBodyTemplate = (rowData) => {
+    return (
+      <img
+        src={rowData.imagen}
+        alt="Category"
+        className="shadow-2 border-round"
+        style={{ width: "64px" }}
+      />
+    );
+  };
+
   return (
     <div>
       {/** TABLA de la categoría */}
       <Table
-        isCategory={true}
+        isCategory={false}
         refToast={toast}
         left={leftToolbarTemplate}
         right={rightToolbarTemplate}
@@ -366,6 +426,9 @@ export default function Category() {
         filterDisplay="menu"
         globalFilterFields={["nombre"]}
         header={header}
+        fieldImage="imagen"
+        headerImage="Imagen"
+        bodyImage={imageBodyTemplate}
         nombre_00="nombre"
         header_00="Nombre"
         nombre_01="estado"
@@ -407,6 +470,20 @@ export default function Category() {
           !category.estado && (
             <small className="p-error">El estado es obligatorio.</small>
           )
+        }
+        onChangeFile={handleFileChange}
+        valueFile={category.fileName}
+        imagen={
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              src={
+                category.preview ||
+                "https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
+              }
+              alt="Vista previa"
+              style={{ marginTop: "10px", maxWidth: "200px" }}
+            />
+          </div>
         }
       />
       {/** Modal de ELIMINAR una categoría */}

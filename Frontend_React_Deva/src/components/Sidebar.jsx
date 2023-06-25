@@ -4,13 +4,13 @@ import SidebarLink from "./SidebarLink";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import Post from "../admin/pages/Post";
-import Category from "../admin/pages/Categoria";
-import Product from "../admin/pages/Producto";
+import Product from "../pages/admin/Producto";
 import User from "../admin/pages/Usuario";
 import mensaje from "../admin/pages/Mensaje";
 import Dropdown from "./Dropdown";
 import DropdownLink from "./DropdownLink";
 import { Banner } from "../pages/admin/Banner";
+import Category from "../pages/admin/Categoria";
 
 const Sidebar = () => {
   const location = useLocation();

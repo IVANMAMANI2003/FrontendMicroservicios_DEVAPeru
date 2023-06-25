@@ -51,6 +51,10 @@
   height: 4px;
 }
 
+.p-carousel-indicators {
+  background-color: whitesmoke;
+}
+
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
   background-color: cornflowerblue;
 }

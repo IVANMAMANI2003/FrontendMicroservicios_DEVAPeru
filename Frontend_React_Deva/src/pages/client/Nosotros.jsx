@@ -31,7 +31,7 @@ function Nosotros() {
         <Carousels value={banners} />
       </div>
 
-      <div className="p-6 bg-gray-100"></div>
+      <div className="p-1 bg-gray-100"></div>
 
       {/* Historia */}
       <div className="container mx-auto">

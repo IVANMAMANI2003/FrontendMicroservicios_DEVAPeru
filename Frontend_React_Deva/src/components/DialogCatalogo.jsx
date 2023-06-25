@@ -5,7 +5,6 @@ import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import Error from "./Error";
 
 export const DialogCreateUpdate = (props) => {
   const {
@@ -90,8 +89,6 @@ export const DialogCreateUpdate = (props) => {
     valueFile,
     imagen,
     onChangeFile,
-    error,
-    onBlur,
   } = props;
 
   const fileInputRef = React.createRef();
@@ -218,7 +215,6 @@ export const DialogCreateUpdate = (props) => {
                     type="file"
                     style={{ display: "none" }}
                     onChange={onChangeFile}
-                    onBlur={onBlur}
                   />
                   <Button
                     type="button"
@@ -230,12 +226,10 @@ export const DialogCreateUpdate = (props) => {
                     readOnly
                     value={valueFile}
                     placeholder="Seleccionar archivo"
-                    onBlur={onBlur}
                   />
                 </div>
                 {imagen}
               </div>
-              <Error error={error} />
             </div>
           </div>
           <div style={{ display: "flex", gap: "1rem" }}>
@@ -324,32 +318,68 @@ export const DialogCreateUpdate = (props) => {
       )}
       {isCategory && (
         <>
-          <div className="field">
-            <label htmlFor={htmlFor_00} className="font-bold">
-              {label_00}
-            </label>
-            <InputText
-              id={id_00}
-              value={value_00}
-              onChange={onChange_00}
-              required
-              autoFocus
-              className={className_00}
-            />
-            {msgRequired_00}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "2rem",
+            }}
+          >
+            <div className="field">
+              <label htmlFor={htmlFor_00} className="font-bold">
+                {label_00}
+              </label>
+              <InputText
+                id={id_00}
+                value={value_00}
+                onChange={onChange_00}
+                required
+                autoFocus
+                className={className_00}
+              />
+              {msgRequired_00}
+            </div>
+            <div className="field">
+              <label htmlFor={htmlFor_01} className="font-bold">
+                {label_01}
+              </label>
+              <InputText
+                id={id_01}
+                value={value_01}
+                onChange={onChange_01}
+                required
+                className={className_01}
+              />
+              {msgRequired_01}
+            </div>
           </div>
           <div className="field">
-            <label htmlFor={htmlFor_01} className="font-bold">
-              {label_01}
-            </label>
-            <InputText
-              id={id_01}
-              value={value_01}
-              onChange={onChange_01}
-              required
-              className={className_01}
-            />
-            {msgRequired_01}
+            <div className="p-field">
+              <label htmlFor="file" className="font-bold">
+                Imagen:
+              </label>
+              <div className="p-inputgroup mt-3">
+                <input
+                  ref={fileInputRef}
+                  accept="image/*"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={onChangeFile}
+                />
+                <Button
+                  type="button"
+                  icon="pi pi-upload"
+                  label="Seleccionar"
+                  onClick={handleClick}
+                />
+                <InputText
+                  readOnly
+                  value={valueFile}
+                  placeholder="Seleccionar archivo"
+                />
+              </div>
+              {imagen}
+            </div>
           </div>
         </>
       )}
