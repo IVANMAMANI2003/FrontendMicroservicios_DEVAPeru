@@ -1,20 +1,20 @@
 import axios from "axios";
-import { API_URL_MEN, headers } from "../config/config";
+import { API_URL, headers } from "../config/config";
 
 export const getMensajeList = () => {
-  return axios.get(API_URL_MEN, { headers });
+  return axios.get(API_URL.MEN, { headers });
 };
 
 export const createMensaje = (mensaje) => {
-  return axios.post(API_URL_MEN, mensaje, { headers });
+  return axios.post(API_URL.MEN, mensaje, { headers });
 };
 
 export const updateMensaje = (mensaje) => {
-  return axios.put(API_URL_MEN, mensaje, { headers });
+  return axios.put(API_URL.MEN, mensaje, { headers });
 };
 
 export const deleteMensaje = (id) => {
-  const url = `${API_URL_MEN}/${id}`;
+  const url = `${API_URL.MEN}/${id}`;
   return axios.delete(url, { headers });
 };
 

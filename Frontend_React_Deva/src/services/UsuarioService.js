@@ -1,20 +1,20 @@
 import axios from "axios";
-import { API_URL_USE, headers } from "../config/config";
+import { API_URL, headers } from "../config/config";
 
 export const getUserList = () => {
-  return axios.get(API_URL_USE, { headers });
+  return axios.get(API_URL.USE, { headers });
 };
 
 export const createUser = (user) => {
-  return axios.post(API_URL_USE, user, { headers });
+  return axios.post(API_URL.USE, user, { headers });
 };
 
 export const updateUser = (user) => {
-  return axios.put(API_URL_USE, user, { headers });
+  return axios.put(API_URL.USE, user, { headers });
 };
 
 export const deleteUser = (id) => {
-  const url = `${API_URL_USE}/${id}`;
+  const url = `${API_URL.USE}/${id}`;
   return axios.delete(url, { headers });
 };
 
