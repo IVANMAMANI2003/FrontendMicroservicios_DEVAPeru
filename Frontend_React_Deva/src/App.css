@@ -58,3 +58,8 @@
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
   background-color: cornflowerblue;
 }
+
+.input-error {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+}
