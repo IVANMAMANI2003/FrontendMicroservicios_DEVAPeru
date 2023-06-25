@@ -6,7 +6,7 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Categorias',
+        title: 'Categorías',
         path: '/sistema-categorias',
         icon: "pi pi-list",
         cName: 'nav-text'
