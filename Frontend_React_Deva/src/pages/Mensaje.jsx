@@ -148,16 +148,16 @@ export default function Contatanos() {
                         submitted &&
                         !mensaje.correo && <small className="p-error">El correo es obligatorio.</small>
                       }
-                      htmlFor_02="fecha"
-                      label_02="Fecha"
-                      id_02="fecha"
-                      value_02={mensaje.fecha}
-                      onChange_02={(e) => onInputChange(e, "fecha")}
-                      className_02={classNames({ "p-invalid": submitted && !mensaje.fecha })}
+                      htmlFor_02="telefono"
+                      label_02="Telefono"
+                      id_02="telefono"
+                      value_02={mensaje.telefono}
+                      onChange_02={(e) => onInputChange(e, "telefono")}
+                      className_02={classNames({ "p-invalid": submitted && !mensaje.telefono })}
                       msgRequired_02={
                         submitted &&
-                        !mensaje.fecha && (
-                          <small className="p-error">El fecha es obligatorio.</small>
+                        !mensaje.telefono && (
+                          <small className="p-error">El telefono es obligatorio.</small>
                         )
                       }
                       htmlFor_03="telefono"
@@ -174,15 +174,15 @@ export default function Contatanos() {
                           <small className="p-error">La telefono es obligatorio.</small>
                         )
                       }
-                      htmlFor_04="asunto"
-                      label_04="Asunto"
-                      id_04="asunto"
-                      value_04={mensaje.asunto}
-                      onChange_04={(e) => onInputChange(e, "asunto")}
-                      className_04={classNames({ "p-invalid": submitted && !mensaje.asunto })}
+                      htmlFor_04="mensaje"
+                      label_04="Mensaje"
+                      id_04="mensaje"
+                      value_04={mensaje.mensaje}
+                      onChange_04={(e) => onInputChange(e, "mensaje")}
+                      className_04={classNames({ "p-invalid": submitted && !mensaje.mensaje })}
                       msgRequired_04={
                         submitted &&
-                        !mensaje.asunto && <small className="p-error">El asunto es obligatorio.</small>
+                        !mensaje.mensaje && <small className="p-error">El mensaje es obligatorio.</small>
 
                       }
                     />

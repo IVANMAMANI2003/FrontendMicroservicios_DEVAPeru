@@ -81,7 +81,7 @@ export const CreateUpdate = (props) => {
             }}>
               {label_02}
             </label>
-            <Calendar
+            <InputText
               id={id_02}
               style={{width: '12rem', textAlign:'center', alignItems:'center'  }}
               value={value_02}
@@ -136,7 +136,7 @@ export const CreateUpdate = (props) => {
                 onChange={onChange_04}
                 required  
                 className={className_04}
-                style={{ height: "150px", width:'27.3rem'}}
+                style={{ height: "150px", width:'27.3rem', alignItems: 'normal'}}
               />
               {msgRequired_04}
             </div>
