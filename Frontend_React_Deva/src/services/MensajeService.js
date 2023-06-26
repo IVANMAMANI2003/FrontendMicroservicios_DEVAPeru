@@ -2,7 +2,12 @@ import axios from "axios";
 import { API_URL_MEN, headers } from "../config/config";
 
 export const getMensajeList = () => {
-  return axios.get(API_URL_MEN, { headers });
+  return axios.get(API_URL_MEN, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
 };
 
 export const createMensaje = (mensaje) => {
@@ -10,12 +15,16 @@ export const createMensaje = (mensaje) => {
 };
 
 export const updateMensaje = (mensaje) => {
-  return axios.put(API_URL_MEN, mensaje, { headers });
+  return axios.put(API_URL_MEN, mensaje, { headers: {
+    Authorization: `Bearer ${token}`,
+  }, });
 };
 
 export const deleteMensaje = (id) => {
   const url = `${API_URL_MEN}/${id}`;
-  return axios.delete(url, { headers });
+  return axios.delete(url, { headers: {
+    Authorization: `Bearer ${token}`,
+  }, });
 };
 
 export const deleteSelectedMensaje = (mensajeIds) => {
