@@ -1,20 +1,20 @@
 import axios from "axios";
-import { API_URL_POS, headers } from "../config/config";
+import { API_URL, headers } from "../config/config";
 
 export const getPostList = () => {
-  return axios.get(API_URL_POS, { headers });
+  return axios.get(API_URL.POS, { headers });
 };
 
 export const createPost = (image) => {
-  return axios.post(API_URL_POS, image, { headers });
+  return axios.post(API_URL.POS, image, { headers });
 };
 
 export const updatePost = (id, image) => {
-  return axios.put(`${API_URL_POS}/imagen/${id}`, image, { headers });
+  return axios.put(`${API_URL.POS}/imagen/${id}`, image, { headers });
 };
 
 export const deletePost = (id) => {
-  const url = `${API_URL_POS}/${id}`;
+  const url = `${API_URL.POS}/${id}`;
   return axios.delete(url, { headers });
 };
 
