@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { Carousels } from "../../components/Carousel";
 import Footer from "../../partials/Footer";
 import * as BannerService from "../../services/BannerService";
+import * as CategoryService from "../../services/CategoriaService";
 
 function Productos() {
+  
   const [banners, setBanners] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     getBanners();
+    getCategories();
   }, []);
 
   const getBanners = () => {
@@ -22,12 +26,25 @@ function Productos() {
         console.log(error);
       });
   };
+
+  const getCategories = () => {
+    CategoryService.getCategoryList()
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       {/* Banner principal */}
       <div id="controls-carousel" className="relative" data-carousel="slide">
         <Carousels value={banners} />
       </div>
+
+      
 
       <div className="py-4 text-center text-4xl bg-gray-200">
         <a
@@ -42,48 +59,43 @@ function Productos() {
       </div>
       {/* Categorías disponibles */}
       <div className="p-10 justify-center">
+      
+    
         <div
-          className="flex flex-wrap relative p-4 shadow-md rounded-lg border-2 xl:mx-20 sm:mx-2 bg-white"
+          className="flex flex-wrap relative p-4 shadow-md rounded-lg border-2 xl:mx-20 sm:mx-2 bg-white gap-10"
           style={{ justifyContent: "center", justifyItems: "center" }}
         >
-          @foreach ($categories as $category)
-          <div className="max-w-md text-center relative p-2 border rounded-2xl m-2 hover:shadow-xl hover:bg-gray-100">
-            <div className="absolute right-0 top-1">
-              @auth
+          
+          {categories.map((category) => (
+            <div
+              key={category.id}
+              className="max-w-md text-center relative p-2 border rounded-2xl m-2 hover:shadow-xl hover:bg-gray-100"
+            >
               <a
-                href="#editar{{ $category->id }}"
-                data-bs-toggle="modal"
-                className="items-center px-4 pr-3 py-2 bg-gray-800 border border-transparent rounded-bl-xl font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
+                data-aos="zoom-in-down"
+                href="/lista-producto"
               >
-                <i className="fa-solid fa-pen-to-square"></i>
-              </a>
-              <a
-                href="#eliminar{{ $category->id }}"
-                data-bs-toggle="modal"
-                className="items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-tr-xl font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"
-              >
-                <i className="fa-solid fa-trash-can"></i>
+                <div className="flex justify-center mb-2">
+                  <div className="rounded-2xl w-max flex justify-center">
+                    <img
+                      alt=".."
+                      className="rounded-xl w-60 h-60"
+                      style={{ objectFit: "cover" }}
+                      src={
+                        category.imagen ? category.imagen : "https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-row justify-center justify-items-center gap-10">
+                <div className="">
+                  <div className="text-base">{category.nombre}</div>
+                </div>
+                
+                </div>
               </a>
             </div>
-            <a
-              data-aos="zoom-in-down"
-              href="{{ route('categoria-productos', $category) }}"
-            >
-              <div className="flex justify-center mb-2">
-                <div className="rounded-2xl w-max flex justify-center">
-                  <img
-                    alt=".."
-                    className="rounded-xl w-60 h-60"
-                    style={{ objectFit: "cover" }}
-                    src="@if ($category->image) {{ Storage::url($category->image->url) }}@else /img/default.jpg @endif"
-                  />
-                </div>
-              </div>
-              <div className="">
-                <div className="text-base">categoria.name</div>
-              </div>
-            </a>
-          </div>
+          ))}
         </div>
       </div>
 

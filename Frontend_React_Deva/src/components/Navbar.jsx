@@ -1,22 +1,18 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
-import { ScrollPanel } from 'primereact/scrollpanel';
 import { Sidebar } from 'primereact/sidebar';
-import { Button } from 'primereact/button';
-import { Link, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-import { SidebarData } from "./SidebarData";
 
 import devaImage from '../assets/img/deva.png';
-import ButtonSidebar from './ButtonSidebar';
-import NavbarLink from './NavbarLink'
+import Header from '../partials/Header';
 import '../styles/ScrollPanel.css';
 import '../styles/flags.css';
 import { NavbarData } from './NavbarData';
-import Header from '../partials/Header';
+import NavbarLink from './NavbarLink';
 import SidebarLink from './SidebarLink';
 
-function Navbar() {
+function Navbar( CartItem) {
 
     const [visible, setVisible] = useState(false);
     const location = useLocation();
@@ -115,6 +111,18 @@ function Navbar() {
                                     <input type="search" placeholder="Buscar"
                                         className="w-full pl-14 pr-4 py-2.5 rounded-lg text-sm text-gray-600 outline-none border border-gray-300 focus:border-green-500 focus:ring-green-500 shadow" />
                                 </div>
+                            </div>
+                            
+                            <div className="sm:flex sm:items-center mx-2">
+                            <div className='icon f_flex width'>
+                                <i className='fa fa-user icon-circle'></i>
+                                <div className='cart'>
+                                <Link to='/cart'>
+                                    <i className='pi pi-shopping-cart pi-circle'></i>
+                                    <span>{CartItem.length === 0 ? "" : CartItem.length}</span>
+                                </Link>
+                                </div>
+                            </div>
                             </div>
                             <div className="sm:flex sm:items-center mx-2">
                                 <span className="inline-flex">

@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // Importaciones de PrimeReact
+import "jspdf-autotable";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
-import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import "jspdf-autotable";
-import Table from "../../components/Table";
+import { classNames } from "primereact/utils";
 import { DialogCreateUpdate } from "../../components/DialogCatalogo";
 import { DialogDelete } from "../../components/DialogDelete";
-import * as ProductoService from "../../services/ProductoService";
+import Table from "../../components/Table";
 import { exportToExcel, exportToPdf } from "../../exports/ExportFilePro";
 import { getCategoryList } from "../../services/CategoriaService";
+import * as ProductoService from "../../services/ProductoService";
 
 export default function Product() {
   let dataProduct = {

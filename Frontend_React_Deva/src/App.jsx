@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { Navigate, Route, Routes } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
-import Inicio from "./pages/client/Inicio";
-import Nosotros from "./pages/client/Nosotros";
-import Contactanos from "./pages/client/Mensaje";
-import Productos from "./pages/client/Productos";
-import Galeria from "./pages/client/Galeria";
 import Login from "./auth/Login";
+import Search from "./common/header/Search";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import Galeria from "./pages/client/Galeria";
+import Inicio from "./pages/client/Inicio";
+
+import ListProducto from "./pages/client/ListProducto";
+import Contactanos from "./pages/client/Mensaje";
+import Nosotros from "./pages/client/Nosotros";
+import Productos from "./pages/client/Productos";
 
 function App() {
   return (
@@ -21,9 +24,11 @@ function App() {
       ) : location.pathname === "/logindev" ? (
         <Login />
       ) : location.pathname === "/" ||
-        location.pathname === "/inicio" ||
-        location.pathname === "/nosotros" ||
-        location.pathname === "/producto" ? (
+      location.pathname === "/inicio" ||
+      location.pathname === "/nosotros" ||
+      location.pathname === "/lista-producto" ||
+      location.pathname === "/detalle-search" ||
+      location.pathname === "/producto" ? (
         <>
           <Navbar />
           <Routes>
@@ -33,6 +38,11 @@ function App() {
             <Route path="/producto" Component={Productos} />
             <Route path="/galeria" Component={Galeria} />
             <Route path="/contactanos" Component={Contactanos} />
+            <Route path="/lista-producto" Component={ListProducto} />
+            <Route path="/detalle-search" Component={Search} />
+           
+            
+          
           </Routes>
         </>
       ) : null}
