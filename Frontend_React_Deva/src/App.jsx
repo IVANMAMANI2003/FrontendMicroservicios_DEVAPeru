@@ -40,9 +40,6 @@ function App() {
             <Route path="/contactanos" Component={Contactanos} />
             <Route path="/lista-producto" Component={ListProducto} />
             <Route path="/detalle-search" Component={Search} />
-           
-            
-          
           </Routes>
         </>
       ) : null}
