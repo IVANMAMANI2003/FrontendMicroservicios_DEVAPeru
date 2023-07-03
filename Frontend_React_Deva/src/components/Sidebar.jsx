@@ -1,7 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import SidebarLink from "./SidebarLink";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import Post from "../admin/pages/Post";
 import Product from "../pages/admin/Producto";
@@ -11,16 +17,31 @@ import Dropdown from "./Dropdown";
 import DropdownLink from "./DropdownLink";
 import { Banner } from "../pages/admin/Banner";
 import Category from "../pages/admin/Categoria";
+import { headers } from "../config/config";
+import * as AuthService from "../services/AuthService";
+import axios from "axios";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const [user, setUsers] = useState([]);
   const location = useLocation();
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [activeRoute, setActiveRoute] = useState("/");
 
   useEffect(() => {
-    // Almacena la ruta actual en localStorage cuando cambia
+    getUsers();
     setActiveRoute(location.pathname);
   }, [location]);
+
+  const getUsers = () => {
+    AuthService.getUserList()
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleSidebar = () => {
     setIsOpenSidebar(!isOpenSidebar);
@@ -28,6 +49,25 @@ const Sidebar = () => {
 
   const handleItemClick = (path) => {
     setActiveRoute(path);
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.delete("http://localhost:9090/auth/logout", {
+        headers,
+      });
+      // Procesar la respuesta del backend, por ejemplo, borrar el token del almacenamiento local
+      console.log("Sesión cerrada");
+      // Borrar el token del almacenamiento local
+      localStorage.removeItem("token", response);
+      console.log("Token eliminado");
+      navigate("/inicio");
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -229,12 +269,16 @@ const Sidebar = () => {
                     <div>
                       {/* Account Management */}
                       <div className="px-4 py-2 bg-gray-100 -mt-1 rounded-t-md text-center">
-                        <div className="font-medium text-sm text-gray-800">
-                          Manuel Chunca Mamani
-                        </div>
-                        <div className="font-medium text-sm text-gray-500">
-                          manuel@gmail.com
-                        </div>
+                        {user.map((user, index) => (
+                          <div key={index}>
+                            <div className="font-medium text-sm text-gray-800">
+                              {user.userName}
+                            </div>
+                            <div className="font-medium text-sm text-gray-500">
+                              {user.correo}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                       {/* Account Management */}
                       <div className="block px-4 py-2 text-sm text-gray-400">
@@ -246,10 +290,12 @@ const Sidebar = () => {
                       <div className="border-t border-gray-100"></div>
 
                       {/* Authentication */}
-                      <form method="POST" data-x-data>
-                        <input type="hidden" name="_token" />
-                        <DropdownLink href="#">Cerrar sesión</DropdownLink>
-                      </form>
+                      <button
+                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                        onClick={handleLogout}
+                      >
+                        Cerrar sesión
+                      </button>
                     </div>
                   }
                 />

@@ -15,6 +15,9 @@ function Form(props) {
     value_03,
     onChange_03,
     showErrorMessage_03,
+    value_04,
+    onChange_04,
+    showErrorMessage_04,
     errorMessage,
     onClick,
     isVisible,
@@ -66,7 +69,31 @@ function Form(props) {
             errorMessage={errorMessage}
           />
         </div>
-
+        {!isVisible && (
+          <div className="">
+            <label className="block mb-2 text-sm font-normal">
+              Correo Electrónico
+            </label>
+            <label className="relative">
+              <input
+                type="text"
+                value={value_04}
+                onChange={onChange_04}
+                className={`input-login text-xs sm:text-sm placeholder-gray-400 focus:ring-green-600 focus:border-green-600 focus:outline-none ${
+                  showErrorMessage_04 ? "input-error" : ""
+                }`}
+                placeholder="company@example.com"
+              />
+              <div className="absolute inset-y-0 left-0 pl-3 pt-1 flex items-center text-sm leading-5">
+                <i className="pi pi-user"></i>
+              </div>
+            </label>
+            <Error
+              showErrorMessage={showErrorMessage_04}
+              errorMessage={errorMessage}
+            />
+          </div>
+        )}
         <div>
           <label className="block mb-2 text-sm font-normal text-gray-900">
             Contraseña
@@ -130,7 +157,9 @@ function Form(props) {
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
                 <i
                   style={{ cursor: "pointer" }}
-                  className={`pi ${showPassword_02 ? "pi-eye-slash" : "pi-eye"}`}
+                  className={`pi ${
+                    showPassword_02 ? "pi-eye-slash" : "pi-eye"
+                  }`}
                   onClick={() => setShowPassword_02(!showPassword_02)}
                 ></i>
               </div>
