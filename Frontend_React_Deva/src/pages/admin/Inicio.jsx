@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-no-target-blank */
-import { useEffect, useState } from "react";
 import { Accordion, AccordionTab } from "primereact/accordion";
+import { useEffect, useState } from "react";
 import * as AuthService from "../../services/AuthService";
 import "../../styles/Dashboard.css";
-import Chart from "chart.js/auto";
+
 
 const Inicio = () => {
   const [user, setUsers] = useState([]);

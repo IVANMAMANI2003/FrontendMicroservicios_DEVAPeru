@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // Importaciones de PrimeReact
-import { classNames } from "primereact/utils";
+import "jspdf-autotable";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import "jspdf-autotable";
-import Table from "../../components/Table";
+import { classNames } from "primereact/utils";
 import { DialogDelete } from "../../components/DialogDelete";
-import * as UsuarioService from "../../services/UsuarioService";
-import { exportToExcel, exportToPdf } from "../../exports/ExportFileCat";
 import { DialogCreateUpdate } from "../../components/DialogUser";
+import Table from "../../components/Table";
+import { exportToExcel, exportToPdf } from "../../exports/ExportFileCat";
+import * as UsuarioService from "../../services/UsuarioService";
 
 export default function User() {
   let dataUser = {

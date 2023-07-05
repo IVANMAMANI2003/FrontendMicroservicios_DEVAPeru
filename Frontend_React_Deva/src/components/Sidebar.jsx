@@ -2,13 +2,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import User from "../admin/pages/Usuario";
 import { headers } from "../config/config";
 import { Banner } from "../pages/admin/Banner";
 import Category from "../pages/admin/Categoria";
 import Inicio from "../pages/admin/Inicio";
 import Message from "../pages/admin/Mensaje";
 import Product from "../pages/admin/Producto";
+import User from "../pages/admin/Usuario";
 import * as AuthService from "../services/AuthService";
 import Venta from "../views/Venta";
 import Dropdown from "./Dropdown";
