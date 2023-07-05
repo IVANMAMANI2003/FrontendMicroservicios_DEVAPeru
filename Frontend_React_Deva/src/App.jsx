@@ -5,21 +5,14 @@ import Search from "./common/header/Search";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Inicio from "./pages/client/Inicio";
-<<<<<<< HEAD
 
 
+import Galeria from "./pages/client/Galeria";
 import ListProducto from "./pages/client/ListProducto";
 import Contactanos from "./pages/client/Mensaje";
 import Nosotros from "./pages/client/Nosotros";
 import Productos from "./pages/client/Productos";
 import Venta from "./views/Venta";
-=======
-import Contactanos from "./pages/client/Mensaje";
-import Nosotros from "./pages/client/Nosotros";
-import Productos from "./pages/client/Productos";
-import ListProducto from "./pages/client/ListProducto";
-import Galeria from "./pages/client/Galeria";
->>>>>>> 1a014bf5f989df6f2a184c6ee89903d8c77cab06
 
 function App() {
   return (
