@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import "jspdf-autotable";
@@ -20,21 +20,14 @@ export default function Contactanos() {
 
   const [mensaje, setMensaje] = useState(dataMensaje);
   const [submitted, setSubmitted] = useState(false);
-  
+   
+  useEffect(() => {
+
+  }, []);
+
   const saveUpdate = () => {
-    let formValid = true;
-    Object.keys(mensaje).forEach((key) => {
-      if (!mensaje[key]) {
-        formValid = false;
-      }
-    });
-  
     setSubmitted(true);
-  
-    if (formValid) {
-      createMensaje(mensaje);
-      setMensaje(dataMensaje); // Limpiar el formulario después de enviarlo
-    }
+    createMensaje(mensaje)
   };
 
   const hideDialog = () => {
