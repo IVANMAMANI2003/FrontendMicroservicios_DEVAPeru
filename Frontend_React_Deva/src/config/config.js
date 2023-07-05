@@ -6,7 +6,6 @@ export const API_URL = {
   MEN: `${import.meta.env.VITE_API_URL}/mensaje`,
   VEN: `${import.meta.env.VITE_API_URL}/venta`,
   USE: `${import.meta.env.VITE_API_URL}/usuario`,
-  POS: `${import.meta.env.VITE_API_URL}/post`,
 };
 
 const token = localStorage.getItem("token");

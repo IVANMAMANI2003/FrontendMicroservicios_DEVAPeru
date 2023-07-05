@@ -4,8 +4,8 @@ import Login from "./auth/Login";
 import Search from "./common/header/Search";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import Galeria from "./pages/client/Galeria";
 import Inicio from "./pages/client/Inicio";
+<<<<<<< HEAD
 
 
 import ListProducto from "./pages/client/ListProducto";
@@ -13,6 +13,13 @@ import Contactanos from "./pages/client/Mensaje";
 import Nosotros from "./pages/client/Nosotros";
 import Productos from "./pages/client/Productos";
 import Venta from "./views/Venta";
+=======
+import Contactanos from "./pages/client/Mensaje";
+import Nosotros from "./pages/client/Nosotros";
+import Productos from "./pages/client/Productos";
+import ListProducto from "./pages/client/ListProducto";
+import Galeria from "./pages/client/Galeria";
+>>>>>>> 1a014bf5f989df6f2a184c6ee89903d8c77cab06
 
 function App() {
   return (
@@ -22,16 +29,17 @@ function App() {
       location.pathname === "/sistema-productos" ||
       location.pathname === "/sistema-ventas" ||
       location.pathname === "/sistema-usuarios" ||
+      location.pathname === "/sistema-mensajes" ||
       location.pathname === "/sistema-banners" ? (
         <Sidebar />
       ) : location.pathname === "/logindev" ? (
         <Login />
       ) : location.pathname === "/" ||
-      location.pathname === "/inicio" ||
-      location.pathname === "/nosotros" ||
-      location.pathname === "/lista-producto" ||
-      location.pathname === "/detalle-search" ||
-      location.pathname === "/producto" ? (
+        location.pathname === "/inicio" ||
+        location.pathname === "/nosotros" ||
+        location.pathname === "/lista-producto" ||
+        location.pathname === "/detalle-search" ||
+        location.pathname === "/producto" ? (
         <>
           <Navbar />
           <Routes>

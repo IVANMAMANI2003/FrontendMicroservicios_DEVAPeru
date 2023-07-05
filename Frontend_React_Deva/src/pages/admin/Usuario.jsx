@@ -5,11 +5,11 @@ import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "jspdf-autotable";
-import Table from "../components/Table";
-import { DialogDelete } from "../components/DialogDelete";
-import * as UsuarioService from "../services/UsuarioService";
-import { exportToExcel, exportToPdf } from "../exports/ExportFileCat";
-import { DialogCreateUpdate } from "../components/DialogUser";
+import Table from "../../components/Table";
+import { DialogDelete } from "../../components/DialogDelete";
+import * as UsuarioService from "../../services/UsuarioService";
+import { exportToExcel, exportToPdf } from "../../exports/ExportFileCat";
+import { DialogCreateUpdate } from "../../components/DialogUser";
 
 export default function User() {
   let dataUser = {

@@ -8,12 +8,14 @@ import Form from "../components/Form";
 function Login() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
+  const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [registerMode, setRegisterMode] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [showErrorMessage_02, setShowErrorMessage_02] = useState(false);
   const [showErrorMessage_03, setShowErrorMessage_03] = useState(false);
+  const [showErrorMessage_04, setShowErrorMessage_04] = useState(false);
   const [showErrorMessage_Pri, setShowErrorMessage_Pri] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -58,6 +60,7 @@ function Login() {
       setShowErrorMessage(true);
       setShowErrorMessage_02(true);
       setShowErrorMessage_03(true);
+      setShowErrorMessage_04(true);
       return;
     }
     if (password !== repeatPassword) {
@@ -70,6 +73,7 @@ function Login() {
       const response = await axios.post("http://localhost:9090/auth/create", {
         userName: userName,
         password: password,
+        correo: correo,
       });
       console.log("Registro exitoso");
       console.log(response);
@@ -78,6 +82,7 @@ function Login() {
       console.error(error);
     } finally {
       setUserName("");
+      setCorreo("");
       setPassword("");
       setRepeatPassword("");
     }
@@ -90,6 +95,7 @@ function Login() {
     setShowErrorMessage(false);
     setShowErrorMessage_02(false);
     setShowErrorMessage_03(false);
+    setShowErrorMessage_04(false);
     setShowErrorMessage_Pri(false);
   };
 
@@ -103,7 +109,11 @@ function Login() {
 
   return (
     <>
-      <img src="/img/fondo-login.png" className="fondo-login" alt="login-img-fondo" />
+      <img
+        src="/img/fondo-login.png"
+        className="fondo-login"
+        alt="login-img-fondo"
+      />
 
       <div className="flex items-center h-screen">
         <div className="cont-area top-0 rounded-b-lg">
@@ -173,9 +183,14 @@ function Login() {
                       setShowErrorMessage_03
                     )
                   }
+                  value_04={correo}
+                  onChange_04={(e) =>
+                    handleInputChange(e, setCorreo, setShowErrorMessage_04)
+                  }
                   showErrorMessage={showErrorMessage}
                   showErrorMessage_02={showErrorMessage_02}
                   showErrorMessage_03={showErrorMessage_03}
+                  showErrorMessage_04={showErrorMessage_04}
                   errorMessage={errorMessage}
                   onClick={() => {
                     setRegisterMode(!registerMode);

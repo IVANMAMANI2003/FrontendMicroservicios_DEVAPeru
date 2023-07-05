@@ -31,7 +31,7 @@ export const SidebarData = [
     },
     {
         title: 'Mensajes',
-        path: '/mensaje',
+        path: '/sistema-mensajes',
         icon: "pi pi-comments",
         cName: 'nav-text'
     },

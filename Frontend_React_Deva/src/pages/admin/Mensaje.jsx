@@ -13,7 +13,7 @@ import {
   deleteSelectedMensaje,
 } from "../../services/MensajeService";
 import { exportToExcel, exportToPdf } from "../../exports/ExportFileCat";
-export default function mensaje() {
+export default function Message() {
   let dataMensaje = {
     id: null,
     nombre: "",

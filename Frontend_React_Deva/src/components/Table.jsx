@@ -24,9 +24,6 @@ const Table = (props) => {
     header_01,
     body,
     isCategory,
-    bodyImage,
-    fieldImage,
-    headerImage,
   } = props;
 
   const visibleColumns = [
@@ -74,12 +71,6 @@ const Table = (props) => {
           emptyMessage="No se encontraron resultados"
         >
           <Column selectionMode="multiple" exportable={false}></Column>
-          <Column
-            field={fieldImage}
-            header={headerImage}
-            body={bodyImage}
-            style={{ minWidth: "7rem" }}
-          ></Column>
           {visibleColumns.map((column, index) => (
             <Column
               key={index}

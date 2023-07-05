@@ -1,15 +1,9 @@
-import { Component } from "react";
-export default class Galeria extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const Galeria = () => {
+  return (
+    <div className="  text-center  p-[30%]">
+      <h1>Pagina Galería </h1>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className="  text-center  p-[30%]">
-        <h1>Pagina Galeria </h1>
-      </div>
-    );
-  }
-}
+export default Galeria;
