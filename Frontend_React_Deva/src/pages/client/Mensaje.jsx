@@ -119,7 +119,7 @@ export default function Contatanos() {
                   marginTop: '0'
                 }
               }}>
-                {/*gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'*/}
+                {/gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'/}
                 <div style={{ display: 'grid', gap: '1.1rem' }}>
                   <div style={{
                     marginTop: '0.01rem', '@media (minWidth: 768px)': {

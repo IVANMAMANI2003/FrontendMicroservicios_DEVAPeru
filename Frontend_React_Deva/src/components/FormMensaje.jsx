@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { InputText } from "primereact/inputtext";
-import { Calendar } from "primereact/calendar";
 
 export const CreateUpdate = (props) => {
   const {

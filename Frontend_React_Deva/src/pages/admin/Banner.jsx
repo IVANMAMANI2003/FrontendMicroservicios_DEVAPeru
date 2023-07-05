@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-// Importaciones de PrimeReact
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";

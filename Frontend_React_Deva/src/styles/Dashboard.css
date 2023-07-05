@@ -1,0 +1,84 @@
+.cardBox {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 1rem;
+}
+
+.cardBox .card {
+  position: relative;
+  background: white;
+  padding: 30px;
+  padding-top: 40px;
+  padding-bottom: 15px;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(229, 231, 235, 0.1);
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cardBox .card .title {
+  background-color: rgba(37, 99, 235, 1);
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  color: white;
+  font-weight: 700;
+  left: 0;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+.cardBox .card .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5em;
+  color: rgb(109, 106, 106);
+}
+
+.cardBox .card .cardName {
+  color: rgb(20, 20, 20);
+  font-size: 1em;
+  margin-top: 5px;
+}
+
+.cardBox .card .iconBx {
+  display: flex;
+  align-items: center;
+  font-size: 3.5em;
+  color: rgb(109, 106, 106);
+}
+
+.cardBox .card:hover {
+  border-color: rgba(37, 99, 235, 1);
+}
+
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx {
+  color: rgba(37, 99, 235, 1);
+}
+
+@media (max-width: 1320px) {
+  .cardBox {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 991px) {
+  .cardBox {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 570px) {
+  .cardBox {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

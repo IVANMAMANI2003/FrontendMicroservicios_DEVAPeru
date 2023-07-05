@@ -9,10 +9,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
-import Post from "../admin/pages/Post";
 import Product from "../pages/admin/Producto";
-import User from "../admin/pages/Usuario";
-import mensaje from "../admin/pages/Mensaje";
 import Dropdown from "./Dropdown";
 import DropdownLink from "./DropdownLink";
 import { Banner } from "../pages/admin/Banner";
@@ -20,6 +17,9 @@ import Category from "../pages/admin/Categoria";
 import { headers } from "../config/config";
 import * as AuthService from "../services/AuthService";
 import axios from "axios";
+import Inicio from "../pages/admin/Inicio";
+import User from "../pages/admin/Usuario";
+import Message from "../pages/admin/Mensaje";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -307,12 +307,11 @@ const Sidebar = () => {
         <div className="p-4">
           <div>
             <Routes>
-              <Route path="/sistema-dashboard" Component={Post} />
+              <Route path="/sistema-dashboard" Component={Inicio} />
               <Route path="/sistema-categorias" Component={Category} />
               <Route path="/sistema-productos" Component={Product} />
               <Route path="/sistema-usuarios" Component={User} />
-              <Route path="/mensaje" Component={mensaje} />
-              <Route path="/newmensaje" Component={mensaje} />
+              <Route path="/sistema-mensajes" Component={Message} />
               <Route path="/sistema-banners" Component={Banner} />
             </Routes>
           </div>
