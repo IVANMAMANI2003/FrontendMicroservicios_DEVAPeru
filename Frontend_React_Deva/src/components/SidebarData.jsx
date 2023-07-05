@@ -18,6 +18,12 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
+        title: 'Venta',
+        path: '/sistema-ventas',
+        icon: "pi pi-shopping-cart",
+        cName: 'nav-text'
+    },
+    {
         title: 'Usuarios',
         path: '/sistema-usuarios',
         icon: "pi pi-users",

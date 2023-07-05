@@ -1,16 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import SidebarLink from "./SidebarLink";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
-import Post from "../admin/pages/Post";
-import Product from "../pages/admin/Producto";
-import User from "../admin/pages/Usuario";
 import mensaje from "../admin/pages/Mensaje";
-import Dropdown from "./Dropdown";
-import DropdownLink from "./DropdownLink";
+import Post from "../admin/pages/Post";
+import User from "../admin/pages/Usuario";
 import { Banner } from "../pages/admin/Banner";
 import Category from "../pages/admin/Categoria";
+import Product from "../pages/admin/Producto";
+import Venta from "../views/Venta";
+import Dropdown from "./Dropdown";
+import DropdownLink from "./DropdownLink";
+import { SidebarData } from "./SidebarData";
+import SidebarLink from "./SidebarLink";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -185,6 +186,8 @@ const Sidebar = () => {
                     ? "Categorias"
                     : location.pathname === "/sistema-productos"
                     ? "Productos"
+                    : location.pathname === "/sistema-ventas"
+                    ? "Venta"
                     : location.pathname === "/sistema-banners"
                     ? "Banners"
                     : location.pathname === "/sistema-videos"
@@ -268,6 +271,7 @@ const Sidebar = () => {
               <Route path="/mensaje" Component={mensaje} />
               <Route path="/newmensaje" Component={mensaje} />
               <Route path="/sistema-banners" Component={Banner} />
+              <Route path="/sistema-ventas" Component={Venta} />
             </Routes>
           </div>
         </div>

@@ -7,10 +7,12 @@ import Sidebar from "./components/Sidebar";
 import Galeria from "./pages/client/Galeria";
 import Inicio from "./pages/client/Inicio";
 
+
 import ListProducto from "./pages/client/ListProducto";
 import Contactanos from "./pages/client/Mensaje";
 import Nosotros from "./pages/client/Nosotros";
 import Productos from "./pages/client/Productos";
+import Venta from "./views/Venta";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
       {location.pathname === "/sistema-dashboard" ||
       location.pathname === "/sistema-categorias" ||
       location.pathname === "/sistema-productos" ||
+      location.pathname === "/sistema-ventas" ||
       location.pathname === "/sistema-usuarios" ||
       location.pathname === "/sistema-banners" ? (
         <Sidebar />
@@ -36,6 +39,7 @@ function App() {
             <Route path="/inicio" Component={Inicio} />
             <Route path="/nosotros" Component={Nosotros} />
             <Route path="/producto" Component={Productos} />
+            <Route path="/venta" Component={Venta} />
             <Route path="/galeria" Component={Galeria} />
             <Route path="/contactanos" Component={Contactanos} />
             <Route path="/lista-producto" Component={ListProducto} />
