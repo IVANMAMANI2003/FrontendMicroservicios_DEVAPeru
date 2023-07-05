@@ -1,18 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { classNames } from "primereact/utils";
 import { Button } from "primereact/button";
 import "jspdf-autotable";
-//import { creamensaje } from "../components/Mensaje";
 import { CreateUpdate } from "../../components/FormMensaje";
-import Footer from '../../partials/Footer';
+import Footer from "../../partials/Footer";
+import { createMensaje } from "../../services/MensajeService";
 
-import {
-  createMensaje,
-} from "../../services/MensajeService";
-
-
-export default function Contatanos() {
+export default function Contactanos() {
   const [mensajeDialog, setMensajeDialog] = useState(true);
   let dataMensaje = {
     id: null,
@@ -25,30 +20,23 @@ export default function Contatanos() {
 
   const [mensaje, setMensaje] = useState(dataMensaje);
   const [submitted, setSubmitted] = useState(false);
-  const toast = useRef(null);
-  const dt = useRef(null);
-
-
-  useEffect(() => {
-
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-
-  const onSubmit = (data, form) => {
-    // setFormData(data);
-    // setShowMessage(true);
-
-    form.restart();
-  };
-
-  const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
-  const getFormErrorMessage = (meta) => {
-    return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
-  };
+  
   const saveUpdate = () => {
+    let formValid = true;
+    Object.keys(mensaje).forEach((key) => {
+      if (!mensaje[key]) {
+        formValid = false;
+      }
+    });
+  
     setSubmitted(true);
-    createMensaje(mensaje)
+  
+    if (formValid) {
+      createMensaje(mensaje);
+      setMensaje(dataMensaje); // Limpiar el formulario después de enviarlo
+    }
   };
+
   const hideDialog = () => {
     setSubmitted(false);
     setMensajeDialog(false);
@@ -62,31 +50,93 @@ export default function Contatanos() {
     setMensaje(_mensaje);
   };
   return (
-
-    <div >
-      <div style={{ padding: '2rem', textAlign: 'center', fontSize: '3.10rem', backgroundColor: 'white' }}>
-        <a style={{ fontFamily: "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif", borderBottomWidth: '2px', borderBottomColor: 'black' }} >
+    <div>
+      <div
+        style={{
+          padding: "2rem",
+          textAlign: "center",
+          fontSize: "3.10rem",
+          backgroundColor: "white",
+        }}
+      >
+        <a
+          style={{
+            fontFamily:
+              "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+            borderBottomWidth: "2px",
+            borderBottomColor: "black",
+          }}
+        >
           CONTÁCTANOS
         </a>
       </div>
-      <div style={{ padding: '2.4rem', textAlign: 'center' }}>
+      <div style={{ padding: "2.4rem", textAlign: "center" }}>
         <span>
-          ¡Bienvenidos a DEVAPERÚ! Estamos comprometidos en brindarle un servicio excepcional y satisfacer todas sus necesidades. Nos enorgullece ofrecer soluciones personalizadas y de calidad que superen sus expectativas
+          ¡Bienvenidos a DEVAPERÚ! Estamos comprometidos en brindarle un
+          servicio excepcional y satisfacer todas sus necesidades. Nos
+          enorgullece ofrecer soluciones personalizadas y de calidad que superen
+          sus expectativas
         </span>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', padding: '1rem', justifyContent: 'center'}} >
-        <div style={{ backgroundColor: 'white', display: 'flex', flexDirection: 'row', flex: '1', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ maxWidth: '20rem', width: '100%', display: 'flex', justifyContent: 'center' }} >
-            <div style={{
-              borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
-              outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem', color: '#cdd3d0'
-            }} >
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'left', color: 'black' }}>
-                <span style={{ marginTop: '0.5rem', marginBottom: '0.5rem', fontWeight: 'bold', margin: '0.75rem' }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          padding: "1rem",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "row",
+            flex: "1",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "20rem",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                borderRadius: "0.75rem",
+                boxShadow: "0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)",
+                outlineWidth: "2px",
+                outlineStyle: "solid",
+                fontSize: "0.875rem",
+                margin: "1.5rem",
+                color: "#cdd3d0",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "left",
+                  color: "black",
+                }}
+              >
+                <span
+                  style={{
+                    marginTop: "0.5rem",
+                    marginBottom: "0.5rem",
+                    fontWeight: "bold",
+                    margin: "0.75rem",
+                  }}
+                >
                   <i className="pi pi-map-marker"></i>
                   Dirección
-                  <p style={{ fontWeight: 'normal' }}>
-                    Lorem ipsum dolor sit amet <br /> consectetur adipiscing elit ultrices
+                  <p style={{ fontWeight: "normal" }}>
+                    Lorem ipsum dolor sit amet <br /> consectetur adipiscing
+                    elit ultrices
                   </p>
                   <br />
                   <i className="pi pi-phone"></i>
@@ -99,7 +149,9 @@ export default function Contatanos() {
                   <br />
                   <i className="pi pi-envelope"></i>
                   Correo Electrónico <br />
-                  <a className="font-normal hover:text-green-500">admin@grupodeva.pe</a>
+                  <a className="font-normal hover:text-green-500">
+                    admin@grupodeva.pe
+                  </a>
                 </span>
                 <div className="flex flex-shrink-0 items-center justify-center">
                   <iframe
@@ -111,23 +163,38 @@ export default function Contatanos() {
                 </div>
               </div>
             </div>
-            <div style={{
-              borderRadius: '0.75rem', boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)', outlineWidth: '2px', outlineStyle: 'solid', fontSize: '0.875rem', margin: '1.5rem', color: '#cdd3d0'
-            }}>
-              <div style={{
-                marginTop: '1.5rem', '@media (minWidth: 640px)': {
-                  marginTop: '0'
-                }
-              }}>
-                {/gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'/}
-                <div style={{ display: 'grid', gap: '1.1rem' }}>
-                  <div style={{
-                    marginTop: '0.01rem', '@media (minWidth: 768px)': {
-                      gridColumn: 'span 2', marginTop: '0'
-                    }
-                  }}>
+            <div
+              style={{
+                borderRadius: "0.75rem",
+                boxShadow: "0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)",
+                outlineWidth: "2px",
+                outlineStyle: "solid",
+                fontSize: "0.875rem",
+                margin: "1.5rem",
+                color: "#cdd3d0",
+              }}
+            >
+              <div
+                style={{
+                  marginTop: "1.5rem",
+                  "@media (minWidth: 640px)": {
+                    marginTop: "0",
+                  },
+                }}
+              >
+                {/*gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'*/}
+                <div style={{ display: "grid", gap: "1.1rem" }}>
+                  <div
+                    style={{
+                      marginTop: "0.01rem",
+                      "@media (minWidth: 768px)": {
+                        gridColumn: "span 2",
+                        marginTop: "0",
+                      },
+                    }}
+                  >
                     <CreateUpdate
-                      width='30rem'
+                      width="30rem"
                       ismensaje={true}
                       onHide={hideDialog}
                       htmlFor_00="nombre"
@@ -136,28 +203,46 @@ export default function Contatanos() {
                       value_00={mensaje.nombre}
                       onChange_00={(e) => onInputChange(e, "nombre")}
                       className_00={classNames({
-                        "p-invalid": submitted && mensaje.nombre
+                        "p-invalid": submitted && !mensaje.nombre,
                       })}
+                      msgRequired_00={
+                        submitted &&
+                        !mensaje.nombre && (
+                          <small className="p-error">
+                            El nombre es obligatorio.
+                          </small>
+                        )
+                      }
                       htmlFor_01="correo"
                       label_01="Correo"
                       id_01="correo"
                       value_01={mensaje.correo}
                       onChange_01={(e) => onInputChange(e, "correo")}
-                      className_01={classNames({ "p-invalid": submitted && !mensaje.correo })}
+                      className_01={classNames({
+                        "p-invalid": submitted && !mensaje.correo,
+                      })}
                       msgRequired_01={
                         submitted &&
-                        !mensaje.correo && <small className="p-error">El correo es obligatorio.</small>
+                        !mensaje.correo && (
+                          <small className="p-error">
+                            El correo es obligatorio.
+                          </small>
+                        )
                       }
                       htmlFor_02="telefono"
                       label_02="Telefono"
                       id_02="telefono"
                       value_02={mensaje.telefono}
                       onChange_02={(e) => onInputChange(e, "telefono")}
-                      className_02={classNames({ "p-invalid": submitted && !mensaje.telefono })}
+                      className_02={classNames({
+                        "p-invalid": submitted && !mensaje.telefono,
+                      })}
                       msgRequired_02={
                         submitted &&
                         !mensaje.telefono && (
-                          <small className="p-error">El telefono es obligatorio.</small>
+                          <small className="p-error">
+                            El telefono es obligatorio.
+                          </small>
                         )
                       }
                       htmlFor_03="asunto"
@@ -171,7 +256,9 @@ export default function Contatanos() {
                       msgRequired_03={
                         submitted &&
                         !mensaje.asunto && (
-                          <small className="p-error">La asunto es obligatorio.</small>
+                          <small className="p-error">
+                            La asunto es obligatorio.
+                          </small>
                         )
                       }
                       htmlFor_04="mensaje"
@@ -179,43 +266,49 @@ export default function Contatanos() {
                       id_04="mensaje"
                       value_04={mensaje.mensaje}
                       onChange_04={(e) => onInputChange(e, "mensaje")}
-                      className_04={classNames({ "p-invalid": submitted && !mensaje.mensaje })}
+                      className_04={classNames({
+                        "p-invalid": submitted && !mensaje.mensaje,
+                      })}
                       msgRequired_04={
                         submitted &&
-                        !mensaje.mensaje && <small className="p-error">El mensaje es obligatorio.</small>
-
+                        !mensaje.mensaje && (
+                          <small className="p-error">
+                            El mensaje es obligatorio.
+                          </small>
+                        )
                       }
                     />
-                    <div style={{
-                      padding: '0.1rem',
-                      paddingBottom: '0.1rem',
-                      display: 'flex',
-                      backgroundColor: 'white',
-                      flex: '1',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      '@media (minWidth: 768px)': {
-                        alignItems: 'stretch',
-                        justifyContent: 'flex-start'
-                      }
-                    }}>
-                      <Button label="Enviar" icon="pi pi-send" onClick={saveUpdate} />
+                    <div
+                      style={{
+                        padding: "0.1rem",
+                        paddingBottom: "0.1rem",
+                        display: "flex",
+                        backgroundColor: "white",
+                        flex: "1",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        "@media (minWidth: 768px)": {
+                          alignItems: "stretch",
+                          justifyContent: "flex-start",
+                        },
+                      }}
+                    >
+                      <Button
+                        label="Enviar"
+                        icon="pi pi-send"
+                        onClick={saveUpdate}
+                      />
                     </div>
                   </div>
-
                 </div>
-
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
 
       {/* Incluir el componente de pie de página */}
       <Footer />
     </div>
-
   );
 }
