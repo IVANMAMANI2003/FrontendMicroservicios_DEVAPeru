@@ -1,40 +1,20 @@
 /* eslint-disable no-unused-vars */
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
-import { Link, Route, Routes, useLocation } from "react-router-dom";
-import mensaje from "../admin/pages/Mensaje";
-import Post from "../admin/pages/Post";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import User from "../admin/pages/Usuario";
+import { headers } from "../config/config";
 import { Banner } from "../pages/admin/Banner";
 import Category from "../pages/admin/Categoria";
+import Inicio from "../pages/admin/Inicio";
+import Message from "../pages/admin/Mensaje";
 import Product from "../pages/admin/Producto";
+import * as AuthService from "../services/AuthService";
 import Venta from "../views/Venta";
 import Dropdown from "./Dropdown";
 import DropdownLink from "./DropdownLink";
 import { SidebarData } from "./SidebarData";
 import SidebarLink from "./SidebarLink";
-=======
-import SidebarLink from "./SidebarLink";
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import { SidebarData } from "./SidebarData";
-import Product from "../pages/admin/Producto";
-import Dropdown from "./Dropdown";
-import DropdownLink from "./DropdownLink";
-import { Banner } from "../pages/admin/Banner";
-import Category from "../pages/admin/Categoria";
-import { headers } from "../config/config";
-import * as AuthService from "../services/AuthService";
-import axios from "axios";
-import Inicio from "../pages/admin/Inicio";
-import User from "../pages/admin/Usuario";
-import Message from "../pages/admin/Mensaje";
->>>>>>> 1a014bf5f989df6f2a184c6ee89903d8c77cab06
 
 const Sidebar = () => {
   const navigate = useNavigate();
